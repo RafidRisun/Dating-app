@@ -34,6 +34,12 @@ export default function LoginLayout() {
 				}}
 			/>
 			<Stack.Screen name="signup" options={{ headerShown: false }} />
+			<Stack.Screen
+				name="enableNotification"
+				options={{ headerShown: false }}
+			/>
+			<Stack.Screen name="enableLocation" options={{ headerShown: false }} />
+			<Stack.Screen name="onboarding" options={{ headerShown: false }} />
 		</Stack>
 	);
 }

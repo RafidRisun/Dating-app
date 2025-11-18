@@ -20,3 +20,13 @@ export const iconApple = `<svg width="24" height="24" viewBox="0 0 24 24" fill="
 </defs>
 </svg>
 `;
+
+export const iconGrayBack = `<svg width="10" height="20" viewBox="0 0 10 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M2.78583 10L8.67833 15.8925L7.5 17.0709L1.01833 10.5892C0.862108 10.4329 0.774345 10.221 0.774345 10C0.774345 9.77906 0.862108 9.56714 1.01833 9.41087L7.5 2.9292L8.67833 4.10753L2.78583 10Z" fill="#8C8C8C"/>
+</svg>
+`;
+
+export const iconPlus = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M23 11V13H13V23H11V13H1V11H11V1H13V11H23Z" fill="#929292"/>
+</svg>
+`;

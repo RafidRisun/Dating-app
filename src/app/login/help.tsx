@@ -50,7 +50,7 @@ export default function Help() {
 						</Text>
 						<TextInput
 							style={tw`bg-gray-100 rounded-lg p-4 h-40 text-sm font-poppins`}
-							placeholder="Describe your issue"
+							placeholder="Describe the problem you're facing..."
 							multiline
 							textAlignVertical="top"
 						/>

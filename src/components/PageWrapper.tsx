@@ -1,5 +1,6 @@
 import React from 'react';
-import { StatusBar, View } from 'react-native';
+import { Keyboard, StatusBar, TouchableWithoutFeedback } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import tw from '../lib/tailwind';
 
 export default function PageWrapper({
@@ -8,9 +9,11 @@ export default function PageWrapper({
 	children: React.ReactNode;
 }) {
 	return (
-		<View style={tw`flex-1 items-center justify-start bg-white p-5`}>
-			<StatusBar barStyle="dark-content" />
-			{children}
-		</View>
+		<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+			<SafeAreaView style={tw`flex-1 items-center justify-start bg-white p-5`}>
+				<StatusBar barStyle="dark-content" />
+				{children}
+			</SafeAreaView>
+		</TouchableWithoutFeedback>
 	);
 }
