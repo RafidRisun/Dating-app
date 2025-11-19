@@ -17,9 +17,10 @@ import {
 } from 'react-native';
 import CountryPicker, { CountryCode } from 'react-native-country-picker-modal';
 //import DatePicker from 'react-native-date-picker';
+import DatePicker from 'react-native-date-picker';
 import PhoneInput from 'react-native-phone-input';
 import { SvgXml } from 'react-native-svg';
-import { DatePicker, Picker } from 'react-native-wheel-pick';
+import { Picker } from 'react-native-wheel-pick';
 
 export default function Signup() {
 	const router = useRouter();
@@ -213,12 +214,7 @@ export default function Signup() {
 							subtitle="Your age will be public."
 						/>
 						<View style={tw`mt-25 items-center justify-center`}>
-							<DatePicker
-								style={{ backgroundColor: 'white', width: 370, height: 240 }}
-								onDateChange={(date: Date) => {
-									console.log(date);
-								}}
-							/>
+							<DatePicker date={date} onDateChange={setDate} mode="date" />
 						</View>
 					</View>
 				)}

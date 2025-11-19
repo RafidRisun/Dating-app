@@ -2,7 +2,7 @@ import tw from '@/src/lib/tailwind';
 import { Image } from 'expo-image';
 import * as Location from 'expo-location';
 import { useRouter } from 'expo-router';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { StatusBar, Text, TouchableOpacity, View } from 'react-native';
 
 export default function EnableLocation() {
@@ -11,26 +11,26 @@ export default function EnableLocation() {
 		null
 	);
 
-	useEffect(() => {
-		const checkLocationPermission = async () => {
-			const { status } = await Location.getForegroundPermissionsAsync();
-			if (status === 'granted') {
-				const userLocation = await Location.getCurrentPositionAsync({});
-				setLocation(userLocation);
-				router.replace('/login/onboarding');
-			}
-		};
-		checkLocationPermission();
-	}, [router]);
+	// useEffect(() => {
+	// 	const checkLocationPermission = async () => {
+	// 		const { status } = await Location.getForegroundPermissionsAsync();
+	// 		if (status === 'granted') {
+	// 			const userLocation = await Location.getCurrentPositionAsync({});
+	// 			setLocation(userLocation);
+	// 			router.replace('/login/onboarding');
+	// 		}
+	// 	};
+	// 	checkLocationPermission();
+	// }, [router]);
 
-	const requestLocationPermission = async () => {
-		router.replace('/login/onboarding');
-		const { status } = await Location.requestForegroundPermissionsAsync();
-		if (status === 'granted') {
-			const userLocation = await Location.getCurrentPositionAsync({});
-			setLocation(userLocation);
-		}
-	};
+	// const requestLocationPermission = async () => {
+	// 	router.replace('/login/onboarding');
+	// 	const { status } = await Location.requestForegroundPermissionsAsync();
+	// 	if (status === 'granted') {
+	// 		const userLocation = await Location.getCurrentPositionAsync({});
+	// 		setLocation(userLocation);
+	// 	}
+	// };
 
 	return (
 		<View style={tw`flex-1 justify-center items-center bg-white`}>
@@ -48,7 +48,8 @@ export default function EnableLocation() {
 				</Text>
 				<TouchableOpacity
 					style={tw`mt-15 flex w-full items-center rounded-full py-3 bg-blue`}
-					onPress={requestLocationPermission}
+					// onPress={requestLocationPermission}
+					onPress={() => router.replace('/login/onboarding')}
 				>
 					<Text style={tw`text-white font-poppinsSemiBold`}>
 						Allow Location

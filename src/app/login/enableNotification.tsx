@@ -1,27 +1,26 @@
 import tw from '@/src/lib/tailwind';
 import { Image } from 'expo-image';
-import * as Notifications from 'expo-notifications';
 import { useRouter } from 'expo-router';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { StatusBar, Text, TouchableOpacity, View } from 'react-native';
 
 export default function EnableNotification() {
 	const router = useRouter();
 
-	useEffect(() => {
-		const checkNotificationPermission = async () => {
-			const { status } = await Notifications.getPermissionsAsync();
-			if (status === 'granted') {
-				router.replace('/login/enableLocation');
-			}
-		};
-		checkNotificationPermission();
-	}, [router]);
+	// useEffect(() => {
+	// 	const checkNotificationPermission = async () => {
+	// 		const { status } = await Notifications.getPermissionsAsync();
+	// 		if (status === 'granted') {
+	// 			router.replace('/login/enableLocation');
+	// 		}
+	// 	};
+	// 	checkNotificationPermission();
+	// }, [router]);
 
-	const requestNotificationPermission = async () => {
-		const { status } = await Notifications.requestPermissionsAsync();
-		router.replace('/login/enableLocation');
-	};
+	// const requestNotificationPermission = async () => {
+	// 	const { status } = await Notifications.requestPermissionsAsync();
+	// 	router.replace('/login/enableLocation');
+	// };
 
 	return (
 		<View style={tw`flex-1 justify-center items-center bg-white`}>
@@ -39,9 +38,10 @@ export default function EnableNotification() {
 				</Text>
 				<TouchableOpacity
 					style={tw`mt-15 flex w-full items-center rounded-full py-3 bg-blue`}
-					onPress={() => {
-						requestNotificationPermission();
-					}}
+					// onPress={() => {
+					// 	requestNotificationPermission();
+					// }}
+					onPress={() => router.replace('/login/enableLocation')}
 				>
 					<Text style={tw`text-white font-poppinsSemiBold`}>
 						Allow Notification

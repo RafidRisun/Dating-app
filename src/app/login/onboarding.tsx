@@ -2,6 +2,7 @@ import { iconGrayBack } from '@/assets/icon';
 import PageWrapper from '@/src/components/PageWrapper';
 import tw from '@/src/lib/tailwind';
 import { Image } from 'expo-image';
+import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import React from 'react';
 import { StatusBar, Text, TouchableOpacity, View } from 'react-native';
@@ -13,39 +14,142 @@ export default function Onboarding() {
 
 	return (
 		<PageWrapper>
-			<StatusBar barStyle="light-content" backgroundColor="transparent" />
-			<View style={tw`flex-1 w-full items-center justify-center`}>
-				<Image
-					source={onboardingImages[progress - 1]}
-					style={tw`w-full h-40 rounded-2xl`}
-					contentFit="cover"
-				/>
-				<TouchableOpacity
-					onPress={() => {
-						setProgress(progress + 1);
-					}}
-				>
-					<Text>asdasdasd</Text>
-				</TouchableOpacity>
+			<StatusBar barStyle="dark-content" backgroundColor="transparent" />
+			<View style={tw`flex-1 w-full items-center justify-start py-10`}>
+				{progress === 1 && (
+					<View style={tw`flex flex-col w-full flex-1 items-center gap-12`}>
+						<Image
+							source={require('../../../assets/images/onboard1.png')}
+							style={tw`w-full h-60 rounded-2xl`}
+							contentFit="cover"
+						/>
+						<Text style={tw`text-2xl font-semibold`}>
+							Social Experiences are Here
+						</Text>
+						<Text style={tw`text-center text-lg font-poppins`}>
+							Meet new people, share real moments, and start meaningful
+							connections through experiences.
+						</Text>
+						<View
+							style={tw`flex flex-row items-center justify-center gap-2 absolute bottom-5`}
+						>
+							<LinearGradient
+								colors={['#05C3DD', '#B14EFF']}
+								start={{ x: 0, y: 0 }}
+								end={{ x: 1, y: 0 }}
+								style={tw`w-6 h-2 rounded-full`}
+							/>
+							<View style={tw`w-2 h-2 rounded-full bg-gray-300`} />
+							<View style={tw`w-2 h-2 rounded-full bg-gray-300`} />
+							<View style={tw`w-2 h-2 rounded-full bg-gray-300`} />
+						</View>
+					</View>
+				)}
+				{progress === 2 && (
+					<View style={tw`flex flex-col w-full flex-1 items-center gap-12`}>
+						<Image
+							source={require('../../../assets/images/onboard2.png')}
+							style={tw`w-full h-60 rounded-2xl`}
+							contentFit="cover"
+						/>
+						<Text style={tw`text-2xl font-semibold`}>Whether to a Concert</Text>
+						<Text style={tw`text-center text-lg font-poppins`}>
+							Feel the rhythm, meet the vibe. Let music bring you closer.
+						</Text>
+						<View
+							style={tw`flex flex-row items-center justify-center gap-2 absolute bottom-5`}
+						>
+							<View style={tw`w-2 h-2 rounded-full bg-gray-300`} />
+							<LinearGradient
+								colors={['#05C3DD', '#B14EFF']}
+								start={{ x: 0, y: 0 }}
+								end={{ x: 1, y: 0 }}
+								style={tw`w-6 h-2 rounded-full`}
+							/>
+							<View style={tw`w-2 h-2 rounded-full bg-gray-300`} />
+							<View style={tw`w-2 h-2 rounded-full bg-gray-300`} />
+						</View>
+					</View>
+				)}
+				{progress === 3 && (
+					<View style={tw`flex flex-col w-full flex-1 items-center gap-12`}>
+						<Image
+							source={require('../../../assets/images/onboard3.png')}
+							style={tw`w-full h-60 rounded-2xl`}
+							contentFit="cover"
+						/>
+						<Text style={tw`text-2xl font-semibold`}>
+							Whether to the Festival
+						</Text>
+						<Text style={tw`text-center text-lg font-poppins`}>
+							Share the energy, live the moment, and find someone to dance it
+							with.
+						</Text>
+						<View
+							style={tw`flex flex-row items-center justify-center gap-2 absolute bottom-5`}
+						>
+							<View style={tw`w-2 h-2 rounded-full bg-gray-300`} />
+							<View style={tw`w-2 h-2 rounded-full bg-gray-300`} />
+							<LinearGradient
+								colors={['#05C3DD', '#B14EFF']}
+								start={{ x: 0, y: 0 }}
+								end={{ x: 1, y: 0 }}
+								style={tw`w-6 h-2 rounded-full`}
+							/>
+							<View style={tw`w-2 h-2 rounded-full bg-gray-300`} />
+						</View>
+					</View>
+				)}
+				{progress === 4 && (
+					<View style={tw`flex flex-col w-full flex-1 items-center gap-12`}>
+						<Image
+							source={require('../../../assets/images/onboard4.png')}
+							style={tw`w-full h-60 rounded-2xl`}
+							contentFit="cover"
+						/>
+						<Text style={tw`text-2xl font-semibold`}>and More Experience</Text>
+						<Text style={tw`text-center text-lg font-poppins`}>
+							Every event could be the start of a new story — yours begins with
+							Soulflag.
+						</Text>
+						<View
+							style={tw`flex flex-row items-center justify-center gap-2 absolute bottom-5`}
+						>
+							<View style={tw`w-2 h-2 rounded-full bg-gray-300`} />
+							<View style={tw`w-2 h-2 rounded-full bg-gray-300`} />
+							<View style={tw`w-2 h-2 rounded-full bg-gray-300`} />
+							<LinearGradient
+								colors={['#05C3DD', '#B14EFF']}
+								start={{ x: 0, y: 0 }}
+								end={{ x: 1, y: 0 }}
+								style={tw`w-6 h-2 rounded-full`}
+							/>
+						</View>
+					</View>
+				)}
 			</View>
 			<View
-				style={tw`flex flex-row items-center justify-between w-full px-5 mb-10 pt-5`}
+				style={tw`flex flex-row items-center ${
+					progress > 1 ? 'justify-between' : 'justify-end'
+				} w-full px-5 mb-10 pt-5`}
 			>
-				<TouchableOpacity
-					style={tw`flex flex-row gap-2 px-4 py-2 items-center justify-center bg-gray-200 rounded-full`}
-					onPress={() => {
-						if (progress > 1) setProgress(progress - 1);
-						else router.back();
-					}}
-				>
-					<SvgXml xml={iconGrayBack} />
-					<Text style={tw`text-gray-500 font-poppins text-lg`}>Back</Text>
-				</TouchableOpacity>
+				{progress > 1 && (
+					<TouchableOpacity
+						style={tw`flex flex-row gap-2 px-4 py-2 items-center justify-center bg-gray-200 rounded-full`}
+						onPress={() => {
+							if (progress > 1) setProgress(progress - 1);
+							else router.back();
+						}}
+					>
+						<SvgXml xml={iconGrayBack} />
+						<Text style={tw`text-gray-500 font-poppins text-lg`}>Back</Text>
+					</TouchableOpacity>
+				)}
 				<TouchableOpacity
 					style={tw`flex flex-row gap-2 px-6 py-2 items-center justify-center bg-blue rounded-full`}
 					onPress={() => {
-						if (progress < 13) setProgress(progress + 1);
-						else router.replace('/login/enableNotification');
+						if (progress < 4) setProgress(progress + 1);
+						else router.replace('/(tabs)/swipe');
 					}}
 				>
 					<Text style={tw`text-white font-poppins text-lg`}>Next</Text>
@@ -56,7 +160,7 @@ export default function Onboarding() {
 }
 
 const onboardingImages = [
-	require('../../../assets/images/onboard1.png'),
+	,
 	require('../../../assets/images/onboard2.png'),
 	require('../../../assets/images/onboard3.png'),
 	require('../../../assets/images/onboard4.png'),
