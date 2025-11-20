@@ -18,8 +18,9 @@ import {
 } from 'react-native';
 import { SvgXml } from 'react-native-svg';
 
-export default function Profile() {
+export default function DetailsModal() {
 	const router = useRouter();
+
 	return (
 		<View style={tw`flex-1 bg-white`}>
 			<StatusBar barStyle="dark-content" />
@@ -28,12 +29,12 @@ export default function Profile() {
 			>
 				<TouchableOpacity style={tw`self-start `} onPress={() => router.back()}>
 					<Image
-						source={require('../../../../assets/images/backbutton.png')}
+						source={require('@/assets/images/backbutton.png')}
 						style={tw`w-4 h-7`}
 						contentFit="contain"
 					/>
 				</TouchableOpacity>
-				<Text style={tw`self-center text-lg font-poppinsSemiBold`}>
+				<Text style={tw`self-center text-xl font-poppinsSemiBold`}>
 					Chad, 27
 				</Text>
 				<TouchableOpacity>
