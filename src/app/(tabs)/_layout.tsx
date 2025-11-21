@@ -25,7 +25,7 @@ export default function TabLayout() {
 					paddingTop: 15,
 					height: 100,
 				},
-				animation: 'shift',
+				// animation: 'shift',
 			}}
 		>
 			<Tabs.Screen
