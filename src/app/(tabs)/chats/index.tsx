@@ -14,7 +14,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 export default function Chat() {
 	const router = useRouter();
 	return (
-		<SafeAreaView style={tw`flex-1 bg-white`}>
+		<SafeAreaView edges={['top']} style={tw`flex-1 bg-white`}>
 			<StatusBar barStyle="dark-content" />
 			<View style={tw`flex-1 bg-white`}>
 				<View style={tw`flex flex-row w-full items-center justify-start p-4`}>

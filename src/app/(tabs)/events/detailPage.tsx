@@ -14,6 +14,7 @@ import {
 	TouchableOpacity,
 	View,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { SvgXml } from 'react-native-svg';
 
 export default function DetailPage() {
@@ -24,11 +25,9 @@ export default function DetailPage() {
 	const [isExpanded, setIsExpanded] = useState(false);
 
 	return (
-		<View style={tw`flex-1 bg-white`}>
+		<SafeAreaView edges={['top']} style={tw`flex-1 bg-white`}>
 			<StatusBar barStyle="dark-content" />
-			<View
-				style={tw`flex flex-row w-full items-center justify-between px-4 pt-12 pb-4`}
-			>
+			<View style={tw`flex flex-row w-full items-center justify-between p-4`}>
 				<TouchableOpacity style={tw`self-start `} onPress={() => router.back()}>
 					<Image
 						source={require('../../../../assets/images/backbutton.png')}
@@ -170,7 +169,7 @@ export default function DetailPage() {
 					</View>
 				</View>
 			</ScrollView>
-		</View>
+		</SafeAreaView>
 	);
 }
 

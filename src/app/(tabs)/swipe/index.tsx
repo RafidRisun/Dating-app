@@ -1,5 +1,4 @@
 import { iconFilter, iconReload } from '@/assets/icon';
-import DetailsModal from '@/src/components/Card/DetailsModal';
 import FilterModal from '@/src/components/Card/FilterModal';
 import { ProfileCard } from '@/src/components/Card/ProfileCard';
 import tw from '@/src/lib/tailwind';
@@ -20,7 +19,7 @@ export default function SwipeScreen() {
 	};
 
 	const [filterModalVisible, setFilterModalVisible] = useState(false);
-	const [detailsModalVisible, setDetailsModalVisible] = useState(false);
+	//const [detailsModalVisible, setDetailsModalVisible] = useState(false);
 
 	return (
 		<GestureHandlerRootView style={{ flex: 1 }}>
@@ -59,7 +58,7 @@ export default function SwipeScreen() {
 						setVisible={setFilterModalVisible}
 					/>
 				)}
-				{detailsModalVisible && <DetailsModal />}
+				{/* {detailsModalVisible && <DetailsModal />} */}
 			</SafeAreaView>
 		</GestureHandlerRootView>
 	);

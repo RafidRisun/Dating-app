@@ -6,6 +6,10 @@ export default function ChatLayout() {
 		<Stack screenOptions={{ headerShown: false }}>
 			<Stack.Screen name="index" />
 			<Stack.Screen name="chat" />
+			<Stack.Screen
+				name="synastryChart"
+				options={{ animation: 'slide_from_bottom' }}
+			/>
 		</Stack>
 	);
 }

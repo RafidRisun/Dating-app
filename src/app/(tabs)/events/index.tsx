@@ -25,7 +25,7 @@ export default function Events() {
 	const [modalVisible, setModalVisible] = React.useState(false);
 
 	return (
-		<SafeAreaView style={tw`flex-1 bg-white`}>
+		<SafeAreaView edges={['top']} style={tw`flex-1 bg-white`}>
 			<StatusBar barStyle="dark-content" />
 			<View style={tw`flex-1 bg-white`}>
 				<View style={tw`flex flex-row w-full items-center justify-between p-4`}>
