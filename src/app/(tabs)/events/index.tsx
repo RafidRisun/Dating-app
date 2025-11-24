@@ -17,7 +17,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { SvgXml } from 'react-native-svg';
 
 const screenWidth = Dimensions.get('window').width;
-const cardWidth = (screenWidth * 44) / 100;
+const cardWidth = (screenWidth * 43) / 100;
 
 export default function Events() {
 	const router = useRouter();

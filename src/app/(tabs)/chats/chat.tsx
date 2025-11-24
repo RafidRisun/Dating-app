@@ -12,13 +12,10 @@ import { useRouter } from 'expo-router';
 import React from 'react';
 import {
 	FlatList,
-	Keyboard,
 	KeyboardAvoidingView,
-	StatusBar,
 	Text,
 	TextInput,
 	TouchableOpacity,
-	TouchableWithoutFeedback,
 	View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -31,21 +28,14 @@ export default function Chat() {
 
 	return (
 		<SafeAreaView edges={['top']} style={tw`flex-1 bg-white`}>
-			<TouchableWithoutFeedback
-				onPress={() => {
-					Keyboard.dismiss();
-				}}
-			>
-				<KeyboardAvoidingView behavior="padding" style={tw`flex-1 bg-white`}>
-					<StatusBar barStyle="dark-content" />
-					{/* header */}
+			<KeyboardAvoidingView behavior="padding" style={tw`flex-1`}>
+				{/* <TouchableWithoutFeedback onPress={Keyboard.dismiss}> */}
+				<View style={tw`flex-1 bg-gray-100`}>
+					{/* Header */}
 					<View
-						style={tw`flex flex-row w-full items-center justify-between gap-4 p-4`}
+						style={tw`flex flex-row bg-white w-full items-center justify-between gap-4 p-4`}
 					>
-						<TouchableOpacity
-							style={tw`self-start `}
-							onPress={() => router.back()}
-						>
+						<TouchableOpacity onPress={() => router.back()}>
 							<SvgXml xml={iconBack} />
 						</TouchableOpacity>
 						<View style={tw`flex flex-row items-center gap-4 flex-1`}>
@@ -53,7 +43,7 @@ export default function Chat() {
 								source={require('@/assets/images/hotgirl1.png')}
 								style={tw`w-10 h-10 rounded-full`}
 							/>
-							<View style={tw`flex flex-col`}>
+							<View>
 								<Text style={tw`font-poppinsSemiBold text-sm`}>Jane Doe</Text>
 								<Text style={tw`text-xs font-poppinsSemiBold text-green-500`}>
 									Online
@@ -72,60 +62,58 @@ export default function Chat() {
 							<TouchableOpacity>
 								<SvgXml xml={iconVideoCall} />
 							</TouchableOpacity>
-							<TouchableOpacity style={tw`w-4`}>
+							<TouchableOpacity>
 								<SvgXml xml={iconOptions} />
 							</TouchableOpacity>
 						</View>
 					</View>
-					{/* chat body */}
-					<View style={tw`flex-1 justify-center items-center bg-gray-100`}>
-						<FlatList
-							// initialScrollIndex={index}
-							showsVerticalScrollIndicator={false}
-							data={messages}
-							renderItem={({ item }) => (
-								<View
-									style={tw`max-w-3/4 mb-4 p-3 rounded-3xl shadow-sm ${
-										item.sent
-											? 'bg-gray-500 self-end rounded-br-md'
-											: 'bg-white self-start rounded-bl-md'
+
+					{/* Chat Body */}
+					<FlatList
+						data={messages}
+						renderItem={({ item }) => (
+							<View
+								style={tw`max-w-3/4 mb-4 p-3 rounded-3xl shadow-sm ${
+									item.sent
+										? 'bg-gray-500 self-end rounded-br-md'
+										: 'bg-white self-start rounded-bl-md'
+								}`}
+							>
+								<Text
+									style={tw`text-base ${
+										item.sent ? 'text-white' : 'text-gray-800'
 									}`}
 								>
-									<Text
-										style={tw`text-base ${
-											item.sent ? 'text-white' : 'text-gray-800'
-										}`}
-									>
-										{item.text}
-									</Text>
-									<Text
-										style={tw`ml-2 text-xs ${
-											item.sent ? 'text-gray-200' : 'text-gray-500'
-										} self-end`}
-									>
-										{item.time}
-									</Text>
-								</View>
-							)}
-							keyExtractor={item => item.id.toString()}
-							style={tw`flex-1 w-full px-4 py-2`}
-						/>
+									{item.text}
+								</Text>
+								<Text
+									style={tw`ml-2 text-xs ${
+										item.sent ? 'text-gray-200' : 'text-gray-500'
+									} self-end`}
+								>
+									{item.time}
+								</Text>
+							</View>
+						)}
+						keyExtractor={item => item.id.toString()}
+						style={tw`flex-1`}
+						contentContainerStyle={tw`px-4 py-2`}
+						showsVerticalScrollIndicator={false}
+					/>
 
-						{/* inputField */}
-						<View
-							style={tw`flex flex-row items-center gap-4 px-4 py-2 bg-white`}
-						>
-							<TextInput
-								placeholder="Type a message..."
-								style={tw`flex-1 border border-gray-300 rounded-full px-4 py-2`}
-							/>
-							<TouchableOpacity>
-								<SvgXml xml={iconSendMessage} />
-							</TouchableOpacity>
-						</View>
+					{/* Input Field */}
+					<View style={tw`flex flex-row items-center gap-4 px-4 py-2 bg-white`}>
+						<TextInput
+							placeholder="Type a message..."
+							style={tw`flex-1 border border-gray-300 rounded-full px-4 py-2`}
+						/>
+						<TouchableOpacity>
+							<SvgXml xml={iconSendMessage} />
+						</TouchableOpacity>
 					</View>
-				</KeyboardAvoidingView>
-			</TouchableWithoutFeedback>
+				</View>
+				{/* </TouchableWithoutFeedback> */}
+			</KeyboardAvoidingView>
 		</SafeAreaView>
 	);
 }

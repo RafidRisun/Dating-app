@@ -10,7 +10,10 @@ export default function PageWrapper({
 }) {
 	return (
 		<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-			<SafeAreaView style={tw`flex-1 items-center justify-start bg-white p-5`}>
+			<SafeAreaView
+				edges={['top', 'left', 'right']}
+				style={tw`flex-1 items-center justify-start bg-white p-5`}
+			>
 				<StatusBar barStyle="dark-content" />
 				{children}
 			</SafeAreaView>
