@@ -1,4 +1,4 @@
-import { iconBell } from '@/assets/icon';
+import ConfirmationModal from '@/src/components/ConfirmationModal';
 import WrapperWithHeader from '@/src/components/WrapperWithHeader';
 import tw from '@/src/lib/tailwind';
 import React from 'react';
@@ -10,7 +10,6 @@ import {
 	TouchableWithoutFeedback,
 	View,
 } from 'react-native';
-import { SvgXml } from 'react-native-svg';
 
 export default function AnotherReason() {
 	const [reason, setReason] = React.useState('');
@@ -55,44 +54,13 @@ export default function AnotherReason() {
 					</TouchableOpacity>
 				</WrapperWithHeader>
 				{areYouSureModal && (
-					<View
-						style={tw`flex items-center justify-center w-full absolute inset-0`}
-					>
-						<View
-							style={tw`flex-1 w-full bg-black opacity-10 absolute inset-0`}
-						/>
-						<View
-							style={tw`flex items-center justify-center w-9/10 p-4 gap-2 bg-white rounded-lg`}
-						>
-							<SvgXml xml={iconBell} />
-							<Text style={tw`text-lg font-poppinsSemiBold text-center`}>
-								Are you sure you want to delete your account?
-							</Text>
-							<Text style={tw`text-sm font-poppins text-gray-400 text-center`}>
-								This cannot be undone.
-							</Text>
-							<TouchableOpacity
-								style={tw`w-full bg-red-500 rounded-lg py-3 mt-4`}
-								onPress={() => {}}
-							>
-								<Text
-									style={tw`text-white text-center text-base font-poppinsSemiBold`}
-								>
-									Continue
-								</Text>
-							</TouchableOpacity>
-							<TouchableOpacity
-								style={tw`w-full border border-gray-300 rounded-lg py-3`}
-								onPress={() => setAreYouSureModal(false)}
-							>
-								<Text
-									style={tw`text-gray-600 text-center text-base font-poppins`}
-								>
-									Cancel
-								</Text>
-							</TouchableOpacity>
-						</View>
-					</View>
+					<ConfirmationModal
+						icon="bell"
+						confirmationText="Are you sure you want to delete your account?"
+						confirmationSubText="This action is irreversible and will permanently delete all your data."
+						onConfirm={() => {}}
+						onCancel={() => setAreYouSureModal(false)}
+					/>
 				)}
 			</View>
 		</TouchableWithoutFeedback>

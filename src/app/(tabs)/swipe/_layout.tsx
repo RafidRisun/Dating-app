@@ -11,6 +11,22 @@ export default function SwipeLayout() {
 		>
 			<Stack.Screen name="index" />
 			<Stack.Screen name="profile" />
+			<Stack.Screen
+				name="Modals/getFavorite"
+				options={{
+					presentation: 'formSheet',
+					sheetAllowedDetents: 'fitToContents',
+					contentStyle: { backgroundColor: 'transparent' },
+				}}
+			/>
+			<Stack.Screen
+				name="Modals/sendDM"
+				options={{
+					presentation: 'formSheet',
+					sheetAllowedDetents: 'fitToContents',
+					contentStyle: { backgroundColor: 'transparent' },
+				}}
+			/>
 		</Stack>
 	);
 }

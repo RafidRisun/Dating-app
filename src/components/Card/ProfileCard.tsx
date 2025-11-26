@@ -7,6 +7,7 @@ import {
 } from '@/assets/icon';
 import tw from '@/src/lib/tailwind';
 import { useRouter } from 'expo-router';
+import { useState } from 'react';
 import { Dimensions, Image, Text, TouchableOpacity, View } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, {
@@ -17,6 +18,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { snapPoint } from 'react-native-redash';
 import { SvgXml } from 'react-native-svg';
+import ConfirmationModal from '../ConfirmationModal';
 
 const { width: wWidth, height } = Dimensions.get('window');
 
@@ -77,6 +79,10 @@ export function ProfileCard({
 		opacity: unlikeOpacity.value,
 	}));
 
+	const [superLikeModal, setSuperLikeModal] = useState(false);
+
+	const [dmModal, setDmModal] = useState(false);
+
 	return (
 		<GestureDetector gesture={gesture}>
 			<Animated.View
@@ -121,11 +127,13 @@ export function ProfileCard({
 					<View style={tw`flex flex-row items-center justify-between mt-3`}>
 						<TouchableOpacity
 							style={tw`w-12 h-12 rounded-full bg-white items-center justify-center`}
+							onPress={() => setDmModal(true)}
 						>
 							<SvgXml xml={iconSwipeMessage} />
 						</TouchableOpacity>
 						<TouchableOpacity
 							style={tw`w-12 h-12 rounded-full bg-white items-center justify-center`}
+							onPress={() => setSuperLikeModal(true)}
 						>
 							<SvgXml xml={iconSuperLike} />
 						</TouchableOpacity>
@@ -139,6 +147,24 @@ export function ProfileCard({
 						</View>
 					</View>
 				</View>
+				{superLikeModal && (
+					<ConfirmationModal
+						icon="star"
+						confirmationText="Get Favorite?"
+						confirmationSubText="You're 5x more likely to get a match! Stand out from the crowd."
+						onConfirm={() => router.push('/(tabs)/swipe/Modals/getFavorite')}
+						onCancel={() => setSuperLikeModal(false)}
+					/>
+				)}
+				{dmModal && (
+					<ConfirmationModal
+						icon="dm"
+						confirmationText="Send a Direct Message?"
+						confirmationSubText="You can start a private conversation with this user."
+						onConfirm={() => router.push('/(tabs)/swipe/Modals/sendDM')}
+						onCancel={() => setDmModal(false)}
+					/>
+				)}
 			</Animated.View>
 		</GestureDetector>
 	);
