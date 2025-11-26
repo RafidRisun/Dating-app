@@ -125,9 +125,7 @@ export default function EditProfileComponent({
 					<TouchableOpacity
 						style={tw`flex flex-row items-center justify-between border-b border-gray-200 pb-2`}
 					>
-						<Text style={tw`text-base font-poppins`}>
-							What are you looking for?
-						</Text>
+						<Text style={tw`text-base font-poppins`}>Looking for</Text>
 						<View style={tw`flex flex-row items-center gap-2`}>
 							<Text style={tw`text-sm font-poppins text-gray-600`}>
 								Casual Dates

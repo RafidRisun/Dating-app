@@ -9,7 +9,7 @@ import {
 import tw from '@/src/lib/tailwind';
 import { Image } from 'expo-image';
 import { useRouter } from 'expo-router';
-import React from 'react';
+import React, { useRef } from 'react';
 import {
 	FlatList,
 	KeyboardAvoidingView,
@@ -25,6 +25,13 @@ export default function Chat() {
 	const router = useRouter();
 	// const { chatId } = useLocalSearchParams();
 	// const [index, setIndex] = React.useState(messages.length - 1);
+	const flatListRef = useRef<FlatList>(null);
+
+	const scrollToTop = (isAnimated = false) => {
+		if (flatListRef.current) {
+			flatListRef.current.scrollToOffset({ offset: 0, animated: isAnimated });
+		}
+	};
 
 	return (
 		<SafeAreaView edges={['top']} style={tw`flex-1 bg-white`}>

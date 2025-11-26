@@ -93,6 +93,9 @@ export default function Settings() {
 						</TouchableOpacity>
 						<TouchableOpacity
 							style={tw`flex flex-row gap-4 justify-between items-center border-b-[0.2px] border-gray-400 pb-4`}
+							onPress={() =>
+								router.push('/(tabs)/profile/settings/privacyAndSecurity')
+							}
 						>
 							<SvgXml xml={iconPrivacySettings} />
 							<View style={tw`flex flex-col gap-1 flex-1`}>
@@ -107,6 +110,9 @@ export default function Settings() {
 						</TouchableOpacity>
 						<TouchableOpacity
 							style={tw`flex flex-row gap-4 justify-between items-center border-b-[0.2px] border-gray-400 pb-4`}
+							onPress={() =>
+								router.push('/(tabs)/profile/settings/notifications')
+							}
 						>
 							<SvgXml xml={iconNotificationSettings} />
 							<View style={tw`flex flex-col gap-1 flex-1`}>
@@ -119,6 +125,7 @@ export default function Settings() {
 						</TouchableOpacity>
 						<TouchableOpacity
 							style={tw`flex flex-row gap-4 justify-between items-center`}
+							onPress={() => router.push('/(tabs)/profile/settings/language')}
 						>
 							<SvgXml xml={iconLanguageSettings} />
 							<View style={tw`flex flex-col gap-1 flex-1`}>
@@ -154,6 +161,7 @@ export default function Settings() {
 					>
 						<TouchableOpacity
 							style={tw`flex flex-row gap-4 justify-between items-center border-b-[0.2px] border-gray-400 pb-4`}
+							onPress={() => router.push('/(tabs)/profile/rateModal')}
 						>
 							<SvgXml xml={iconRateUs} />
 							<Text style={tw`text-sm font-poppins`}>Rate Us</Text>
@@ -161,6 +169,7 @@ export default function Settings() {
 						</TouchableOpacity>
 						<TouchableOpacity
 							style={tw`flex flex-row gap-4 justify-between items-center border-b-[0.2px] border-gray-400 pb-4`}
+							onPress={() => router.push('/(tabs)/profile/settings/about')}
 						>
 							<SvgXml xml={iconAboutUs} />
 							<Text style={tw`text-sm font-poppins`}>About</Text>
@@ -168,6 +177,7 @@ export default function Settings() {
 						</TouchableOpacity>
 						<TouchableOpacity
 							style={tw`flex flex-row gap-4 justify-between items-center`}
+							onPress={() => router.push('/(tabs)/profile/settings/help')}
 						>
 							<SvgXml xml={iconHelp} />
 							<Text style={tw`text-sm font-poppins`}>Help</Text>

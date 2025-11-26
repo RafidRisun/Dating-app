@@ -58,6 +58,7 @@ export default function Profile() {
 						</View>
 						<TouchableOpacity
 							style={tw`flex flex-row items-center justify-center gap-2 w-44 py-1.5`}
+							onPress={() => router.push('/(tabs)/profile/editProfile')}
 						>
 							<LinearGradient
 								style={tw`absolute inset-0 rounded-full`}
