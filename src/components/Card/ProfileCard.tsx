@@ -37,7 +37,13 @@ export function ProfileCard({
 	const unlikeOpacity = useSharedValue(0);
 
 	const gesture = Gesture.Pan()
-		.onUpdate(({ translationX }) => {
+		.onUpdate(({ translationX, translationY }) => {
+			// Disable horizontal translation if vertical scrolling is detected
+			if (Math.abs(translationY) * 3 > Math.abs(translationX)) {
+				translateX.value = 0;
+				return;
+			}
+
 			translateX.value = translationX;
 
 			// Adjust opacity based on pan direction
