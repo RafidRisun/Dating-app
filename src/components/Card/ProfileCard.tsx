@@ -12,6 +12,7 @@ import { Dimensions, Image, Text, TouchableOpacity, View } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, {
 	runOnJS,
+	useAnimatedProps,
 	useAnimatedStyle,
 	useSharedValue,
 	withSpring,
@@ -20,9 +21,12 @@ import { snapPoint } from 'react-native-redash';
 import { SvgXml } from 'react-native-svg';
 import ConfirmationModal from '../ConfirmationModal';
 
-const { width: wWidth, height } = Dimensions.get('window');
+const { width: wWidth } = Dimensions.get('window');
 
 const SNAP_POINTS = [-wWidth, 0, wWidth];
+
+// Wrap SvgXml with Animated
+const AnimatedSvgXml = Animated.createAnimatedComponent(SvgXml);
 
 export function ProfileCard({
 	profile,
@@ -36,11 +40,20 @@ export function ProfileCard({
 	const likeOpacity = useSharedValue(0);
 	const unlikeOpacity = useSharedValue(0);
 
+	const arrowSize = useSharedValue(20);
+
 	const gesture = Gesture.Pan()
 		.onUpdate(({ translationX, translationY }) => {
 			// Disable horizontal translation if vertical scrolling is detected
-			if (Math.abs(translationY) * 3 > Math.abs(translationX)) {
+			if (Math.abs(translationY) > Math.abs(translationX)) {
 				translateX.value = 0;
+
+				// Increase arrow size only for negative translateY (swiping down)
+				if (translationY < 0) {
+					arrowSize.value = Math.min(40, 20 + Math.abs(translationY) / 10);
+				} else {
+					arrowSize.value = 20; // Reset size for positive translateY
+				}
 				return;
 			}
 
@@ -55,7 +68,7 @@ export function ProfileCard({
 				likeOpacity.value = 0;
 			}
 		})
-		.onEnd(({ velocityX }) => {
+		.onEnd(({ velocityX, translationY, translationX }) => {
 			const dest = snapPoint(translateX.value, velocityX, SNAP_POINTS);
 
 			translateX.value = withSpring(dest, { velocity: velocityX }, () => {
@@ -65,6 +78,12 @@ export function ProfileCard({
 			});
 			likeOpacity.value = 0;
 			unlikeOpacity.value = 0;
+			arrowSize.value = withSpring(20); // Reset arrow size
+
+			// Navigate to profile on vertical swipe end only if translationY remained negative and horizontal swipe was minimal
+			if (Math.abs(translationX) < 20 && translationY < 0) {
+				runOnJS(router.push)('/(tabs)/swipe/profile');
+			}
 		});
 
 	const animatedStyle = useAnimatedStyle(() => ({
@@ -80,6 +99,11 @@ export function ProfileCard({
 
 	const unlikeStyle = useAnimatedStyle(() => ({
 		opacity: unlikeOpacity.value,
+	}));
+
+	const arrowAnimatedProps = useAnimatedProps(() => ({
+		height: arrowSize.value,
+		width: arrowSize.value,
 	}));
 
 	const [superLikeModal, setSuperLikeModal] = useState(false);
@@ -145,7 +169,10 @@ export function ProfileCard({
 								style={tw`w-20 items-center`}
 								onPress={() => router.push('/(tabs)/swipe/profile')}
 							>
-								<SvgXml xml={iconDownArrow} />
+								<AnimatedSvgXml
+									xml={iconDownArrow}
+									animatedProps={arrowAnimatedProps}
+								/>
 							</TouchableOpacity>
 						</View>
 					</View>

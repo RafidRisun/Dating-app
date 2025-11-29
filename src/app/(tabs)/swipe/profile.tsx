@@ -55,25 +55,19 @@ export default function Profile() {
 					</Text>
 				</View>
 				<View
-					style={tw`flex flex-col h-220 p-4 gap-4 shadow-md bg-white rounded-lg my-5`}
+					style={tw`flex flex-col p-4 gap-4 shadow-md bg-white rounded-lg my-5`}
 				>
 					<Text style={tw`text-sm font-poppinsSemiBold`}>PHOTOS</Text>
-					<ScrollView
-						showsVerticalScrollIndicator={false}
-						nestedScrollEnabled={true}
-						contentContainerStyle={tw`gap-4`}
-					>
-						<Image
-							source={require('@/assets/images/hotGuy.png')}
-							style={tw`w-full h-150`}
-							contentFit="contain"
-						/>
-						<Image
-							source={require('@/assets/images/hotGuy.png')}
-							style={tw`w-full h-150`}
-							contentFit="contain"
-						/>
-					</ScrollView>
+					<Image
+						source={require('@/assets/images/hotGuy.png')}
+						style={tw`w-full h-150`}
+						contentFit="contain"
+					/>
+					<Image
+						source={require('@/assets/images/hotGuy.png')}
+						style={tw`w-full h-150`}
+						contentFit="contain"
+					/>
 				</View>
 				<View
 					style={tw`flex flex-col p-4 gap-2 shadow-md bg-white rounded-lg my-5`}
