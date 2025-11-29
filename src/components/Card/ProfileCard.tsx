@@ -33,14 +33,12 @@ export function ProfileCard({
 	const router = useRouter();
 
 	const translateX = useSharedValue(0);
-	const translateY = useSharedValue(0);
 	const likeOpacity = useSharedValue(0);
 	const unlikeOpacity = useSharedValue(0);
 
 	const gesture = Gesture.Pan()
-		.onUpdate(({ translationX, translationY }) => {
+		.onUpdate(({ translationX }) => {
 			translateX.value = translationX;
-			translateY.value = translationY;
 
 			// Adjust opacity based on pan direction
 			if (translationX > 0) {
@@ -59,7 +57,6 @@ export function ProfileCard({
 					runOnJS(onSwipe)(profile.id); // Use runOnJS to call the onSwipe function
 				}
 			});
-			translateY.value = withSpring(0);
 			likeOpacity.value = 0;
 			unlikeOpacity.value = 0;
 		});
@@ -67,7 +64,7 @@ export function ProfileCard({
 	const animatedStyle = useAnimatedStyle(() => ({
 		transform: [
 			{ translateX: translateX.value },
-			{ translateY: translateY.value },
+			{ rotate: `${translateX.value / 20}deg` }, // Slight tilt based on horizontal translation
 		],
 	}));
 
