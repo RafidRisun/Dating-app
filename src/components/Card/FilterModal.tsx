@@ -1,10 +1,17 @@
-import React, { useState } from 'react';
-import { ScrollView, Switch, Text, TouchableOpacity, View } from 'react-native';
-
 import { iconCloseSmall } from '@/assets/icon';
 import tw from '@/src/lib/tailwind';
-import Slider from '@react-native-community/slider';
+import React, { useState } from 'react';
+import {
+	Dimensions,
+	ScrollView,
+	Switch,
+	Text,
+	TouchableOpacity,
+	View,
+} from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
+// import RangeSlider from 'react-native-range-slider-expo';
+import MultiSlider from '@ptomasroos/react-native-multi-slider';
 import { SvgXml } from 'react-native-svg';
 
 export default function FilterModal({
@@ -24,6 +31,10 @@ export default function FilterModal({
 	const [likedProfilesOnly, setLikedProfilesOnly] = useState(false);
 	const toggleLikedProfilesOnlySwitch = () =>
 		setLikedProfilesOnly(previousState => !previousState);
+
+	const [fromValue, setFromValue] = useState(20);
+	const [toValue, setToValue] = useState(36);
+
 	return (
 		<View
 			style={[
@@ -78,21 +89,26 @@ export default function FilterModal({
 						<View style={tw`flex flex-row items-center justify-between`}>
 							<Text style={tw`text-sm font-poppins text-gray-600`}>18</Text>
 							<Text style={tw`text-sm font-poppinsSemiBold text-gray-800`}>
-								{ageRange}
+								{fromValue} - {toValue}
 							</Text>
 							<Text style={tw`text-sm font-poppins text-gray-600`}>65+</Text>
 						</View>
-						<Slider
-							style={{ width: '100%', height: 40 }}
-							minimumValue={18}
-							maximumValue={65}
-							minimumTrackTintColor="#017ADF"
-							maximumTrackTintColor="#B0BEC5"
-							thumbTintColor="#017ADF"
-							value={ageRange}
-							onValueChange={value => setAgeRange(value)}
-							step={1}
-						/>
+						<View style={tw`w-full items-center`}>
+							<MultiSlider
+								values={[fromValue, toValue]} // Set initial values for the range slider
+								min={18} // Minimum value for the slider
+								max={65} // Maximum value for the slider
+								onValuesChange={values => {
+									setFromValue(values[0]); // Update the lower bound
+									setToValue(values[1]); // Update the upper bound
+								}}
+								sliderLength={Dimensions.get('window').width - 100} // Adjust slider length as needed
+								selectedStyle={{ backgroundColor: '#05C3DD' }} // Style for the selected range
+								unselectedStyle={{ backgroundColor: '#B0BEC5' }} // Style for the unselected range
+								step={1} // Increment step for the slider
+								markerStyle={{ backgroundColor: '#05C3DD' }} // Custom marker color
+							/>
+						</View>
 					</View>
 					<View style={tw`flex flex-col gap-4 w-full mb-10`}>
 						<Text style={tw`font-poppinsSemiBold text-gray-600 mb-4`}>

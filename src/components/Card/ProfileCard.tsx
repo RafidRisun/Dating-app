@@ -23,7 +23,7 @@ import ConfirmationModal from '../ConfirmationModal';
 
 const { width: wWidth } = Dimensions.get('window');
 
-const SNAP_POINTS = [-wWidth, 0, wWidth];
+// const SNAP_POINTS = [-wWidth, 0, wWidth];
 
 // Wrap SvgXml with Animated
 const AnimatedSvgXml = Animated.createAnimatedComponent(SvgXml);
@@ -69,7 +69,11 @@ export function ProfileCard({
 			}
 		})
 		.onEnd(({ velocityX, translationY, translationX }) => {
-			const dest = snapPoint(translateX.value, velocityX, SNAP_POINTS);
+			const dest = snapPoint(translateX.value, velocityX, [
+				-wWidth * 2,
+				0,
+				wWidth * 2,
+			]);
 
 			translateX.value = withSpring(dest, { velocity: velocityX }, () => {
 				if (dest !== 0) {
@@ -81,7 +85,7 @@ export function ProfileCard({
 			arrowSize.value = withSpring(20); // Reset arrow size
 
 			// Navigate to profile on vertical swipe end only if translationY remained negative and horizontal swipe was minimal
-			if (Math.abs(translationX) < 20 && translationY < 0) {
+			if (Math.abs(translationX) < 100 && translationY < -80) {
 				runOnJS(router.push)('/(tabs)/swipe/profile');
 			}
 		});

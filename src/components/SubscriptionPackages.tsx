@@ -1,6 +1,5 @@
 import { iconFeature } from '@/assets/icon';
 import { Image } from 'expo-image';
-import { LinearGradient } from 'expo-linear-gradient';
 import React, { useRef } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import PagerView from 'react-native-pager-view';
@@ -65,12 +64,6 @@ export default function SubscriptionPackages() {
 						key={pkg.id}
 						style={tw`flex flex-col gap-2 flex-1 items-center`}
 					>
-						{pkg.name === 'Soulflag Premium' && (
-							<LinearGradient
-								style={tw`w-full h-full mb-6 rounded-2xl absolute inset-0`}
-								colors={['#FFFFFF', '#FEF3CA']}
-							/>
-						)}
 						<Image source={pkg.photo} style={tw`w-full h-55 mb-6`} />
 						{pkg.features.map((feature, featureIndex) => (
 							<View
@@ -81,25 +74,15 @@ export default function SubscriptionPackages() {
 								<Text style={tw`ml-4 text-base font-poppins`}>{feature}</Text>
 							</View>
 						))}
-						{pkg.name === 'Soulflag Plus' ? (
-							<TouchableOpacity
-								style={tw`mt-6 mb-4 px-6 py-3 border-2 border-[#D2691E] rounded-xl`}
-							>
-								<Text style={tw`text-[#D2691E] text-center font-poppinsBold`}>
-									Get Soulflag Plus
-								</Text>
-							</TouchableOpacity>
-						) : (
-							<TouchableOpacity style={tw`mt-6 mb-4 px-6 py-3 rounded-xl`}>
-								<LinearGradient
-									style={tw`absolute inset-0 rounded-xl`}
-									colors={['#D56D1C', '#F0960F']}
-								/>
-								<Text style={tw`text-white text-center font-poppinsBold`}>
-									Get Soulflag Premium
-								</Text>
-							</TouchableOpacity>
-						)}
+						<TouchableOpacity
+							style={tw`mt-6 mb-4 px-6 py-3 bg-blue rounded-full`}
+						>
+							<Text style={tw`text-white text-center font-poppinsBold`}>
+								{pkg.name === 'Soulflag Plus'
+									? 'Subscribe to Plus'
+									: 'Subscribe to Premium'}
+							</Text>
+						</TouchableOpacity>
 					</View>
 				))}
 			</PagerView>

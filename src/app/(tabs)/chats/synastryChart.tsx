@@ -62,16 +62,14 @@ export default function SynastryChart() {
 					and event discovery when disabled.
 				</Text>
 				<View
-					style={tw`flex items-center justify-center bg-[#F7EDFF] rounded-lg gap-2 p-4`}
+					style={tw`flex items-center justify-center bg-[#F4F4F4] rounded-lg gap-2 p-4`}
 				>
-					<Text
-						style={tw`font-poppinsSemiBold text-base text-[#7E37B5] w-full`}
-					>
+					<Text style={tw`font-poppinsSemiBold text-base w-full`}>
 						Your Birth
 					</Text>
 					<View>
 						<TouchableOpacity
-							style={tw`w-full p-3 border border-gray-300 bg-gray-100 rounded-lg flex flex-row  items-center justify-between`}
+							style={tw`w-full p-3 border border-gray-300 bg-white rounded-lg flex flex-row  items-center justify-between`}
 							onPress={() => setOpenUserDateModal(true)}
 						>
 							<Text style={tw`font-poppinsSemiBold text-xs text-gray-600`}>
@@ -97,7 +95,7 @@ export default function SynastryChart() {
 						<View style={tw`flex flex-1 gap-2`}>
 							<Text>Time</Text>
 							<TouchableOpacity
-								style={tw`flex-1 p-3 border border-gray-300 bg-gray-100 rounded-lg flex flex-row  items-center justify-between`}
+								style={tw`flex-1 p-3 border border-gray-300 bg-white rounded-lg flex flex-row  items-center justify-between`}
 								onPress={() => setOpenUserTimeModal(true)}
 							>
 								<Text style={tw`font-poppinsSemiBold text-xs text-gray-600`}>
@@ -121,7 +119,7 @@ export default function SynastryChart() {
 						</View>
 						<View style={tw`flex flex-1 gap-2`}>
 							<Text>City of Birth</Text>
-							<View style={tw`border border-gray-300 bg-gray-100 rounded-lg`}>
+							<View style={tw`border border-gray-300 bg-white rounded-lg`}>
 								<RNPickerSelect
 									placeholder={{ label: 'City', value: null }}
 									onValueChange={value => setUserCity(value)}
@@ -139,7 +137,7 @@ export default function SynastryChart() {
 					</View>
 					<View style={tw`flex w-full gap-2`}>
 						<Text>Country of Birth</Text>
-						<View style={tw`border border-gray-300 bg-gray-100 rounded-lg`}>
+						<View style={tw`border border-gray-300 bg-white rounded-lg`}>
 							<RNPickerSelect
 								placeholder={{ label: 'Country', value: null }}
 								onValueChange={value => setUserCountry(value)}
@@ -156,17 +154,15 @@ export default function SynastryChart() {
 					</View>
 				</View>
 				<View
-					style={tw`flex items-center justify-center bg-[#FEEDF6] rounded-lg gap-2 p-4`}
+					style={tw`flex items-center justify-center bg-[#F4F4F4] rounded-lg gap-2 p-4`}
 				>
-					<Text
-						style={tw`font-poppinsSemiBold text-base text-[#AE3773] w-full`}
-					>
+					<Text style={tw`font-poppinsSemiBold text-base w-full`}>
 						Match&apos;s Birth
 					</Text>
 					<View style={tw`w-full gap-2`}>
 						<Text>Match&apos;s Name {'(for display only)'}</Text>
 						<View
-							style={tw`w-full border border-gray-300 bg-gray-100 rounded-lg flex  items-center px-2 py-1`}
+							style={tw`w-full border border-gray-300 bg-white rounded-lg flex  items-center px-2 py-1`}
 						>
 							<TextInput
 								placeholder="Full Name"
@@ -177,7 +173,7 @@ export default function SynastryChart() {
 					<View style={tw`flex w-full gap-2`}>
 						<Text>Date of birth</Text>
 						<TouchableOpacity
-							style={tw`w-full p-3 border border-gray-300 bg-gray-100 rounded-lg flex flex-row  items-center justify-between`}
+							style={tw`w-full p-3 border border-gray-300 bg-white rounded-lg flex flex-row  items-center justify-between`}
 							onPress={() => setOpenUserDateModal(true)}
 						>
 							<Text style={tw`font-poppinsSemiBold text-xs text-gray-600`}>
@@ -203,7 +199,7 @@ export default function SynastryChart() {
 						<View style={tw`flex flex-1 gap-2`}>
 							<Text>Time</Text>
 							<TouchableOpacity
-								style={tw`flex-1 p-3 border border-gray-300 bg-gray-100 rounded-lg flex flex-row  items-center justify-between`}
+								style={tw`flex-1 p-3 border border-gray-300 bg-white rounded-lg flex flex-row  items-center justify-between`}
 								onPress={() => setOpenMatchTimeModal(true)}
 							>
 								<Text style={tw`font-poppinsSemiBold text-xs text-gray-600`}>
@@ -227,7 +223,7 @@ export default function SynastryChart() {
 						</View>
 						<View style={tw`flex flex-1 gap-2`}>
 							<Text>City of Birth</Text>
-							<View style={tw`border border-gray-300 bg-gray-100 rounded-lg`}>
+							<View style={tw`border border-gray-300 bg-white rounded-lg`}>
 								<RNPickerSelect
 									placeholder={{ label: 'City', value: null }}
 									onValueChange={value => setMatchCity(value)}
@@ -245,7 +241,7 @@ export default function SynastryChart() {
 					</View>
 					<View style={tw`flex w-full gap-2`}>
 						<Text>Country of Birth</Text>
-						<View style={tw`border border-gray-300 bg-gray-100 rounded-lg`}>
+						<View style={tw`border border-gray-300 bg-white rounded-lg`}>
 							<RNPickerSelect
 								placeholder={{ label: 'Country', value: null }}
 								onValueChange={value => setMatchCountry(value)}
