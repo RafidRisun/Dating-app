@@ -1,8 +1,10 @@
 import {
 	iconBell,
 	iconDmModal,
+	iconGoBack,
 	iconOutOfLikes,
 	iconStarModal,
+	iconUnmatch,
 } from '@/assets/icon';
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
@@ -16,7 +18,7 @@ export default function ConfirmationModal({
 	onConfirm,
 	onCancel,
 }: {
-	icon: string;
+	icon: string | null;
 	confirmationText: string;
 	confirmationSubText: string;
 	onConfirm: () => void;
@@ -26,8 +28,12 @@ export default function ConfirmationModal({
 	const star = iconStarModal;
 	const dm = iconDmModal;
 	const outOfLikes = iconOutOfLikes;
+	const goBack = iconGoBack;
+	const unMatch = iconUnmatch;
 	return (
-		<View style={tw`flex items-center justify-center w-full absolute inset-0`}>
+		<View
+			style={tw`flex items-center justify-center w-full absolute inset-0 z-50`}
+		>
 			<View style={tw`flex-1 w-full bg-black opacity-10 absolute inset-0`} />
 			<View
 				style={tw`flex items-center justify-center w-9/10 p-4 gap-2 bg-white rounded-lg`}
@@ -40,7 +46,13 @@ export default function ConfirmationModal({
 							? star
 							: icon === 'dm'
 							? dm
-							: outOfLikes
+							: icon === 'goBack'
+							? goBack
+							: icon === 'unMatch'
+							? unMatch
+							: icon === 'outOfLikes'
+							? outOfLikes
+							: null
 					}
 				/>
 				<Text style={tw`text-lg font-poppinsSemiBold text-center`}>

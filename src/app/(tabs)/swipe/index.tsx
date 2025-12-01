@@ -1,7 +1,9 @@
 import { iconFilter, iconReload } from '@/assets/icon';
 import FilterModal from '@/src/components/Card/FilterModal';
 import { ProfileCard } from '@/src/components/Card/ProfileCard';
+import ConfirmationModal from '@/src/components/ConfirmationModal';
 import tw from '@/src/lib/tailwind';
+import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import { StatusBar, Text, TouchableOpacity, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -9,6 +11,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { SvgXml } from 'react-native-svg';
 
 export default function SwipeScreen() {
+	const router = useRouter();
 	const [cards, setCards] = useState(profiles);
 
 	const handleSwipe = (id: string) => {
@@ -20,6 +23,7 @@ export default function SwipeScreen() {
 
 	const [filterModalVisible, setFilterModalVisible] = useState(false);
 	//const [detailsModalVisible, setDetailsModalVisible] = useState(false);
+	const [gobackModal, setGobackModal] = useState(false);
 
 	return (
 		<GestureHandlerRootView style={{ flex: 1 }}>
@@ -31,7 +35,7 @@ export default function SwipeScreen() {
 					>
 						<Text style={tw`font-poppinsSemiBold text-2xl`}>Soulflag</Text>
 						<View style={tw`flex flex-row items-center gap-8`}>
-							<TouchableOpacity>
+							<TouchableOpacity onPress={() => setGobackModal(true)}>
 								<SvgXml xml={iconReload} />
 							</TouchableOpacity>
 							<TouchableOpacity onPress={() => setFilterModalVisible(true)}>
@@ -59,6 +63,15 @@ export default function SwipeScreen() {
 					/>
 				)}
 				{/* {detailsModalVisible && <DetailsModal />} */}
+				{gobackModal && (
+					<ConfirmationModal
+						icon="goBack"
+						confirmationText="Go back to Jackson?"
+						confirmationSubText="Go back to the last profile you passed."
+						onConfirm={() => router.push('/(tabs)/swipe/Modals/goBack')}
+						onCancel={() => setGobackModal(false)}
+					/>
+				)}
 			</SafeAreaView>
 		</GestureHandlerRootView>
 	);

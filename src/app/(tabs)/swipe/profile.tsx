@@ -8,7 +8,7 @@ import {
 import tw from '@/src/lib/tailwind';
 import { Image } from 'expo-image';
 import { useRouter } from 'expo-router';
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import {
 	NativeScrollEvent,
 	NativeSyntheticEvent,
@@ -23,25 +23,28 @@ import { SvgXml } from 'react-native-svg';
 
 export default function Profile() {
 	const router = useRouter();
-	const scrollViewRef = useRef(null);
-	const [isAtTop, setIsAtTop] = useState(false);
-	const [canTriggerBack, setCanTriggerBack] = useState(false);
+	const isAtTop = useRef(false); // Track if the ScrollView is at the top
+	const hasReachedTop = useRef(false); // Track if the user has reached the top
 
 	const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
 		const { contentOffset } = event.nativeEvent;
-		if (contentOffset.y <= 0) {
-			setIsAtTop(true);
-		} else {
-			setIsAtTop(false);
-			setCanTriggerBack(false); // Reset the trigger flag when scrolling away from the top
+		isAtTop.current = contentOffset.y <= 0; // Check if ScrollView is at the top
+
+		// Reset the flag if the user scrolls down
+		if (contentOffset.y > 0) {
+			hasReachedTop.current = false;
 		}
 	};
 
-	const handleScrollEnd = () => {
-		if (isAtTop && canTriggerBack) {
-			router.back();
-		} else if (isAtTop) {
-			setCanTriggerBack(true); // Allow back navigation on the next upward swipe
+	const handleMomentumScrollEnd = () => {
+		if (isAtTop.current) {
+			if (hasReachedTop.current) {
+				// If already at the top and scrolled up again, go back
+				router.back();
+			} else {
+				// Mark that the user has reached the top
+				hasReachedTop.current = true;
+			}
 		}
 	};
 
@@ -64,12 +67,11 @@ export default function Profile() {
 				</TouchableOpacity>
 			</View>
 			<ScrollView
-				ref={scrollViewRef}
 				style={tw`flex-1 px-4 pb-4`}
 				showsVerticalScrollIndicator={false}
 				onScroll={handleScroll}
-				onMomentumScrollEnd={handleScrollEnd}
-				scrollEventThrottle={16} // Ensures smooth scroll tracking
+				onMomentumScrollEnd={handleMomentumScrollEnd}
+				scrollEventThrottle={16} // Ensure smooth scroll tracking
 			>
 				{/* header */}
 				<View

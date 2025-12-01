@@ -1,6 +1,7 @@
 import {
 	iconBack,
 	iconCall,
+	iconEvents,
 	iconOptions,
 	iconSendMessage,
 	iconSynastry,
@@ -69,7 +70,10 @@ export default function Chat() {
 							<TouchableOpacity>
 								<SvgXml xml={iconVideoCall} />
 							</TouchableOpacity>
-							<TouchableOpacity>
+							<TouchableOpacity
+								onPress={() => router.push('/(tabs)/chats/threeDots')}
+								style={tw`px-2`}
+							>
 								<SvgXml xml={iconOptions} />
 							</TouchableOpacity>
 						</View>
@@ -110,6 +114,11 @@ export default function Chat() {
 
 					{/* Input Field */}
 					<View style={tw`flex flex-row items-center gap-4 px-4 py-2 bg-white`}>
+						<TouchableOpacity
+							onPress={() => router.push('/(tabs)/chats/sendEvent')}
+						>
+							<SvgXml xml={iconEvents} />
+						</TouchableOpacity>
 						<TextInput
 							placeholder="Type a message..."
 							style={tw`flex-1 border border-gray-300 rounded-full px-4 py-2`}

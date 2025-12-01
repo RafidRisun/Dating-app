@@ -10,6 +10,21 @@ export default function ChatLayout() {
 				name="synastryChart"
 				options={{ animation: 'slide_from_bottom' }}
 			/>
+			<Stack.Screen
+				name="sendEvent"
+				options={{
+					presentation: 'transparentModal',
+					animation: 'none',
+				}}
+			/>
+			<Stack.Screen
+				name="threeDots"
+				options={{
+					presentation: 'formSheet',
+					sheetAllowedDetents: 'fitToContents',
+					contentStyle: { backgroundColor: 'transparent' },
+				}}
+			/>
 		</Stack>
 	);
 }

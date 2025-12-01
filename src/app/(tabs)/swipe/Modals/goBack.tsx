@@ -1,11 +1,9 @@
 import tw from '@/src/lib/tailwind';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useRouter } from 'expo-router';
 import React from 'react';
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 
-export default function SendDM() {
-	const router = useRouter();
+export default function GoBack() {
 	const plans = [
 		{
 			id: 1,
@@ -34,12 +32,9 @@ export default function SendDM() {
 
 	return (
 		<View style={tw`w-full bg-white rounded-t-3xl p-6`}>
-			<Text style={tw`text-center text-lg font-poppinsSemiBold`}>
-				Send a DM
-			</Text>
+			<Text style={tw`text-center text-lg font-poppinsSemiBold`}>Go Back</Text>
 			<Text style={tw`text-center text-sm font-poppins mt-4`}>
-				Skip the line and send a DM directly. Your message will be seen first by
-				this user.
+				Go back to the last profile you passed.
 			</Text>
 			<ScrollView horizontal showsHorizontalScrollIndicator={false}>
 				<View style={tw`flex-row items-center gap-4 mt-6`}>
@@ -82,7 +77,6 @@ export default function SendDM() {
 			</Text>
 			<TouchableOpacity
 				style={tw`w-full bg-blue rounded-full py-3 mt-6 items-center`}
-				onPress={() => router.push('/(tabs)/swipe/dm')}
 			>
 				<Text style={tw`text-white font-poppinsSemiBold`}>
 					Get {plans.find(plan => plan.id === selectedPlan)?.name} for{' '}
