@@ -8,8 +8,10 @@ import {
 import tw from '@/src/lib/tailwind';
 import { Image } from 'expo-image';
 import { useRouter } from 'expo-router';
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import {
+	NativeScrollEvent,
+	NativeSyntheticEvent,
 	ScrollView,
 	StatusBar,
 	Text,
@@ -21,6 +23,28 @@ import { SvgXml } from 'react-native-svg';
 
 export default function Profile() {
 	const router = useRouter();
+	const scrollViewRef = useRef(null);
+	const [isAtTop, setIsAtTop] = useState(false);
+	const [canTriggerBack, setCanTriggerBack] = useState(false);
+
+	const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+		const { contentOffset } = event.nativeEvent;
+		if (contentOffset.y <= 0) {
+			setIsAtTop(true);
+		} else {
+			setIsAtTop(false);
+			setCanTriggerBack(false); // Reset the trigger flag when scrolling away from the top
+		}
+	};
+
+	const handleScrollEnd = () => {
+		if (isAtTop && canTriggerBack) {
+			router.back();
+		} else if (isAtTop) {
+			setCanTriggerBack(true); // Allow back navigation on the next upward swipe
+		}
+	};
+
 	return (
 		<SafeAreaView edges={['top']} style={tw`flex-1 bg-white`}>
 			<StatusBar barStyle="dark-content" />
@@ -40,8 +64,12 @@ export default function Profile() {
 				</TouchableOpacity>
 			</View>
 			<ScrollView
+				ref={scrollViewRef}
 				style={tw`flex-1 px-4 pb-4`}
 				showsVerticalScrollIndicator={false}
+				onScroll={handleScroll}
+				onMomentumScrollEnd={handleScrollEnd}
+				scrollEventThrottle={16} // Ensures smooth scroll tracking
 			>
 				{/* header */}
 				<View

@@ -1,0 +1,22 @@
+import tw from '@/src/lib/tailwind';
+import React from 'react';
+import { TextInput, View } from 'react-native';
+import TitleAndSubtitle from '../Register/TitleAndSubtitle';
+
+export default function Education() {
+	const [education, setEducation] = React.useState('');
+	return (
+		<View>
+			<TitleAndSubtitle
+				title="Your Education?"
+				subtitle="Add your education details."
+			/>
+			<TextInput
+				style={tw`border border-gray-300 rounded-lg bg-gray-100 px-4 py-3 mt-5 text-base font-poppins`}
+				placeholder="e.g., Bachelor's in Computer Science"
+				value={education}
+				onChangeText={text => setEducation(text)}
+			/>
+		</View>
+	);
+}
