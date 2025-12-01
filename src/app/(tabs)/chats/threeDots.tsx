@@ -1,9 +1,11 @@
 import ConfirmationModal from '@/src/components/ConfirmationModal';
 import tw from '@/src/lib/tailwind';
+import { useRouter } from 'expo-router';
 import React from 'react';
 import { Modal, Text, TouchableOpacity, View } from 'react-native';
 
 export default function ThreeDots() {
+	const router = useRouter();
 	const [unMatchModalVisible, setUnMatchModalVisible] = React.useState(false);
 	const [reportModalVisible, setReportModalVisible] = React.useState(false);
 	return (
@@ -62,7 +64,8 @@ export default function ThreeDots() {
 						confirmationText="Report Emma?"
 						confirmationSubText="Your report will be reviewed by our team."
 						onConfirm={() => {
-							// Handle report logic here
+							setReportModalVisible(false);
+							router.push('/(tabs)/chats/reportModal');
 						}}
 						onCancel={() => setReportModalVisible(false)}
 					/>

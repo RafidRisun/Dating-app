@@ -24,6 +24,8 @@ export default function ProfileLayout() {
 					contentStyle: { backgroundColor: 'transparent' },
 				}}
 			/>
+			<Stack.Screen name="settings/contact" />
+			<Stack.Screen name="settings/others" />
 		</Stack>
 	);
 }

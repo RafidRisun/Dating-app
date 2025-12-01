@@ -25,6 +25,14 @@ export default function ChatLayout() {
 					contentStyle: { backgroundColor: 'transparent' },
 				}}
 			/>
+			<Stack.Screen
+				name="reportModal"
+				options={{
+					presentation: 'formSheet',
+					sheetAllowedDetents: 'fitToContents',
+					contentStyle: { backgroundColor: 'transparent' },
+				}}
+			/>
 		</Stack>
 	);
 }
