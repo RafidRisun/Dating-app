@@ -10,7 +10,10 @@ export default function AccountSettings() {
 	return (
 		<WrapperWithHeader name="Account Settings">
 			<View style={tw`w-full p-4 bg-white rounded-lg shadow-sm gap-2 mt-6`}>
-				<TouchableOpacity style={tw`flex p-2 border-b border-gray-300 w-full`}>
+				<TouchableOpacity
+					style={tw`flex p-2 border-b border-gray-300 w-full`}
+					onPress={() => router.push('/(tabs)/profile/settings/blocked')}
+				>
 					<Text style={tw`text-sm font-poppins`}>Blocked</Text>
 				</TouchableOpacity>
 				<TouchableOpacity

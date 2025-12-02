@@ -1,6 +1,7 @@
 import {
 	iconDownArrow,
 	iconLocationSmall,
+	iconShareSmall,
 	iconSuperLike,
 	iconSwipeMessage,
 	iconVerified,
@@ -8,7 +9,14 @@ import {
 import tw from '@/src/lib/tailwind';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
-import { Dimensions, Image, Text, TouchableOpacity, View } from 'react-native';
+import {
+	Dimensions,
+	Image,
+	Share,
+	Text,
+	TouchableOpacity,
+	View,
+} from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, {
 	runOnJS,
@@ -125,6 +133,22 @@ export function ProfileCard({
 				]}
 			>
 				<Image source={profile.image} style={tw`w-full h-full`} />
+				<TouchableOpacity
+					style={tw`absolute top-0 right-0 p-5`}
+					onPress={async () => {
+						try {
+							await Share.share({
+								message:
+									'Check out this profile: https://example.com/profile/' +
+									profile.id,
+							});
+						} catch (error) {
+							console.error('Error sharing the link:', error);
+						}
+					}}
+				>
+					<SvgXml xml={iconShareSmall} width={20} height={20} />
+				</TouchableOpacity>
 				<Animated.Image
 					source={require('@/assets/images/Like.png')}
 					style={[

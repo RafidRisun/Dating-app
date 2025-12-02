@@ -1,6 +1,7 @@
 import { iconBack, iconSendMessage } from '@/assets/icon';
 import tw from '@/src/lib/tailwind';
 import { Image } from 'expo-image';
+import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import React from 'react';
 import {
@@ -66,10 +67,24 @@ export default function Dm() {
 						<View style={tw`flex-1 items-center`}>
 							<Text>Jackson, 27</Text>
 						</View>
-						<View
-							style={tw`w-6 h-6 flex items-center justify-center border border-gray-300 rounded-full`}
-						>
-							<Text>{dmCount}</Text>
+						<View style={tw`flex flex-col items-end gap-1`}>
+							<View
+								style={tw`w-6 h-6 flex items-center justify-center border border-gray-300 rounded-full`}
+							>
+								<Text>{dmCount}</Text>
+							</View>
+							{dmCount === 0 && (
+								<LinearGradient
+									colors={['#05C3DD', '#B14EFF']}
+									style={tw`px-2 py-1 rounded-full`}
+									start={{ x: 0, y: 0 }}
+									end={{ x: 1, y: 0 }}
+								>
+									<Text style={tw`text-xs text-white font-poppins`}>
+										0 DM left
+									</Text>
+								</LinearGradient>
+							)}
 						</View>
 					</View>
 

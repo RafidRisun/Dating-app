@@ -26,6 +26,7 @@ export default function ProfileLayout() {
 			/>
 			<Stack.Screen name="settings/contact" />
 			<Stack.Screen name="settings/others" />
+			<Stack.Screen name="settings/blocked" />
 		</Stack>
 	);
 }

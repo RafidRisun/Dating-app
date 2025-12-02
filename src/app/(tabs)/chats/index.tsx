@@ -1,5 +1,6 @@
 import tw from '@/src/lib/tailwind';
 import { Image } from 'expo-image';
+import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import React from 'react';
 import {
@@ -13,12 +14,59 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function Chat() {
 	const router = useRouter();
+	const [status, setStatus] = React.useState<'All' | 'Unread'>('All');
 	return (
 		<SafeAreaView edges={['top']} style={tw`flex-1 bg-white`}>
 			<StatusBar barStyle="dark-content" />
 			<View style={tw`flex-1 bg-white`}>
-				<View style={tw`flex flex-row w-full items-center justify-start p-4`}>
+				<View style={tw`flex flex-row w-full items-center justify-between p-4`}>
 					<Text style={tw`font-poppinsSemiBold text-2xl`}>Messages</Text>
+					<View style={tw`flex flex-row items-center gap-2`}>
+						<TouchableOpacity
+							style={tw`px-4 py-2 ${
+								status === 'All' ? '' : 'border border-gray-200 rounded-xl'
+							}`}
+							onPress={() => setStatus('All')}
+						>
+							{status === 'All' && (
+								<LinearGradient
+									colors={['#05C3DD', '#B14EFF']}
+									style={tw`absolute inset-0 rounded-xl`}
+									start={{ x: 0, y: 0 }}
+									end={{ x: 1, y: 0 }}
+								/>
+							)}
+							<Text
+								style={tw`text-xs font-poppinsSemiBold ${
+									status === 'All' ? 'text-white' : ''
+								}`}
+							>
+								All
+							</Text>
+						</TouchableOpacity>
+						<TouchableOpacity
+							style={tw`px-4 py-2 ${
+								status === 'Unread' ? '' : 'border border-gray-200 rounded-xl'
+							}`}
+							onPress={() => setStatus('Unread')}
+						>
+							{status === 'Unread' && (
+								<LinearGradient
+									colors={['#05C3DD', '#B14EFF']}
+									style={tw`absolute inset-0 rounded-xl`}
+									start={{ x: 0, y: 0 }}
+									end={{ x: 1, y: 0 }}
+								/>
+							)}
+							<Text
+								style={tw`text-xs font-poppinsSemiBold ${
+									status === 'Unread' ? 'text-white' : ''
+								}`}
+							>
+								Unread
+							</Text>
+						</TouchableOpacity>
+					</View>
 				</View>
 				<ScrollView>
 					<View style={tw`flex w-full items-center justify-center p-4 gap-4`}>

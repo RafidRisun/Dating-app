@@ -1,4 +1,4 @@
-import { iconFilter, iconRightArrowBlue } from '@/assets/icon';
+import { iconFilter, iconLocationXS, iconRightArrowBlue } from '@/assets/icon';
 import EventFilter from '@/src/components/Events/EventFilter';
 import tw from '@/src/lib/tailwind';
 import { Image } from 'expo-image';
@@ -30,9 +30,17 @@ export default function Events() {
 			<View style={tw`flex-1 bg-white`}>
 				<View style={tw`flex flex-row w-full items-center justify-between p-4`}>
 					<Text style={tw`font-poppinsSemiBold text-2xl`}>Events</Text>
-					<TouchableOpacity onPress={() => setModalVisible(true)}>
-						<SvgXml xml={iconFilter} />
-					</TouchableOpacity>
+					<View style={tw`flex flex-col items-end justify-center gap-2`}>
+						<TouchableOpacity onPress={() => setModalVisible(true)}>
+							<SvgXml xml={iconFilter} />
+						</TouchableOpacity>
+						<View style={tw`flex flex-row items-center gap-1`}>
+							<SvgXml xml={iconLocationXS} />
+							<Text style={tw`text-xs font-poppins text-gray-500`}>
+								Sancam, Adana
+							</Text>
+						</View>
+					</View>
 				</View>
 				<View style={tw`flex w-full items-center justify-center p-4`}>
 					<ScrollView horizontal showsHorizontalScrollIndicator={false}>

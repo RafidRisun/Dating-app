@@ -3,6 +3,7 @@ import FilterModal from '@/src/components/Card/FilterModal';
 import { ProfileCard } from '@/src/components/Card/ProfileCard';
 import ConfirmationModal from '@/src/components/ConfirmationModal';
 import tw from '@/src/lib/tailwind';
+import { BlurView } from 'expo-blur';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import { StatusBar, Text, TouchableOpacity, View } from 'react-native';
@@ -24,6 +25,8 @@ export default function SwipeScreen() {
 	const [filterModalVisible, setFilterModalVisible] = useState(false);
 	//const [detailsModalVisible, setDetailsModalVisible] = useState(false);
 	const [gobackModal, setGobackModal] = useState(false);
+
+	const [dateEnabled, setDateEnabled] = useState(false);
 
 	return (
 		<GestureHandlerRootView style={{ flex: 1 }}>
@@ -54,6 +57,31 @@ export default function SwipeScreen() {
 								style={{ zIndex: cards.length - index }} // Ensure the top card is rendered above others
 							/>
 						))}
+						{!dateEnabled && (
+							<View
+								style={tw`absolute inset-0 justify-center items-center z-50`}
+							>
+								<BlurView
+									style={tw`absolute inset-0 rounded-xl`}
+									intensity={120}
+									tint="prominent"
+									// experimentalBlurMethod="dimezisBlurView"
+								/>
+								<Text
+									style={tw`text-2xl font-poppinsSemiBold text-center text-white px-14`}
+								>
+									To start scrolling, turn on date mode from settings.
+								</Text>
+								<TouchableOpacity
+									style={tw`mt-25 bg-blue px-25 py-3 rounded-full`}
+									onPress={() => setDateEnabled(true)}
+								>
+									<Text style={tw`font-poppins text-base text-white`}>
+										Go to Settings
+									</Text>
+								</TouchableOpacity>
+							</View>
+						)}
 					</View>
 				</View>
 				{filterModalVisible && (

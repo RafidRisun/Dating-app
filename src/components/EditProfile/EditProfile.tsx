@@ -75,26 +75,26 @@ export default function EditProfileComponent({
 							<SvgXml xml={iconRightArrowGradient} />
 						</View>
 					</TouchableOpacity>
-					<TouchableOpacity
+					<View
 						style={tw`flex flex-row items-center justify-between border-b border-gray-200 pb-2`}
 					>
-						<Text style={tw`text-base font-poppins`}>Birthday</Text>
+						<Text style={tw`text-base font-poppins text-gray-500`}>
+							Birthday
+						</Text>
 						<View style={tw`flex flex-row items-center gap-2`}>
-							<Text style={tw`text-sm font-poppins text-gray-600`}>
+							<Text style={tw`text-sm font-poppins text-gray-300`}>
 								January 1, 2000
 							</Text>
-							<SvgXml xml={iconRightArrowGradient} />
 						</View>
-					</TouchableOpacity>
-					<TouchableOpacity
+					</View>
+					<View
 						style={tw`flex flex-row items-center justify-between border-b border-gray-200 pb-2`}
 					>
-						<Text style={tw`text-base font-poppins`}>Gender</Text>
+						<Text style={tw`text-base font-poppins text-gray-500`}>Gender</Text>
 						<View style={tw`flex flex-row items-center gap-2`}>
-							<Text style={tw`text-sm font-poppins text-gray-600`}>Male</Text>
-							<SvgXml xml={iconRightArrowGradient} />
+							<Text style={tw`text-sm font-poppins text-gray-300`}>Male</Text>
 						</View>
-					</TouchableOpacity>
+					</View>
 					<TouchableOpacity
 						style={tw`flex flex-row items-center justify-between border-b border-gray-200 pb-2`}
 					>
