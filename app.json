@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "soulflag",
-    "slug": "soulflag",
+    "slug": "soulflag-c0kh1aoxug-mkpdkf6l2-",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -44,6 +44,19 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "62772ec8-0843-497e-9aff-36ca9b81bf48"
+      }
+    },
+    "owner": "rafidrisun",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/62772ec8-0843-497e-9aff-36ca9b81bf48"
     }
   }
 }
