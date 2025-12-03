@@ -41,6 +41,7 @@ export function ProfileCard({
 	index,
 	onSwipe,
 	style,
+	setBottomSheetVisible,
 }: ProfileCardProps & { style?: any }) {
 	const router = useRouter();
 
@@ -94,7 +95,8 @@ export function ProfileCard({
 
 			// Navigate to profile on vertical swipe end only if translationY remained negative and horizontal swipe was minimal
 			if (Math.abs(translationX) < 100 && translationY < -80) {
-				runOnJS(router.push)('/(tabs)/swipe/profile');
+				//runOnJS(router.push)('/(tabs)/swipe/profile');
+				runOnJS(setBottomSheetVisible)(true);
 			}
 		});
 
@@ -240,4 +242,5 @@ interface ProfileCardProps {
 	index: number;
 	onSwipe: (profileId: string) => void;
 	style?: any;
+	setBottomSheetVisible: (visible: boolean) => void;
 }

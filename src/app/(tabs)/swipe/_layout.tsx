@@ -10,7 +10,13 @@ export default function SwipeLayout() {
 			}}
 		>
 			<Stack.Screen name="index" />
-			<Stack.Screen name="profile" />
+			<Stack.Screen
+				name="profile"
+				options={{
+					presentation: 'formSheet',
+					//sheetAllowedDetents: 'fitToContents',
+				}}
+			/>
 			<Stack.Screen
 				name="Modals/getFavorite"
 				options={{

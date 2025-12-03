@@ -1,4 +1,4 @@
-import { iconFeature } from '@/assets/icon';
+import { iconFeature, iconLack } from '@/assets/icon';
 import { Image } from 'expo-image';
 import React, { useRef } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
@@ -13,6 +13,7 @@ export default function SubscriptionPackages() {
 		setIndex(pageIndex);
 		pagerRef.current?.setPage(pageIndex); // Scroll to the selected page
 	};
+	const [seeMore, setSeeMore] = React.useState(false);
 	return (
 		<View style={tw`flex-1 bg-white mt-12`}>
 			<View
@@ -53,7 +54,7 @@ export default function SubscriptionPackages() {
 			</View>
 			<PagerView
 				ref={pagerRef} // Attach the reference
-				style={tw`h-150`}
+				style={tw`h-180`}
 				initialPage={0}
 				scrollEnabled={true}
 				pageMargin={0}
@@ -65,24 +66,48 @@ export default function SubscriptionPackages() {
 						style={tw`flex flex-col gap-2 flex-1 items-center`}
 					>
 						<Image source={pkg.photo} style={tw`w-full h-55 mb-6`} />
-						{pkg.features.map((feature, featureIndex) => (
-							<View
-								key={featureIndex}
-								style={tw`flex flex-row items-center w-full px-6`}
+						{pkg.features
+							.slice(0, seeMore ? pkg.features.length : 6)
+							.map((feature, featureIndex) => (
+								<View
+									key={featureIndex}
+									style={tw`flex flex-row items-center w-full px-6`}
+								>
+									<SvgXml xml={iconFeature} />
+									<Text style={tw`ml-4 text-base font-poppins`}>{feature}</Text>
+								</View>
+							))}
+
+						{seeMore &&
+							pkg.lacks.map((lack, lackIndex) => (
+								<View
+									key={lackIndex}
+									style={tw`flex flex-row items-center w-full px-6`}
+								>
+									<SvgXml xml={iconLack} />
+									<Text style={tw`ml-4 text-base font-poppins`}>{lack}</Text>
+								</View>
+							))}
+						{seeMore === false ? (
+							<TouchableOpacity
+								style={tw`mt-6 mb-4 px-6 py-3 bg-blue rounded-lg`}
+								onPress={() => setSeeMore(true)}
 							>
-								<SvgXml xml={iconFeature} />
-								<Text style={tw`ml-4 text-base font-poppins`}>{feature}</Text>
-							</View>
-						))}
-						<TouchableOpacity
-							style={tw`mt-6 mb-4 px-6 py-3 bg-blue rounded-full`}
-						>
-							<Text style={tw`text-white text-center font-poppinsBold`}>
-								{pkg.name === 'Soulflag Plus'
-									? 'Subscribe to Plus'
-									: 'Subscribe to Premium'}
-							</Text>
-						</TouchableOpacity>
+								<Text style={tw`text-white text-center font-poppinsBold`}>
+									See all perks
+								</Text>
+							</TouchableOpacity>
+						) : (
+							<TouchableOpacity
+								style={tw`mt-6 mb-4 px-6 py-3 bg-blue rounded-lg`}
+							>
+								<Text style={tw`text-white text-center font-poppinsBold`}>
+									{pkg.name === 'Soulflag Plus'
+										? 'Subscribe to Plus'
+										: 'Subscribe to Premium'}
+								</Text>
+							</TouchableOpacity>
+						)}
 					</View>
 				))}
 			</PagerView>
@@ -99,8 +124,13 @@ const packages = [
 			'See Who Liked You',
 			'1 free standout per month',
 			'2 free favorites per week',
-			'Unlimited rewinds',
+			'Unlimited go backs',
 			'Control who sees you',
+		],
+		lacks: [
+			'Match with All-Star Profiles (Not included)',
+			'Direct Messaging (Not included)',
+			'Multicity mode (Not included)',
 		],
 		photo: require('@/assets/images/onboard2.png'),
 	},
@@ -108,13 +138,18 @@ const packages = [
 		id: '2',
 		name: 'Soulflag Premium',
 		features: [
-			'All Soulflag Plus features',
-			'5 free standouts per month',
-			'5 free favorites per week',
-			'Advanced filters',
-			'Read receipts',
-			'Message before matching',
+			'Unlimited Likes',
+			'See Who Liked You',
+			'Match with All-Star Profiles',
+			'2 free standout per month',
+			'3 free favorites per week',
+			'3 free DMs per week',
+			'Unlimited go backs',
+			'Multicity mode (New)',
+			'Control who sees you',
+			'Hide ads',
 		],
+		lacks: [],
 		photo: require('@/assets/images/premium.png'),
 	},
 ];

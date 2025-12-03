@@ -1,8 +1,10 @@
 import { iconFilter, iconReload } from '@/assets/icon';
 import FilterModal from '@/src/components/Card/FilterModal';
 import { ProfileCard } from '@/src/components/Card/ProfileCard';
+import ProfileDetails from '@/src/components/Card/ProfileDetails';
 import ConfirmationModal from '@/src/components/ConfirmationModal';
 import tw from '@/src/lib/tailwind';
+import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { BlurView } from 'expo-blur';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
@@ -28,11 +30,13 @@ export default function SwipeScreen() {
 
 	const [dateEnabled, setDateEnabled] = useState(false);
 
+	const [bottomSheetVisible, setBottomSheetVisible] = useState(false);
+
 	return (
 		<GestureHandlerRootView style={{ flex: 1 }}>
 			<SafeAreaView style={tw`flex-1 bg-white`}>
 				<StatusBar barStyle="dark-content" />
-				<View style={tw`flex-1 bg-white`}>
+				<View style={tw`flex-1 bg-white relative`}>
 					<View
 						style={tw`flex flex-row w-full items-center justify-between p-4`}
 					>
@@ -46,6 +50,7 @@ export default function SwipeScreen() {
 							</TouchableOpacity>
 						</View>
 					</View>
+
 					{/* Stack of cards */}
 					<View style={tw`flex-1 items-center justify-center px-4`}>
 						{cards.map((profile, index) => (
@@ -54,6 +59,7 @@ export default function SwipeScreen() {
 								profile={profile}
 								index={index}
 								onSwipe={handleSwipe}
+								setBottomSheetVisible={setBottomSheetVisible}
 								style={{ zIndex: cards.length - index }} // Ensure the top card is rendered above others
 							/>
 						))}
@@ -83,6 +89,22 @@ export default function SwipeScreen() {
 							</View>
 						)}
 					</View>
+					{bottomSheetVisible && (
+						<View style={tw` absolute inset-0 z-50`}>
+							<BottomSheet
+								index={0}
+								snapPoints={['100%']} // Updated snap points
+								enablePanDownToClose={true} // Enable closing the sheet by swiping down
+								onClose={() => setBottomSheetVisible(false)}
+							>
+								<BottomSheetScrollView contentContainerStyle={tw`p-4`}>
+									<ProfileDetails
+										setBottomSheetVisible={setBottomSheetVisible}
+									/>
+								</BottomSheetScrollView>
+							</BottomSheet>
+						</View>
+					)}
 				</View>
 				{filterModalVisible && (
 					<FilterModal

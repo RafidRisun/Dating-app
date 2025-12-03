@@ -16,19 +16,25 @@ import {
 	TouchableOpacity,
 	View,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { SvgXml } from 'react-native-svg';
 
-export default function Profile() {
+export default function ProfileDetails({
+	setBottomSheetVisible,
+}: {
+	setBottomSheetVisible: (visible: boolean) => void;
+}) {
 	const router = useRouter();
 
 	return (
-		<SafeAreaView edges={['top']} style={tw`flex-1 bg-white`}>
+		<View style={tw`flex-1 bg-white`}>
 			<StatusBar barStyle="dark-content" />
-			<View style={tw`flex flex-row w-full items-center justify-between p-4`}>
-				<TouchableOpacity style={tw`self-start `} onPress={() => router.back()}>
+			<View style={tw`flex flex-row w-full items-center justify-between`}>
+				<TouchableOpacity
+					style={tw`self-start `}
+					onPress={() => setBottomSheetVisible(false)}
+				>
 					<Image
-						source={require('../../../../assets/images/backbutton.png')}
+						source={require('@/assets/images/backbutton.png')}
 						style={tw`w-4 h-7`}
 						contentFit="contain"
 					/>
@@ -41,7 +47,7 @@ export default function Profile() {
 				</TouchableOpacity>
 			</View>
 			<ScrollView
-				style={tw`flex-1 px-4 pb-4`}
+				style={tw`flex-1 px-1 pb-4`}
 				showsVerticalScrollIndicator={false}
 				scrollEventThrottle={16} // Ensure smooth scroll tracking
 			>
@@ -199,6 +205,6 @@ export default function Profile() {
 					</View>
 				</View>
 			</ScrollView>
-		</SafeAreaView>
+		</View>
 	);
 }
