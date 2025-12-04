@@ -36,6 +36,7 @@ export default function Others() {
 					placeholder="Write your reason here..."
 					multiline
 					textAlignVertical="top"
+					placeholderTextColor="#6B7280"
 				/>
 				<Text style={tw`text-sm font-poppins text-gray-800`}>
 					Add Image {'(Optional)'}

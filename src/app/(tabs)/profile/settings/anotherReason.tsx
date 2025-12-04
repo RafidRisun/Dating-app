@@ -36,6 +36,7 @@ export default function AnotherReason() {
 							textAlignVertical="top"
 							value={reason}
 							onChangeText={setReason}
+							placeholderTextColor="#6B7280"
 						/>
 					</View>
 					<TouchableOpacity

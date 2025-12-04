@@ -130,6 +130,7 @@ export default function Dm() {
 							value={inputText}
 							onChangeText={setInputText}
 							editable={dmCount > 0}
+							placeholderTextColor="#6B7280"
 						/>
 						<TouchableOpacity
 							onPress={handleSend}

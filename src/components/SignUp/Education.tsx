@@ -16,6 +16,7 @@ export default function Education() {
 				placeholder="e.g., Bachelor's in Computer Science"
 				value={education}
 				onChangeText={text => setEducation(text)}
+				placeholderTextColor="#6B7280"
 			/>
 		</View>
 	);

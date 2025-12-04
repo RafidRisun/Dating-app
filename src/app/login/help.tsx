@@ -53,6 +53,7 @@ export default function Help() {
 							placeholder="Describe the problem you're facing..."
 							multiline
 							textAlignVertical="top"
+							placeholderTextColor="#6B7280"
 						/>
 					</View>
 					<TouchableOpacity

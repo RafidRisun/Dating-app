@@ -59,6 +59,7 @@ export default function RateModal() {
 					textAlignVertical="top"
 					value={opinion}
 					onChangeText={setOpinion}
+					placeholderTextColor="#6B7280"
 				/>
 				<TouchableOpacity
 					style={tw`w-full bg-blue rounded-full py-3 mt-6 mb-2 items-center`}

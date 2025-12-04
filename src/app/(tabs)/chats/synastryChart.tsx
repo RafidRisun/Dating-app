@@ -5,6 +5,7 @@ import {
 	iconSynastryGradient,
 } from '@/assets/icon';
 import tw from '@/src/lib/tailwind';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import React from 'react';
@@ -15,8 +16,6 @@ import {
 	TouchableOpacity,
 	View,
 } from 'react-native';
-import DatePicker from 'react-native-date-picker';
-import RNPickerSelect from 'react-native-picker-select';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { SvgXml } from 'react-native-svg';
 
@@ -26,16 +25,55 @@ export default function SynastryChart() {
 	const [openUserDateModal, setOpenUserDateModal] = React.useState(false);
 	const [userTime, setUserTime] = React.useState(new Date());
 	const [openUserTimeModal, setOpenUserTimeModal] = React.useState(false);
-	const [userCity, setUserCity] = React.useState('');
-	const [userCountry, setUserCountry] = React.useState('');
+	const [userCity, setUserCity] = React.useState<string | null>(null);
+	const [userCountry, setUserCountry] = React.useState<string | null>(null);
+	const [userCityModalOpen, setUserCityModalOpen] = React.useState(false);
+	const [userCountryModalOpen, setUserCountryModalOpen] = React.useState(false);
 
 	const [matchName, setMatchName] = React.useState('');
 	const [matchDate, setMatchDate] = React.useState(new Date());
 	const [openMatchDateModal, setOpenMatchDateModal] = React.useState(false);
 	const [matchTime, setMatchTime] = React.useState(new Date());
 	const [openMatchTimeModal, setOpenMatchTimeModal] = React.useState(false);
-	const [matchCity, setMatchCity] = React.useState('');
-	const [matchCountry, setMatchCountry] = React.useState('');
+	const [matchCity, setMatchCity] = React.useState<string | null>(null);
+	const [matchCountry, setMatchCountry] = React.useState<string | null>(null);
+	const [matchCityModalOpen, setMatchCityModalOpen] = React.useState(false);
+	const [matchCountryModalOpen, setMatchCountryModalOpen] =
+		React.useState(false);
+
+	const cityOptions = [
+		{ label: 'Istanbul', value: 'istanbul' },
+		{ label: 'Ankara', value: 'ankara' },
+		{ label: 'Izmir', value: 'izmir' },
+		{ label: 'Bursa', value: 'bursa' },
+		{ label: 'Antalya', value: 'antalya' },
+		{ label: 'Konya', value: 'konya' },
+		{ label: 'Adana', value: 'adana' },
+		{ label: 'Gaziantep', value: 'gaziantep' },
+		{ label: 'Kayseri', value: 'kayseri' },
+		{ label: 'Mersin', value: 'mersin' },
+	];
+	const cityLabelMap: Record<string, string> = cityOptions.reduce((acc, c) => {
+		acc[c.value] = c.label;
+		return acc;
+	}, {} as Record<string, string>);
+
+	const countryOptions = [
+		{ label: 'Turkey', value: 'turkey' },
+		{ label: 'USA', value: 'usa' },
+		{ label: 'Germany', value: 'germany' },
+		{ label: 'France', value: 'france' },
+		{ label: 'Italy', value: 'italy' },
+		{ label: 'Spain', value: 'spain' },
+		{ label: 'United Kingdom', value: 'uk' },
+	];
+	const countryLabelMap: Record<string, string> = countryOptions.reduce(
+		(acc, c) => {
+			acc[c.value] = c.label;
+			return acc;
+		},
+		{} as Record<string, string>
+	);
 
 	const [ReportVisible, setReportVisible] = React.useState(false);
 
@@ -77,19 +115,23 @@ export default function SynastryChart() {
 							</Text>
 							<SvgXml xml={iconCalendarBlack} />
 						</TouchableOpacity>
-						<DatePicker
-							modal
-							open={openUserDateModal}
-							date={userDate}
-							onConfirm={date => {
-								setOpenUserDateModal(false);
-								setUserDate(date);
-							}}
-							onCancel={() => {
-								setOpenUserDateModal(false);
-							}}
-							mode="date"
-						/>
+						{openUserDateModal && (
+							<DateTimePicker
+								value={userDate}
+								mode="date"
+								display="spinner"
+								themeVariant="light"
+								textColor="black"
+								onChange={(event, selectedDate) => {
+									if ((event as any).type === 'dismissed') {
+										setOpenUserDateModal(false);
+										return;
+									}
+									if (selectedDate) setUserDate(selectedDate);
+									setOpenUserDateModal(false);
+								}}
+							/>
+						)}
 					</View>
 					<View style={tw`flex flex-row w-full gap-2 items-center`}>
 						<View style={tw`flex flex-1 gap-2`}>
@@ -99,57 +141,53 @@ export default function SynastryChart() {
 								onPress={() => setOpenUserTimeModal(true)}
 							>
 								<Text style={tw`font-poppinsSemiBold text-xs text-gray-600`}>
-									{userTime.toDateString()}
+									{userTime.toLocaleTimeString()}
 								</Text>
 								<SvgXml xml={iconCalendarBlack} />
 							</TouchableOpacity>
-							<DatePicker
-								modal
-								open={openUserTimeModal}
-								date={userTime}
-								onConfirm={date => {
-									setOpenUserTimeModal(false);
-									setUserTime(date);
-								}}
-								onCancel={() => {
-									setOpenUserTimeModal(false);
-								}}
-								mode="time"
-							/>
 						</View>
 						<View style={tw`flex flex-1 gap-2`}>
 							<Text>City of Birth</Text>
 							<View style={tw`border border-gray-300 bg-white rounded-lg`}>
-								<RNPickerSelect
-									placeholder={{ label: 'City', value: null }}
-									onValueChange={value => setUserCity(value)}
-									items={[
-										{ label: 'Istanbul', value: 'istanbul' },
-										{ label: 'Ankara', value: 'ankara' },
-										{ label: 'Izmir', value: 'izmir' },
-										{ label: 'New York', value: 'newyork' },
-										{ label: 'Los Angeles', value: 'losangeles' },
-										{ label: 'Chicago', value: 'chicago' },
-									]}
-								/>
+								<TouchableOpacity
+									style={tw`w-full p-3 flex flex-row items-center justify-between`}
+									onPress={() => setUserCityModalOpen(true)}
+								>
+									<Text style={tw`font-poppinsSemiBold text-xs text-gray-600`}>
+										{userCity ? cityLabelMap[userCity] : 'City'}
+									</Text>
+								</TouchableOpacity>
 							</View>
 						</View>
 					</View>
+					{openUserTimeModal && (
+						<DateTimePicker
+							value={userTime}
+							mode="time"
+							display="spinner"
+							themeVariant="light"
+							textColor="black"
+							onChange={(event, selectedDate) => {
+								if ((event as any).type === 'dismissed') {
+									setOpenUserTimeModal(false);
+									return;
+								}
+								if (selectedDate) setUserTime(selectedDate);
+								setOpenUserTimeModal(false);
+							}}
+						/>
+					)}
 					<View style={tw`flex w-full gap-2`}>
 						<Text>Country of Birth</Text>
 						<View style={tw`border border-gray-300 bg-white rounded-lg`}>
-							<RNPickerSelect
-								placeholder={{ label: 'Country', value: null }}
-								onValueChange={value => setUserCountry(value)}
-								items={[
-									{ label: 'Turkey', value: 'turkey' },
-									{ label: 'USA', value: 'usa' },
-									{ label: 'Germany', value: 'germany' },
-									{ label: 'France', value: 'france' },
-									{ label: 'Italy', value: 'italy' },
-									{ label: 'Spain', value: 'spain' },
-								]}
-							/>
+							<TouchableOpacity
+								style={tw`w-full p-3 flex flex-row items-center justify-between`}
+								onPress={() => setUserCountryModalOpen(true)}
+							>
+								<Text style={tw`font-poppinsSemiBold text-xs text-gray-600`}>
+									{userCountry ? countryLabelMap[userCountry] : 'Country'}
+								</Text>
+							</TouchableOpacity>
 						</View>
 					</View>
 				</View>
@@ -167,6 +205,7 @@ export default function SynastryChart() {
 							<TextInput
 								placeholder="Full Name"
 								style={tw`w-full font-poppinsSemiBold text-xs text-gray-600`}
+								placeholderTextColor="#6B7280"
 							/>
 						</View>
 					</View>
@@ -174,26 +213,30 @@ export default function SynastryChart() {
 						<Text>Date of birth</Text>
 						<TouchableOpacity
 							style={tw`w-full p-3 border border-gray-300 bg-white rounded-lg flex flex-row  items-center justify-between`}
-							onPress={() => setOpenUserDateModal(true)}
+							onPress={() => setOpenMatchDateModal(true)}
 						>
 							<Text style={tw`font-poppinsSemiBold text-xs text-gray-600`}>
 								{userDate.toDateString()}
 							</Text>
 							<SvgXml xml={iconCalendarBlack} />
 						</TouchableOpacity>
-						<DatePicker
-							modal
-							open={openMatchDateModal}
-							date={matchDate}
-							onConfirm={date => {
-								setOpenMatchDateModal(false);
-								setMatchDate(date);
-							}}
-							onCancel={() => {
-								setOpenMatchDateModal(false);
-							}}
-							mode="date"
-						/>
+						{openMatchDateModal && (
+							<DateTimePicker
+								value={matchDate}
+								mode="date"
+								display="spinner"
+								themeVariant="light"
+								textColor="black"
+								onChange={(event, selectedDate) => {
+									if ((event as any).type === 'dismissed') {
+										setOpenMatchDateModal(false);
+										return;
+									}
+									if (selectedDate) setMatchDate(selectedDate);
+									setOpenMatchDateModal(false);
+								}}
+							/>
+						)}
 					</View>
 					<View style={tw`flex flex-row w-full gap-2 items-center`}>
 						<View style={tw`flex flex-1 gap-2`}>
@@ -203,57 +246,53 @@ export default function SynastryChart() {
 								onPress={() => setOpenMatchTimeModal(true)}
 							>
 								<Text style={tw`font-poppinsSemiBold text-xs text-gray-600`}>
-									{matchTime.toDateString()}
+									{matchTime.toLocaleTimeString()}
 								</Text>
 								<SvgXml xml={iconCalendarBlack} />
 							</TouchableOpacity>
-							<DatePicker
-								modal
-								open={openMatchTimeModal}
-								date={matchTime}
-								onConfirm={date => {
-									setOpenMatchTimeModal(false);
-									setMatchTime(date);
-								}}
-								onCancel={() => {
-									setOpenMatchTimeModal(false);
-								}}
-								mode="time"
-							/>
 						</View>
 						<View style={tw`flex flex-1 gap-2`}>
 							<Text>City of Birth</Text>
 							<View style={tw`border border-gray-300 bg-white rounded-lg`}>
-								<RNPickerSelect
-									placeholder={{ label: 'City', value: null }}
-									onValueChange={value => setMatchCity(value)}
-									items={[
-										{ label: 'Istanbul', value: 'istanbul' },
-										{ label: 'Ankara', value: 'ankara' },
-										{ label: 'Izmir', value: 'izmir' },
-										{ label: 'New York', value: 'newyork' },
-										{ label: 'Los Angeles', value: 'losangeles' },
-										{ label: 'Chicago', value: 'chicago' },
-									]}
-								/>
+								<TouchableOpacity
+									style={tw`w-full p-3 flex flex-row items-center justify-between`}
+									onPress={() => setMatchCityModalOpen(true)}
+								>
+									<Text style={tw`font-poppinsSemiBold text-xs text-gray-600`}>
+										{matchCity ? cityLabelMap[matchCity] : 'City'}
+									</Text>
+								</TouchableOpacity>
 							</View>
 						</View>
 					</View>
+					{openMatchTimeModal && (
+						<DateTimePicker
+							value={matchTime}
+							mode="time"
+							display="spinner"
+							themeVariant="light"
+							textColor="black"
+							onChange={(event, selectedDate) => {
+								if ((event as any).type === 'dismissed') {
+									setOpenMatchTimeModal(false);
+									return;
+								}
+								if (selectedDate) setMatchTime(selectedDate);
+								setOpenMatchTimeModal(false);
+							}}
+						/>
+					)}
 					<View style={tw`flex w-full gap-2`}>
 						<Text>Country of Birth</Text>
 						<View style={tw`border border-gray-300 bg-white rounded-lg`}>
-							<RNPickerSelect
-								placeholder={{ label: 'Country', value: null }}
-								onValueChange={value => setMatchCountry(value)}
-								items={[
-									{ label: 'Turkey', value: 'turkey' },
-									{ label: 'USA', value: 'usa' },
-									{ label: 'Germany', value: 'germany' },
-									{ label: 'France', value: 'france' },
-									{ label: 'Italy', value: 'italy' },
-									{ label: 'Spain', value: 'spain' },
-								]}
-							/>
+							<TouchableOpacity
+								style={tw`w-full p-3 flex flex-row items-center justify-between`}
+								onPress={() => setMatchCountryModalOpen(true)}
+							>
+								<Text style={tw`font-poppinsSemiBold text-xs text-gray-600`}>
+									{matchCountry ? countryLabelMap[matchCountry] : 'Country'}
+								</Text>
+							</TouchableOpacity>
 						</View>
 					</View>
 				</View>
@@ -321,6 +360,124 @@ export default function SynastryChart() {
 					</View>
 				</View>
 			)}
+			{userCityModalOpen && (
+				<View
+					style={tw`absolute inset-0 bg-black bg-opacity-15 flex items-center justify-center px-5`}
+				>
+					<View style={tw`w-full bg-white rounded-xl p-4`}>
+						<Text style={tw`font-poppinsSemiBold text-base mb-2`}>
+							Select City (You)
+						</Text>
+						<ScrollView showsVerticalScrollIndicator={false}>
+							{cityOptions.map(c => (
+								<TouchableOpacity
+									key={c.value}
+									style={tw`p-3 border border-gray-200 rounded-lg mb-2`}
+									onPress={() => {
+										setUserCity(c.value);
+										setUserCityModalOpen(false);
+									}}
+								>
+									<Text style={tw`font-poppins text-gray-800`}>{c.label}</Text>
+								</TouchableOpacity>
+							))}
+						</ScrollView>
+						<TouchableOpacity
+							style={tw`w-full px-4 py-2 bg-gray-200 rounded-xl items-center mt-3`}
+							onPress={() => setUserCityModalOpen(false)}
+						>
+							<Text style={tw`font-poppinsSemiBold text-gray-700`}>Close</Text>
+						</TouchableOpacity>
+					</View>
+				</View>
+			)}
+			{matchCityModalOpen && (
+				<View
+					style={tw`absolute inset-0 bg-black bg-opacity-15 flex items-center justify-center px-5`}
+				>
+					<View style={tw`w-full bg-white rounded-xl p-4`}>
+						<Text style={tw`font-poppinsSemiBold text-base mb-2`}>
+							Select City (Match)
+						</Text>
+						<ScrollView showsVerticalScrollIndicator={false}>
+							{cityOptions.map(c => (
+								<TouchableOpacity
+									key={c.value}
+									style={tw`p-3 border border-gray-200 rounded-lg mb-2`}
+									onPress={() => {
+										setMatchCity(c.value);
+										setMatchCityModalOpen(false);
+									}}
+								>
+									<Text style={tw`font-poppins text-gray-800`}>{c.label}</Text>
+								</TouchableOpacity>
+							))}
+						</ScrollView>
+						<TouchableOpacity
+							style={tw`w-full px-4 py-2 bg-gray-200 rounded-xl items-center mt-3`}
+							onPress={() => setMatchCityModalOpen(false)}
+						>
+							<Text style={tw`font-poppinsSemiBold text-gray-700`}>Close</Text>
+						</TouchableOpacity>
+					</View>
+				</View>
+			)}
+			{/* Country Modals */}
+			<CountrySelectModal
+				open={userCountryModalOpen}
+				onClose={() => setUserCountryModalOpen(false)}
+				onSelect={value => setUserCountry(value)}
+				options={countryOptions}
+			/>
+			<CountrySelectModal
+				open={matchCountryModalOpen}
+				onClose={() => setMatchCountryModalOpen(false)}
+				onSelect={value => setMatchCountry(value)}
+				options={countryOptions}
+			/>
 		</SafeAreaView>
+	);
+}
+
+// Country selection modals
+function CountrySelectModal({
+	open,
+	onClose,
+	onSelect,
+	options,
+}: {
+	open: boolean;
+	onClose: () => void;
+	onSelect: (value: string) => void;
+	options: { label: string; value: string }[];
+}) {
+	if (!open) return null;
+	return (
+		<View style={tw`absolute inset-0 bg-black/40`}>
+			<View
+				style={tw`absolute bottom-0 left-0 right-0 bg-white rounded-t-2xl p-4 max-h-[60%]`}
+			>
+				<View style={tw`flex-row items-center justify-between mb-2`}>
+					<Text style={tw`font-poppinsSemiBold`}>Select Country</Text>
+					<TouchableOpacity onPress={onClose}>
+						<Text style={tw`text-primary`}>Close</Text>
+					</TouchableOpacity>
+				</View>
+				<ScrollView>
+					{options.map(opt => (
+						<TouchableOpacity
+							key={opt.value}
+							style={tw`py-3 border-b border-gray-200`}
+							onPress={() => {
+								onSelect(opt.value);
+								onClose();
+							}}
+						>
+							<Text style={tw`text-gray-800`}>{opt.label}</Text>
+						</TouchableOpacity>
+					))}
+				</ScrollView>
+			</View>
+		</View>
 	);
 }

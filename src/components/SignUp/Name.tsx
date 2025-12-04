@@ -17,6 +17,7 @@ export default function Name() {
 				keyboardType="default"
 				value={name}
 				onChangeText={text => setName(text)}
+				placeholderTextColor="#6B7280"
 			/>
 		</View>
 	);

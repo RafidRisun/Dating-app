@@ -17,6 +17,7 @@ export default function OTP() {
 				keyboardType="number-pad"
 				value={code}
 				onChangeText={text => setCode(text)}
+				placeholderTextColor="#6B7280"
 			/>
 		</View>
 	);

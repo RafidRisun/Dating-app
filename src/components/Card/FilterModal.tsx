@@ -9,7 +9,7 @@ import {
 	TouchableOpacity,
 	View,
 } from 'react-native';
-import RNPickerSelect from 'react-native-picker-select';
+// Replacing RNPickerSelect with a custom modal for Expo Go reliability
 // import RangeSlider from 'react-native-range-slider-expo';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
 import { SvgXml } from 'react-native-svg';
@@ -21,7 +21,6 @@ export default function FilterModal({
 	visible: boolean;
 	setVisible: (visible: boolean) => void;
 }) {
-	const [ageRange, setAgeRange] = useState(25);
 	const [verifiedProfile, setVerifiedProfile] = useState(false);
 	const toggleVerifiedProfileSwitch = () =>
 		setVerifiedProfile(previousState => !previousState);
@@ -34,6 +33,34 @@ export default function FilterModal({
 
 	const [fromValue, setFromValue] = useState(20);
 	const [toValue, setToValue] = useState(36);
+	const [city, setCity] = useState<string | null>(null);
+	const [cityModalOpen, setCityModalOpen] = useState<boolean>(false);
+
+	const turkishCities: { label: string; value: string }[] = [
+		{ label: 'Istanbul', value: 'istanbul' },
+		{ label: 'Ankara', value: 'ankara' },
+		{ label: 'Izmir', value: 'izmir' },
+		{ label: 'Bursa', value: 'bursa' },
+		{ label: 'Antalya', value: 'antalya' },
+		{ label: 'Konya', value: 'konya' },
+		{ label: 'Adana', value: 'adana' },
+		{ label: 'Gaziantep', value: 'gaziantep' },
+		{ label: 'Kayseri', value: 'kayseri' },
+		{ label: 'Mersin', value: 'mersin' },
+		{ label: 'Eskisehir', value: 'eskisehir' },
+		{ label: 'Diyarbakir', value: 'diyarbakir' },
+		{ label: 'Samsun', value: 'samsun' },
+		{ label: 'Trabzon', value: 'trabzon' },
+		{ label: 'Erzurum', value: 'erzurum' },
+	];
+
+	const cityLabelMap: Record<string, string> = turkishCities.reduce(
+		(acc, c) => {
+			acc[c.value] = c.label;
+			return acc;
+		},
+		{} as Record<string, string>
+	);
 
 	return (
 		<View
@@ -110,22 +137,15 @@ export default function FilterModal({
 							/>
 						</View>
 					</View>
-					<View style={tw`flex flex-col gap-4 w-full mb-10`}>
-						<Text style={tw`font-poppinsSemiBold text-gray-600 mb-4`}>
-							City
-						</Text>
-						<RNPickerSelect
-							placeholder={{ label: 'City', value: null }}
-							onValueChange={value => console.log(value)}
-							items={[
-								{ label: 'Istanbul', value: 'istanbul' },
-								{ label: 'Ankara', value: 'ankara' },
-								{ label: 'Izmir', value: 'izmir' },
-								{ label: 'New York', value: 'newyork' },
-								{ label: 'Los Angeles', value: 'losangeles' },
-								{ label: 'Chicago', value: 'chicago' },
-							]}
-						/>
+					<View style={[tw`w-full`, { zIndex: 20 }]}>
+						<TouchableOpacity
+							style={tw`w-full p-3 border border-gray-300 bg-gray-100 rounded-lg flex flex-row items-center justify-between`}
+							onPress={() => setCityModalOpen(true)}
+						>
+							<Text style={tw`font-poppinsSemiBold text-xs text-gray-600`}>
+								{city ? cityLabelMap[city] : 'City'}
+							</Text>
+						</TouchableOpacity>
 						<Text style={tw`text-xs font-poppins text-gray-500`}>
 							Travel Mode {'(multi-city)'} is a Premium feature
 						</Text>
@@ -185,6 +205,37 @@ export default function FilterModal({
 					<Text style={tw`text-white font-poppinsSemiBold`}>Apply Filter</Text>
 				</TouchableOpacity>
 			</View>
+			{cityModalOpen && (
+				<View
+					style={tw`absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center px-5`}
+				>
+					<View style={tw`w-full h-1/2 bg-white rounded-lg p-4`}>
+						<Text style={tw`text-base font-poppinsSemiBold mb-3`}>
+							Select City (Turkey)
+						</Text>
+						<ScrollView style={tw`w-full`} showsVerticalScrollIndicator={false}>
+							{turkishCities.map(c => (
+								<TouchableOpacity
+									key={c.value}
+									style={tw`w-full p-3 border border-gray-200 rounded-lg mb-2`}
+									onPress={() => {
+										setCity(c.value);
+										setCityModalOpen(false);
+									}}
+								>
+									<Text style={tw`font-poppins text-gray-800`}>{c.label}</Text>
+								</TouchableOpacity>
+							))}
+						</ScrollView>
+						<TouchableOpacity
+							style={tw`w-full px-4 py-2 bg-gray-200 rounded-xl items-center mt-3`}
+							onPress={() => setCityModalOpen(false)}
+						>
+							<Text style={tw`font-poppinsSemiBold text-gray-700`}>Close</Text>
+						</TouchableOpacity>
+					</View>
+				</View>
+			)}
 		</View>
 	);
 }

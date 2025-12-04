@@ -10,6 +10,7 @@ export default function SwipeLayout() {
 			}}
 		>
 			<Stack.Screen name="index" />
+			<Stack.Screen name="dm" />
 			<Stack.Screen
 				name="profile"
 				options={{

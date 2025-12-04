@@ -16,6 +16,7 @@ export default function Email() {
 				placeholder="e.g., your.email@example.com"
 				value={email}
 				onChangeText={text => setEmail(text)}
+				placeholderTextColor="#6B7280"
 			/>
 		</View>
 	);

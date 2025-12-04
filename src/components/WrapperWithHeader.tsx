@@ -23,7 +23,7 @@ export default function WrapperWithHeader({
 			<StatusBar barStyle="dark-content" />
 			{/* header */}
 			<View style={tw`flex flex-row bg-white w-full items-center gap-4 pb-2`}>
-				<TouchableOpacity onPress={() => router.back()}>
+				<TouchableOpacity style={tw`px-2`} onPress={() => router.back()}>
 					<SvgXml xml={iconBack} />
 				</TouchableOpacity>
 				<Text style={tw`self-center text-lg font-poppinsSemiBold`}>{name}</Text>

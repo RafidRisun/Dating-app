@@ -16,6 +16,7 @@ export default function Bio() {
 					placeholder="Who's up here to get clapped!"
 					multiline
 					textAlignVertical="top"
+					placeholderTextColor="#6B7280"
 				/>
 			</View>
 		</View>
