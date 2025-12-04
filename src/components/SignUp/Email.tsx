@@ -6,7 +6,7 @@ import TitleAndSubtitle from '../Register/TitleAndSubtitle';
 export default function Email() {
 	const [email, setEmail] = React.useState('');
 	return (
-		<View>
+		<View style={tw`flex-1 w-full`}>
 			<TitleAndSubtitle
 				title="Stay in the loop?"
 				subtitle="Receive marketing emails about campaigns and offers."

@@ -6,7 +6,7 @@ import TitleAndSubtitle from '../Register/TitleAndSubtitle';
 export default function Name() {
 	const [name, setName] = useState('');
 	return (
-		<View>
+		<View style={tw`flex-1 w-full`}>
 			<TitleAndSubtitle
 				title="Your Name?"
 				subtitle="This is how you will appear in Soulflag."

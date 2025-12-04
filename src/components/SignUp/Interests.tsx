@@ -6,7 +6,7 @@ import TitleAndSubtitle from '../Register/TitleAndSubtitle';
 export default function Interests() {
 	const [interests, setInterests] = useState<string[]>([]);
 	return (
-		<View style={tw`flex-1`}>
+		<View style={tw`flex-1 w-full`}>
 			<TitleAndSubtitle
 				title="Your Interests?"
 				subtitle="Pick a few things that you like."

@@ -9,7 +9,7 @@ export default function Birthday() {
 	const [date, setDate] = useState(new Date());
 	const [showAndroidPicker, setShowAndroidPicker] = useState(true);
 	return (
-		<View>
+		<View style={tw`flex-1 w-full`}>
 			<TitleAndSubtitle
 				title="When's your birthday?"
 				subtitle="Your age will be public."

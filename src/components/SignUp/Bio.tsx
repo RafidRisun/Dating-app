@@ -5,7 +5,7 @@ import TitleAndSubtitle from '../Register/TitleAndSubtitle';
 
 export default function Bio() {
 	return (
-		<View>
+		<View style={tw`flex-1 w-full`}>
 			<TitleAndSubtitle
 				title="What's your bio?"
 				subtitle="Tell us a bit about yourself."

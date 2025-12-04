@@ -5,7 +5,7 @@ import TitleAndSubtitle from '../Register/TitleAndSubtitle';
 
 export default function Gender() {
 	return (
-		<View>
+		<View style={tw`flex-1 w-full`}>
 			<TitleAndSubtitle title="Your Gender?" subtitle="Select your gender" />
 			<View style={tw`mt-5 flex flex-col gap-4 items-center justify-center`}>
 				<TouchableOpacity

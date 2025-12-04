@@ -1,6 +1,7 @@
 import { iconPlus, iconRightArrowGradient } from '@/assets/icon';
 import tw from '@/src/lib/tailwind';
 import { Image } from 'expo-image';
+import { useRouter } from 'expo-router';
 import React from 'react';
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { SvgXml } from 'react-native-svg';
@@ -12,6 +13,7 @@ export default function EditProfileComponent({
 	photos: (string | null)[];
 	handlePhotoUpload: (index: number) => void;
 }) {
+	const router = useRouter();
 	return (
 		<ScrollView style={tw`flex-1 w-full`} showsVerticalScrollIndicator={false}>
 			<View style={tw`flex flex-col gap-4`}>
@@ -44,6 +46,9 @@ export default function EditProfileComponent({
 				>
 					<TouchableOpacity
 						style={tw`flex flex-row items-center justify-between border-b border-gray-200 pb-2`}
+						onPress={() =>
+							router.push('/(tabs)/profile/personalInformation/nameSettings')
+						}
 					>
 						<Text style={tw`text-base font-poppins`}>Name</Text>
 						<View style={tw`flex flex-row items-center gap-2`}>
@@ -55,6 +60,11 @@ export default function EditProfileComponent({
 					</TouchableOpacity>
 					<TouchableOpacity
 						style={tw`flex flex-row items-center justify-between border-b border-gray-200 pb-2`}
+						onPress={() =>
+							router.push(
+								'/(tabs)/profile/personalInformation/phoneNumberSettings'
+							)
+						}
 					>
 						<Text style={tw`text-base font-poppins`}>Number</Text>
 						<View style={tw`flex flex-row items-center gap-2`}>
@@ -66,6 +76,9 @@ export default function EditProfileComponent({
 					</TouchableOpacity>
 					<TouchableOpacity
 						style={tw`flex flex-row items-center justify-between border-b border-gray-200 pb-2`}
+						onPress={() =>
+							router.push('/(tabs)/profile/personalInformation/emailSettings')
+						}
 					>
 						<Text style={tw`text-base font-poppins`}>Email</Text>
 						<View style={tw`flex flex-row items-center gap-2`}>
@@ -97,6 +110,9 @@ export default function EditProfileComponent({
 					</View>
 					<TouchableOpacity
 						style={tw`flex flex-row items-center justify-between border-b border-gray-200 pb-2`}
+						onPress={() =>
+							router.push('/(tabs)/profile/personalInformation/heightSettings')
+						}
 					>
 						<Text style={tw`text-base font-poppins`}>Height</Text>
 						<View style={tw`flex flex-row items-center gap-2`}>
@@ -108,6 +124,9 @@ export default function EditProfileComponent({
 					</TouchableOpacity>
 					<TouchableOpacity
 						style={tw`flex flex-row items-center justify-between border-b border-gray-200 pb-2`}
+						onPress={() =>
+							router.push('/(tabs)/profile/personalInformation/bioSettings')
+						}
 					>
 						<Text style={tw`text-base font-poppins`}>Bio</Text>
 						<View style={tw`flex flex-row items-center gap-2`}>
@@ -124,6 +143,11 @@ export default function EditProfileComponent({
 					</TouchableOpacity>
 					<TouchableOpacity
 						style={tw`flex flex-row items-center justify-between border-b border-gray-200 pb-2`}
+						onPress={() =>
+							router.push(
+								'/(tabs)/profile/personalInformation/lookingForSettings'
+							)
+						}
 					>
 						<Text style={tw`text-base font-poppins`}>Looking for</Text>
 						<View style={tw`flex flex-row items-center gap-2`}>
@@ -135,6 +159,11 @@ export default function EditProfileComponent({
 					</TouchableOpacity>
 					<TouchableOpacity
 						style={tw`flex flex-row items-center justify-between border-b border-gray-200 pb-2`}
+						onPress={() =>
+							router.push(
+								'/(tabs)/profile/personalInformation/interestsSettings'
+							)
+						}
 					>
 						<Text style={tw`text-base font-poppins`}>Interests</Text>
 						<View style={tw`flex flex-row items-center gap-2`}>
@@ -146,6 +175,11 @@ export default function EditProfileComponent({
 					</TouchableOpacity>
 					<TouchableOpacity
 						style={tw`flex flex-row items-center justify-between`}
+						onPress={() =>
+							router.push(
+								'/(tabs)/profile/personalInformation/educationSettings'
+							)
+						}
 					>
 						<Text style={tw`text-base font-poppins`}>Education</Text>
 						<View style={tw`flex flex-row items-center gap-2`}>

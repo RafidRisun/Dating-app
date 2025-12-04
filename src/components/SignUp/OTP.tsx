@@ -6,7 +6,7 @@ import TitleAndSubtitle from '../Register/TitleAndSubtitle';
 export default function OTP() {
 	const [code, setCode] = useState('');
 	return (
-		<View>
+		<View style={tw`flex-1 w-full`}>
 			<TitleAndSubtitle
 				title="Enter the verification code"
 				subtitle="We have sent a 6-digit verification code to your phone number."

@@ -14,7 +14,7 @@ export default function LookingFor() {
 	>('');
 	const [lookingForId, setLookingForId] = useState<string>('');
 	return (
-		<View>
+		<View style={tw`flex-1 w-full`}>
 			<TitleAndSubtitle
 				title="What are you looking for?"
 				subtitle="Select an option that best describes your intentions."

@@ -32,7 +32,7 @@ export default function AddPhotos() {
 		}
 	};
 	return (
-		<View>
+		<View style={tw`flex-1 w-full`}>
 			<TitleAndSubtitle
 				title="Add your Photos"
 				subtitle="Add at least 2 photos to your profile."

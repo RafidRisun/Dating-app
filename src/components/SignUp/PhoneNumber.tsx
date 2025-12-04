@@ -22,7 +22,7 @@ export default function PhoneNumber() {
 		setShowPhoneCountryPicker(false);
 	};
 	return (
-		<View>
+		<View style={tw`flex-1 w-full`}>
 			<TitleAndSubtitle
 				title="What's your phone number?"
 				subtitle="We will send you a code to verify your number."

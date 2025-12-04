@@ -8,7 +8,7 @@ export default function Height() {
 	const [height, setHeight] = useState<string>('');
 	const [unit, setUnit] = useState<'cm' | 'ft'>('cm');
 	return (
-		<View>
+		<View style={tw`flex-1 w-full`}>
 			<TitleAndSubtitle title="Your Height?" subtitle="Add your height." />
 			<View style={tw`mt-25 items-center justify-center`}>
 				{unit === 'cm' ? (

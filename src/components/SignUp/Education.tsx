@@ -6,7 +6,7 @@ import TitleAndSubtitle from '../Register/TitleAndSubtitle';
 export default function Education() {
 	const [education, setEducation] = React.useState('');
 	return (
-		<View>
+		<View style={tw`flex-1 w-full`}>
 			<TitleAndSubtitle
 				title="Your Education?"
 				subtitle="Add your education details."
