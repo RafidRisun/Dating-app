@@ -10,7 +10,13 @@ export default function SwipeLayout() {
 			}}
 		>
 			<Stack.Screen name="index" />
-			<Stack.Screen name="dm" />
+			<Stack.Screen
+				name="dm"
+				options={{
+					presentation: 'card', // use card/push style (not a modal sheet)
+					animation: 'default', // or 'slide_from_right' for normal push
+				}}
+			/>
 			<Stack.Screen
 				name="profile"
 				options={{

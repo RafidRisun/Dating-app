@@ -9,6 +9,7 @@ export default function SendDM() {
 			title="Send a DM"
 			subtitle="Skip the line and send a DM directly. Your message will be seen first by this user."
 			action={() => {
+				router.back();
 				router.push('/(tabs)/swipe/dm');
 			}}
 		/>
