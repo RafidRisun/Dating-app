@@ -15,7 +15,14 @@ import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import React from 'react';
-import { ScrollView, Switch, Text, TouchableOpacity, View } from 'react-native';
+import {
+	Alert,
+	ScrollView,
+	Switch,
+	Text,
+	TouchableOpacity,
+	View,
+} from 'react-native';
 import { SvgXml } from 'react-native-svg';
 
 export default function Settings() {
@@ -181,6 +188,32 @@ export default function Settings() {
 						>
 							<SvgXml xml={iconHelp} />
 							<Text style={tw`text-sm font-poppins`}>Help</Text>
+							<SvgXml xml={iconRightArrowGradient} />
+						</TouchableOpacity>
+					</View>
+					<View
+						style={tw`flex flex-col w-full p-4 gap-4 bg-white border-[0.2px] border-gray-400 rounded-lg`}
+					>
+						<TouchableOpacity
+							style={tw`flex flex-row gap-4 justify-between items-center`}
+							onPress={() =>
+								Alert.alert('Log out?', 'Are you sure you want to log out?', [
+									{
+										text: 'Cancel',
+										style: 'cancel',
+									},
+									{
+										text: 'Log Out',
+										onPress: () => {
+											// Add your log out logic here
+											router.replace('/login');
+										},
+									},
+								])
+							}
+						>
+							<SvgXml xml={iconShare} />
+							<Text style={tw`text-sm font-poppins`}>Log Out</Text>
 							<SvgXml xml={iconRightArrowGradient} />
 						</TouchableOpacity>
 					</View>

@@ -13,65 +13,97 @@ import Name from '@/src/components/SignUp/Name';
 import OTP from '@/src/components/SignUp/OTP';
 import PhoneNumber from '@/src/components/SignUp/PhoneNumber';
 import tw from '@/src/lib/tailwind';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useFocusEffect } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
-import { StatusBar, Text, TouchableOpacity, View } from 'react-native';
+import {
+	KeyboardAvoidingView,
+	StatusBar,
+	Text,
+	TouchableOpacity,
+	View,
+} from 'react-native';
 
 export default function Signup() {
 	const router = useRouter();
 	const [progress, setProgress] = useState(1);
 
+	const [age, setAge] = useState(18);
+
+	// Check AsyncStorage for age confirmation whenever this screen regains focus
+	useFocusEffect(
+		React.useCallback(() => {
+			const checkAgeConfirmed = async () => {
+				const ageConfirmed = await AsyncStorage.getItem('ageConfirmed');
+				if (ageConfirmed === 'true' && progress === 5) {
+					setProgress(6);
+					await AsyncStorage.removeItem('ageConfirmed');
+				}
+			};
+
+			checkAgeConfirmed();
+		}, [progress])
+	);
+
 	return (
 		<PageWrapper>
 			<StatusBar barStyle="dark-content" backgroundColor="white" />
-			<View style={tw`flex w-full h-15 items-center justify-end mb-10`}>
-				<View style={tw`flex w-full h-2 bg-gray-300 rounded-full mb-2`}>
-					{/* Progress Bar Background */}
-					<LinearGradient
-						colors={['#05C3DD', '#B14EFF']}
-						start={{ x: 0, y: 0 }}
-						end={{ x: 1, y: 0 }}
-						style={tw`w-${progress}/13 h-2 rounded-full`}
-					/>
-					{/* Progress Bar Fill */}
+			<KeyboardAvoidingView behavior="padding" style={tw`flex-1 w-full`}>
+				<View style={tw`flex w-full h-15 items-center justify-end mb-10`}>
+					<View style={tw`flex w-full h-2 bg-gray-300 rounded-full mb-2`}>
+						{/* Progress Bar Background */}
+						<LinearGradient
+							colors={['#05C3DD', '#B14EFF']}
+							start={{ x: 0, y: 0 }}
+							end={{ x: 1, y: 0 }}
+							style={tw`w-${progress}/13 h-2 rounded-full`}
+						/>
+						{/* Progress Bar Fill */}
+					</View>
+					{progress >= 7 && (
+						<TouchableOpacity
+							style={tw`absolute right-0 bottom-7 flex px-3 py-1 items-center justify-center bg-purple rounded-md`}
+							onPress={() => {
+								if (progress < 13) setProgress(progress + 1);
+								else router.replace('/login/enableNotification');
+							}}
+						>
+							<Text style={tw`text-white font-poppins text-sm`}>Skip</Text>
+						</TouchableOpacity>
+					)}
 				</View>
-				{progress >= 7 && (
-					<TouchableOpacity
-						style={tw`absolute right-0 bottom-7 flex px-3 py-1 items-center justify-center bg-purple rounded-md`}
-						onPress={() => {
-							if (progress < 13) setProgress(progress + 1);
-							else router.replace('/login/enableNotification');
-						}}
-					>
-						<Text style={tw`text-white font-poppins text-sm`}>Skip</Text>
-					</TouchableOpacity>
-				)}
-			</View>
-			<View style={tw`flex-1 w-full justify-between`}>
-				{progress === 1 && <PhoneNumber />}
-				{progress === 2 && <OTP />}
-				{progress === 3 && <Name />}
-				{progress === 4 && <AddPhotos />}
-				{progress === 5 && <Birthday />}
-				{progress === 6 && <Gender />}
-				{progress === 7 && <LookingFor />}
-				{progress === 8 && <Interests />}
-				{progress === 9 && <Height />}
-				{progress === 10 && <Bio />}
-				{progress === 11 && <Lifestyle />}
-				{progress === 12 && <Education />}
-				{progress === 13 && <Email />}
-			</View>
-			<TouchableOpacity
-				style={tw`flex w-full gap-2 px-6 py-2 mb-6 items-center justify-center bg-blue rounded-full`}
-				onPress={() => {
-					if (progress < 13) setProgress(progress + 1);
-					else router.replace('/login/enableNotification');
-				}}
-			>
-				<Text style={tw`text-white font-poppins text-lg`}>Save</Text>
-			</TouchableOpacity>
+				<View style={tw`flex-1 w-full justify-between`}>
+					{progress === 1 && <PhoneNumber />}
+					{progress === 2 && <OTP />}
+					{progress === 3 && <Name />}
+					{progress === 4 && <AddPhotos />}
+					{progress === 5 && <Birthday setAge={setAge} />}
+					{progress === 6 && <Gender />}
+					{progress === 7 && <LookingFor />}
+					{progress === 8 && <Interests />}
+					{progress === 9 && <Height />}
+					{progress === 10 && <Bio />}
+					{progress === 11 && <Lifestyle />}
+					{progress === 12 && <Education />}
+					{progress === 13 && <Email />}
+				</View>
+				<TouchableOpacity
+					style={tw`flex w-full gap-2 px-6 py-2 mb-6 items-center justify-center bg-blue rounded-full`}
+					onPress={() => {
+						if (progress < 13 && progress !== 5) setProgress(progress + 1);
+						else if (progress === 5)
+							router.push({
+								pathname: '/login/ageModal',
+								params: { age: age.toString() },
+							});
+						else router.replace('/login/enableNotification');
+					}}
+				>
+					<Text style={tw`text-white font-poppins text-lg`}>Save</Text>
+				</TouchableOpacity>
+			</KeyboardAvoidingView>
 		</PageWrapper>
 	);
 }

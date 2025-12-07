@@ -1,13 +1,23 @@
 import tw from '@/src/lib/tailwind';
 // import DateTimePicker from '@react-native-community/datetimepicker';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { DatePicker } from 'react-native-wheel-pick';
 import TitleAndSubtitle from '../Register/TitleAndSubtitle';
 
-export default function Birthday() {
+export default function Birthday({
+	setAge,
+}: {
+	setAge: (age: number) => void;
+}) {
 	const [date, setDate] = useState(new Date());
 	const [showAndroidPicker, setShowAndroidPicker] = useState(true);
+
+	useEffect(() => {
+		const age = new Date().getFullYear() - date.getFullYear();
+		setAge(age);
+	}, [date]);
+
 	return (
 		<View style={tw`flex-1 w-full`}>
 			<TitleAndSubtitle
@@ -54,11 +64,12 @@ export default function Birthday() {
 					minimumDate={new Date('1960-01-01')}
 					maximumDate={new Date()}
 					onDateChange={(date: Date) => {
-						console.log(date);
+						setDate(date);
 					}}
 					textColor="black"
 					selectTextColor="black"
 					textSize={18}
+					date={date}
 				/>
 			</View>
 		</View>

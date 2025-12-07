@@ -117,6 +117,7 @@ export default function EventFilter({
 								display="spinner"
 								themeVariant="light"
 								textColor="black"
+								minimumDate={new Date()}
 								onChange={(event, selectedDate) => {
 									if (selectedDate) setFromDate(selectedDate);
 								}}
@@ -138,6 +139,7 @@ export default function EventFilter({
 									value={fromDate}
 									mode="date"
 									display="default"
+									minimumDate={new Date()}
 									onChange={(event, selectedDate) => {
 										if (event.type === 'dismissed') {
 											setOpenFrom(false);
@@ -161,6 +163,7 @@ export default function EventFilter({
 								display="spinner"
 								themeVariant="light"
 								textColor="black"
+								minimumDate={new Date()}
 								onChange={(event, selectedDate) => {
 									if (selectedDate) setToDate(selectedDate);
 								}}
@@ -182,6 +185,7 @@ export default function EventFilter({
 									value={toDate}
 									mode="date"
 									display="default"
+									minimumDate={new Date()}
 									onChange={(event, selectedDate) => {
 										if (event.type === 'dismissed') {
 											setOpenTo(false);

@@ -40,6 +40,14 @@ export default function LoginLayout() {
 			/>
 			<Stack.Screen name="enableLocation" options={{ headerShown: false }} />
 			<Stack.Screen name="onboarding" options={{ headerShown: false }} />
+			<Stack.Screen
+				name="ageModal"
+				options={{
+					presentation: 'formSheet',
+					sheetAllowedDetents: 'fitToContents',
+					contentStyle: { backgroundColor: 'transparent' },
+				}}
+			/>
 		</Stack>
 	);
 }
