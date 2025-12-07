@@ -4,6 +4,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import React from 'react';
 import {
+	Alert,
 	ScrollView,
 	StatusBar,
 	Text,
@@ -286,7 +287,23 @@ function MessageRow({
 			>
 				<TouchableOpacity
 					style={tw`w-20 h-full items-center justify-center bg-red-500 rounded-r-lg`}
-					onPress={onDelete}
+					onPress={() => {
+						Alert.alert(
+							'Delete Message',
+							'Are you sure you want to delete this message?',
+							[
+								{
+									text: 'Cancel',
+									style: 'cancel',
+								},
+								{
+									text: 'Delete',
+									onPress: onDelete,
+									style: 'destructive',
+								},
+							]
+						);
+					}}
 				>
 					<Text style={tw`text-white font-poppinsSemiBold`}>Delete</Text>
 				</TouchableOpacity>
