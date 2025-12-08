@@ -1,13 +1,23 @@
 import { iconYesIdLoveTo } from '@/assets/icon';
 import tw from '@/src/lib/tailwind';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { SvgXml } from 'react-native-svg';
 import TitleAndSubtitle from '../Register/TitleAndSubtitle';
 
 export default function Email() {
 	const [email, setEmail] = React.useState('');
-	const [isSubscribed, setIsSubscribed] = React.useState(true);
+	const [isSubscribed, setIsSubscribed] = React.useState(false);
+
+	useEffect(() => {
+		if (email.trim() === '') {
+			setIsSubscribed(false);
+		}
+		if (email.trim() !== '') {
+			setIsSubscribed(true);
+		}
+	}, [email]);
+
 	return (
 		<View style={tw`flex-1 w-full`}>
 			<TitleAndSubtitle
@@ -28,6 +38,7 @@ export default function Email() {
 						: 'bg-gray-100 border border-gray-300 '
 				}`}
 				onPress={() => setIsSubscribed(!isSubscribed)}
+				disabled={email.trim() === ''}
 			>
 				{isSubscribed && (
 					<SvgXml xml={iconYesIdLoveTo} width={20} height={20} />

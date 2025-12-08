@@ -10,13 +10,22 @@ export default function Birthday({
 }: {
 	setAge: (age: number) => void;
 }) {
-	const [date, setDate] = useState(new Date());
+	// default date to 18 years ago so picker doesn't start with a too-recent date
+	const [date, setDate] = useState(() => {
+		const d = new Date();
+		d.setFullYear(d.getFullYear() - 18);
+		return d;
+	});
 	const [showAndroidPicker, setShowAndroidPicker] = useState(true);
 
 	useEffect(() => {
 		const age = new Date().getFullYear() - date.getFullYear();
 		setAge(age);
 	}, [date]);
+
+	// compute maximum selectable date as "today minus 18 years"
+	const maxSelectableDate = new Date();
+	maxSelectableDate.setFullYear(maxSelectableDate.getFullYear() - 18);
 
 	return (
 		<View style={tw`flex-1 w-full`}>
@@ -25,44 +34,10 @@ export default function Birthday({
 				subtitle="Your age will be public."
 			/>
 			<View style={tw`mt-25 items-center justify-center`}>
-				{/* {Platform.OS === 'ios' ? (
-					<DateTimePicker
-						value={date}
-						mode="date"
-						display="spinner"
-						textColor="black"
-						onChange={(event, selectedDate) => {
-							if (selectedDate) setDate(selectedDate);
-						}}
-					/>
-				) : (
-					<>
-						<TouchableOpacity
-							style={tw`px-4 py-3 bg-blue rounded-full`}
-							onPress={() => setShowAndroidPicker(true)}
-						>
-							<Text style={tw`text-white font-poppinsSemiBold`}>
-								Select Birth Date
-							</Text>
-						</TouchableOpacity>
-						{showAndroidPicker && (
-							<DateTimePicker
-								value={date}
-								mode="date"
-								display="spinner"
-								onChange={(event, selectedDate) => {
-									if (selectedDate) setDate(selectedDate);
-									// Close after selection or dismissal
-									setShowAndroidPicker(false);
-								}}
-							/>
-						)}
-					</>
-				)} */}
 				<DatePicker
 					style={{ backgroundColor: 'white', width: 340, height: 240 }}
 					minimumDate={new Date('1960-01-01')}
-					maximumDate={new Date()}
+					maximumDate={maxSelectableDate}
 					onDateChange={(date: Date) => {
 						setDate(date);
 					}}

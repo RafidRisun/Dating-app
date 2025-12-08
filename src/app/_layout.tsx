@@ -1,5 +1,6 @@
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
+import { ThemeProvider } from '../lib/ThemeContext';
 
 export default function RootLayout() {
 	const [loaded] = useFonts({
@@ -10,9 +11,13 @@ export default function RootLayout() {
 		poppinsLight: require('../../assets/fonts/Poppins-Light.ttf'),
 	});
 
+	if (!loaded) return null;
+
 	return (
-		<Stack screenOptions={{ headerShown: false }}>
-			<Stack.Screen name="index" />
-		</Stack>
+		<ThemeProvider>
+			<Stack screenOptions={{ headerShown: false }}>
+				<Stack.Screen name="index" />
+			</Stack>
+		</ThemeProvider>
 	);
 }

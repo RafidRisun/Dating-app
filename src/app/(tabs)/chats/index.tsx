@@ -17,6 +17,7 @@ import {
 	GestureHandlerRootView,
 } from 'react-native-gesture-handler';
 import Animated, {
+	runOnJS,
 	useAnimatedStyle,
 	useSharedValue,
 	withSpring,
@@ -261,11 +262,32 @@ function MessageRow({
 }) {
 	const translateX = useSharedValue(0);
 	const maxTranslate = -90; // width of delete button
+	const touchBlocked = React.useRef(false);
+
+	const setBlocked = (val: boolean) => {
+		touchBlocked.current = val;
+	};
+
+	const clearBlockedDelayed = () => {
+		// keep blocked for a short moment after gesture ends to avoid immediate taps
+		setTimeout(() => {
+			touchBlocked.current = false;
+		}, 250);
+	};
 
 	const gesture = Gesture.Pan()
+		// only activate after horizontal movement; fail when vertical movement is significant
+		.activeOffsetX([-10, 10])
+		.failOffsetY([-10, 10])
+		.onStart(() => {
+			// mark that we're interacting with the row
+			runOnJS(setBlocked)(true);
+		})
 		.onUpdate(({ translationX }) => {
 			// allow only left dragging up to maxTranslate
-			translateX.value = Math.max(maxTranslate, Math.min(0, translationX));
+			if (translationX < 0) {
+				translateX.value = Math.max(translationX, maxTranslate);
+			}
 		})
 		.onEnd(({ translationX, velocityX }) => {
 			if (translationX < maxTranslate / 2 || velocityX < -500) {
@@ -273,6 +295,8 @@ function MessageRow({
 			} else {
 				translateX.value = withSpring(0, { velocity: velocityX });
 			}
+			// clear the blocked flag shortly after gesture ends (on JS thread)
+			runOnJS(clearBlockedDelayed)();
 		});
 
 	const animatedStyle = useAnimatedStyle(() => ({
@@ -319,7 +343,10 @@ function MessageRow({
 					}
 				>
 					<TouchableOpacity
-						onPress={onOpenChat}
+						onPress={() => {
+							if (touchBlocked.current) return;
+							onOpenChat();
+						}}
 						style={tw`flex flex-row items-center flex-1`}
 					>
 						<Image source={message.image} style={tw`w-12 h-12 rounded-full`} />

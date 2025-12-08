@@ -3,6 +3,7 @@ import {
 	iconAccountSettings,
 	iconHelp,
 	iconLanguageSettings,
+	iconLogout,
 	iconNotificationSettings,
 	iconPrivacySettings,
 	iconRateUs,
@@ -212,7 +213,7 @@ export default function Settings() {
 								])
 							}
 						>
-							<SvgXml xml={iconShare} />
+							<SvgXml xml={iconLogout} />
 							<Text style={tw`text-sm font-poppins`}>Log Out</Text>
 							<SvgXml xml={iconRightArrowGradient} />
 						</TouchableOpacity>

@@ -71,26 +71,6 @@ export default function Gender() {
 						Non-Binary
 					</Text>
 				</TouchableOpacity>
-				<TouchableOpacity
-					style={tw`w-full p-4 border border-gray-300 bg-gray-100 rounded-lg ${
-						selectedGender === 'Other' ? 'bg-blue' : ''
-					}`}
-					onPress={() => {
-						if (selectedGender === 'Other') {
-							setSelectedGender(null);
-						} else {
-							setSelectedGender('Other');
-						}
-					}}
-				>
-					<Text
-						style={tw`font-poppinsSemiBold text-lg ${
-							selectedGender === 'Other' ? 'text-white' : 'text-gray-600'
-						}`}
-					>
-						Other
-					</Text>
-				</TouchableOpacity>
 			</View>
 		</View>
 	);

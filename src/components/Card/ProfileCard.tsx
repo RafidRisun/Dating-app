@@ -7,7 +7,6 @@ import {
 	iconShareSmall,
 	iconSuperLike,
 	iconSwipeMessage,
-	iconVerified,
 } from '@/assets/icon';
 import tw from '@/src/lib/tailwind';
 import { Image } from 'expo-image';
@@ -156,11 +155,13 @@ export function ProfileCard({
 							contentFit="cover"
 						/>
 						<View style={tw`absolute bottom-0 w-full p-4`}>
-							<View style={tw`flex-row items-center gap-2`}>
+							<View style={tw`flex-row items-center gap-3`}>
 								<Text style={tw`text-white text-3xl font-poppinsSemiBold`}>
 									{profile.name}, {profile.age}
 								</Text>
-								{profile.verified && <SvgXml xml={iconVerified} />}
+								{profile.verified && (
+									<SvgXml xml={iconSuperLike} width={16} height={16} />
+								)}
 							</View>
 
 							<View style={tw`flex flex-row items-center gap-2`}>
@@ -186,12 +187,9 @@ export function ProfileCard({
 								<View
 									style={tw`flex w-full items-center absolute bottom-[-2] `}
 								>
-									<TouchableOpacity
-										style={tw`w-20 items-center`}
-										onPress={() => router.push('/(tabs)/swipe/profile')}
-									>
+									<View style={tw`w-20 items-center`}>
 										<SvgXml xml={iconDownArrow} width={20} height={20} />
-									</TouchableOpacity>
+									</View>
 								</View>
 							</View>
 						</View>

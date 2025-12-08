@@ -43,6 +43,7 @@ export default function LoginLayout() {
 			<Stack.Screen
 				name="ageModal"
 				options={{
+					headerShown: false,
 					presentation: 'formSheet',
 					sheetAllowedDetents: 'fitToContents',
 					contentStyle: { backgroundColor: 'transparent' },

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import {
+	Modal,
 	Platform,
 	ScrollView,
 	Text,
@@ -10,6 +11,7 @@ import {
 import { iconCalendarBlack, iconCloseSmall } from '@/assets/icon';
 import tw from '@/src/lib/tailwind';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { Calendar } from 'react-native-calendars';
 import { SvgXml } from 'react-native-svg';
 
 export default function EventFilter({
@@ -110,19 +112,59 @@ export default function EventFilter({
 						Specific Date Range:
 					</Text>
 					{Platform.OS === 'ios' ? (
-						<View style={tw`w-full bg-white rounded-lg`}>
-							<DateTimePicker
-								value={fromDate}
-								mode="date"
-								display="spinner"
-								themeVariant="light"
-								textColor="black"
-								minimumDate={new Date()}
-								onChange={(event, selectedDate) => {
-									if (selectedDate) setFromDate(selectedDate);
-								}}
-							/>
-						</View>
+						<>
+							<TouchableOpacity
+								style={tw`w-full p-3 border border-gray-300 bg-gray-100 rounded-lg flex flex-row  items-center justify-between`}
+								onPress={() => setOpenFrom(true)}
+							>
+								<Text style={tw`font-poppinsSemiBold text-xs text-gray-600`}>
+									{fromDate.toDateString()}
+								</Text>
+								<SvgXml xml={iconCalendarBlack} />
+							</TouchableOpacity>
+							{openFrom && (
+								<Modal visible transparent animationType="slide">
+									<View
+										style={{
+											flex: 1,
+											backgroundColor: 'rgba(0,0,0,0.4)',
+											justifyContent: 'center',
+											alignItems: 'center',
+											padding: 20,
+										}}
+									>
+										<View
+											style={{
+												width: '100%',
+												borderRadius: 12,
+												overflow: 'hidden',
+											}}
+										>
+											<Calendar
+												onDayPress={day => {
+													const selected = new Date(day.timestamp);
+													setFromDate(selected);
+													setOpenFrom(false);
+												}}
+												markedDates={{
+													[fromDate.toISOString().split('T')[0]]: {
+														selected: true,
+														selectedColor: 'blue',
+													},
+												}}
+												minDate={new Date().toISOString().split('T')[0]}
+											/>
+											<TouchableOpacity
+												style={tw`w-full p-3 items-center bg-gray-100`}
+												onPress={() => setOpenFrom(false)}
+											>
+												<Text style={tw`font-poppinsSemiBold`}>Close</Text>
+											</TouchableOpacity>
+										</View>
+									</View>
+								</Modal>
+							)}
+						</>
 					) : (
 						<>
 							<TouchableOpacity
@@ -156,19 +198,59 @@ export default function EventFilter({
 					)}
 					<Text style={tw`font-poppinsSemiBold text-gray-600`}>To:</Text>
 					{Platform.OS === 'ios' ? (
-						<View style={tw`w-full bg-white rounded-lg mb-10`}>
-							<DateTimePicker
-								value={toDate}
-								mode="date"
-								display="spinner"
-								themeVariant="light"
-								textColor="black"
-								minimumDate={new Date()}
-								onChange={(event, selectedDate) => {
-									if (selectedDate) setToDate(selectedDate);
-								}}
-							/>
-						</View>
+						<>
+							<TouchableOpacity
+								style={tw`w-full p-3 border border-gray-300 bg-gray-100 rounded-lg flex flex-row  items-center justify-between mb-10`}
+								onPress={() => setOpenTo(true)}
+							>
+								<Text style={tw`font-poppinsSemiBold text-xs text-gray-600`}>
+									{toDate.toDateString()}
+								</Text>
+								<SvgXml xml={iconCalendarBlack} />
+							</TouchableOpacity>
+							{openTo && (
+								<Modal visible transparent animationType="slide">
+									<View
+										style={{
+											flex: 1,
+											backgroundColor: 'rgba(0,0,0,0.4)',
+											justifyContent: 'center',
+											alignItems: 'center',
+											padding: 20,
+										}}
+									>
+										<View
+											style={{
+												width: '100%',
+												borderRadius: 12,
+												overflow: 'hidden',
+											}}
+										>
+											<Calendar
+												onDayPress={day => {
+													const selected = new Date(day.timestamp);
+													setToDate(selected);
+													setOpenTo(false);
+												}}
+												markedDates={{
+													[toDate.toISOString().split('T')[0]]: {
+														selected: true,
+														selectedColor: 'blue',
+													},
+												}}
+												minDate={new Date().toISOString().split('T')[0]}
+											/>
+											<TouchableOpacity
+												style={tw`w-full p-3 items-center bg-gray-100`}
+												onPress={() => setOpenTo(false)}
+											>
+												<Text style={tw`font-poppinsSemiBold`}>Close</Text>
+											</TouchableOpacity>
+										</View>
+									</View>
+								</Modal>
+							)}
+						</>
 					) : (
 						<>
 							<TouchableOpacity
