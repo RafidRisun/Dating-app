@@ -9,6 +9,7 @@ import {
 	iconSwipeMessage,
 } from '@/assets/icon';
 import tw from '@/src/lib/tailwind';
+import { useTheme } from '@/src/lib/ThemeContext';
 import { Image } from 'expo-image';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
@@ -45,6 +46,7 @@ export function ProfileCard({
 	style,
 	setBottomSheetVisible,
 }: ProfileCardProps & { style?: any }) {
+	const { theme, toggleTheme, setTheme, isHydrated } = useTheme();
 	const router = useRouter();
 
 	const translateX = useSharedValue(0);
@@ -144,7 +146,7 @@ export function ProfileCard({
 				}}
 			>
 				<ScrollView
-					style={tw`flex-1 pb-4 bg-white`}
+					style={tw`flex-1 pb-4 ${theme === 'dark' ? 'bg-dark' : 'bg-white'}`}
 					showsVerticalScrollIndicator={false}
 					scrollEventThrottle={16}
 				>
@@ -173,13 +175,17 @@ export function ProfileCard({
 
 							<View style={tw`flex flex-row items-center justify-between mt-3`}>
 								<TouchableOpacity
-									style={tw`w-12 h-12 rounded-full bg-white items-center justify-center`}
+									style={tw`w-12 h-12 rounded-full ${
+										theme === 'dark' ? 'bg-dark' : 'bg-white'
+									} items-center justify-center`}
 									onPress={() => setDmModal(true)}
 								>
 									<SvgXml xml={iconSwipeMessage} />
 								</TouchableOpacity>
 								<TouchableOpacity
-									style={tw`w-12 h-12 rounded-full bg-white items-center justify-center`}
+									style={tw`w-12 h-12 rounded-full ${
+										theme === 'dark' ? 'bg-dark' : 'bg-white'
+									} items-center justify-center`}
 									onPress={() => setSuperLikeModal(true)}
 								>
 									<SvgXml xml={iconSuperLike} />
@@ -196,10 +202,22 @@ export function ProfileCard({
 					</View>
 					{/* header */}
 					<View
-						style={tw`flex flex-col p-4 gap-2 shadow-md bg-white rounded-lg mt-5 mx-1`}
+						style={tw`flex flex-col p-4 gap-2 shadow-md ${
+							theme === 'dark' ? 'bg-lightDark' : 'bg-white'
+						} rounded-lg mt-5 mx-1`}
 					>
-						<Text style={tw`text-sm font-poppinsSemiBold`}>ABOUT ME</Text>
-						<Text style={tw`text-sm font-poppins text-gray-700`}>
+						<Text
+							style={tw`text-sm font-poppinsSemiBold ${
+								theme === 'dark' ? 'text-white' : 'text-black'
+							}`}
+						>
+							ABOUT ME
+						</Text>
+						<Text
+							style={tw`text-sm font-poppins ${
+								theme === 'dark' ? 'text-white' : 'text-gray-700'
+							} `}
+						>
 							Just a creative soul looking for my next adventure. I love
 							painting on weekends and exploring new hiking trails. Big believer
 							in zodiac compatibility!
@@ -210,29 +228,61 @@ export function ProfileCard({
 						style={tw`w-full h-150 my-4`}
 					/>
 					<View
-						style={tw`flex flex-col p-4 gap-2 shadow-md bg-white rounded-lg my-5 mx-1`}
+						style={tw`flex flex-col p-4 gap-2 shadow-md ${
+							theme === 'dark' ? 'bg-lightDark' : 'bg-white'
+						} rounded-lg my-5 mx-1`}
 					>
-						<Text style={tw`text-sm font-poppinsSemiBold`}>HEIGHT</Text>
-						<Text style={tw`text-sm font-poppins text-gray-700`}>
+						<Text
+							style={tw`text-sm font-poppinsSemiBold ${
+								theme === 'dark' ? 'text-white' : 'text-black'
+							}`}
+						>
+							HEIGHT
+						</Text>
+						<Text
+							style={tw`text-sm font-poppins ${
+								theme === 'dark' ? 'text-white' : 'text-gray-700'
+							}`}
+						>
 							180cm (5&apos;9&quot;)
 						</Text>
 					</View>
 					<View
-						style={tw`flex flex-col p-4 gap-3 shadow-md bg-white rounded-lg my-5 mx-1`}
+						style={tw`flex flex-col p-4 gap-3 shadow-md ${
+							theme === 'dark' ? 'bg-lightDark' : 'bg-white'
+						} rounded-lg my-5 mx-1`}
 					>
-						<Text style={tw`text-sm font-poppinsSemiBold`}>LOOKING FOR</Text>
+						<Text
+							style={tw`text-sm font-poppinsSemiBold ${
+								theme === 'dark' ? 'text-white' : 'text-black'
+							}`}
+						>
+							LOOKING FOR
+						</Text>
 						<View style={tw`flex flex-row gap-2`}>
 							<View
-								style={tw`px-3 py-1 bg-gray-200 rounded-full items-center justify-center`}
+								style={tw`px-3 py-1 ${
+									theme === 'dark' ? 'bg-lightDark' : 'bg-gray-200'
+								} rounded-full items-center justify-center`}
 							>
-								<Text style={tw`text-sm font-poppins text-gray-700`}>
+								<Text
+									style={tw`text-sm font-poppins ${
+										theme === 'dark' ? 'text-white' : 'text-gray-700'
+									}`}
+								>
 									Something Casual
 								</Text>
 							</View>
 							<View
-								style={tw`px-3 py-1 bg-gray-200 rounded-full items-center justify-center`}
+								style={tw`px-3 py-1 ${
+									theme === 'dark' ? 'bg-lightDark' : 'bg-gray-200'
+								} rounded-full items-center justify-center`}
 							>
-								<Text style={tw`text-sm font-poppins text-gray-700`}>
+								<Text
+									style={tw`text-sm font-poppins ${
+										theme === 'dark' ? 'text-white' : 'text-gray-700'
+									}`}
+								>
 									Some clapping
 								</Text>
 							</View>
@@ -243,64 +293,134 @@ export function ProfileCard({
 						style={tw`w-full h-150 my-4`}
 					/>
 					<View
-						style={tw`flex flex-col p-4 gap-3 shadow-md bg-white rounded-lg my-5 mx-1`}
+						style={tw`flex flex-col p-4 gap-3 shadow-md ${
+							theme === 'dark' ? 'bg-lightDark' : 'bg-white'
+						} rounded-lg my-5 mx-1`}
 					>
-						<Text style={tw`text-sm font-poppinsSemiBold`}>INTERESTS</Text>
+						<Text
+							style={tw`text-sm font-poppinsSemiBold ${
+								theme === 'dark' ? 'text-white' : 'text-black'
+							}`}
+						>
+							INTERESTS
+						</Text>
 						<View style={tw`flex flex-row gap-2`}>
 							<View
-								style={tw`px-3 py-1 bg-gray-200 rounded-full items-center justify-center`}
+								style={tw`px-3 py-1 ${
+									theme === 'dark' ? 'bg-lightDark' : 'bg-gray-200'
+								} rounded-full items-center justify-center`}
 							>
-								<Text style={tw`text-sm font-poppins text-gray-700`}>
+								<Text
+									style={tw`text-sm font-poppins ${
+										theme === 'dark' ? 'text-white' : 'text-gray-700'
+									}`}
+								>
 									Hiking
 								</Text>
 							</View>
 							<View
-								style={tw`px-3 py-1 bg-gray-200 rounded-full items-center justify-center`}
+								style={tw`px-3 py-1 ${
+									theme === 'dark' ? 'bg-lightDark' : 'bg-gray-200'
+								} rounded-full items-center justify-center`}
 							>
-								<Text style={tw`text-sm font-poppins text-gray-700`}>
+								<Text
+									style={tw`text-sm font-poppins ${
+										theme === 'dark' ? 'text-white' : 'text-gray-700'
+									}`}
+								>
 									Clapping
 								</Text>
 							</View>
 						</View>
 					</View>
 					<View
-						style={tw`flex flex-col p-4 gap-3 shadow-md bg-white rounded-lg my-5 mx-1`}
+						style={tw`flex flex-col p-4 gap-3 shadow-md ${
+							theme === 'dark' ? 'bg-lightDark' : 'bg-white'
+						} rounded-lg my-5 mx-1`}
 					>
-						<Text style={tw`text-sm font-poppinsSemiBold`}>LIFESTYLE</Text>
+						<Text
+							style={tw`text-sm font-poppinsSemiBold ${
+								theme === 'dark' ? 'text-white' : 'text-black'
+							}`}
+						>
+							LIFESTYLE
+						</Text>
 						<View style={tw`flex flex-row gap-2`}>
 							<View
-								style={tw`px-3 py-1 bg-gray-200 rounded-full items-center justify-center`}
+								style={tw`px-3 py-1 ${
+									theme === 'dark' ? 'bg-lightDark' : 'bg-gray-200'
+								} rounded-full items-center justify-center`}
 							>
-								<Text style={tw`text-sm font-poppins text-gray-700`}>
+								<Text
+									style={tw`text-sm font-poppins ${
+										theme === 'dark' ? 'text-white' : 'text-gray-700'
+									}`}
+								>
 									Smoker
 								</Text>
 							</View>
 							<View
-								style={tw`px-3 py-1 bg-gray-200 rounded-full items-center justify-center`}
+								style={tw`px-3 py-1 ${
+									theme === 'dark' ? 'bg-lightDark' : 'bg-gray-200'
+								} rounded-full items-center justify-center`}
 							>
-								<Text style={tw`text-sm font-poppins text-gray-700`}>
+								<Text
+									style={tw`text-sm font-poppins ${
+										theme === 'dark' ? 'text-white' : 'text-gray-700'
+									}`}
+								>
 									Drinker
 								</Text>
 							</View>
 						</View>
 					</View>
 					<View
-						style={tw`flex flex-col p-4 gap-2 shadow-md bg-white rounded-lg my-5 mx-1`}
+						style={tw`flex flex-col p-4 gap-2 shadow-md ${
+							theme === 'dark' ? 'bg-lightDark' : 'bg-white'
+						} rounded-lg my-5 mx-1`}
 					>
-						<Text style={tw`text-sm font-poppinsSemiBold`}>EDUCATION</Text>
-						<Text style={tw`text-sm font-poppins text-gray-700`}>
+						<Text
+							style={tw`text-sm font-poppinsSemiBold ${
+								theme === 'dark' ? 'text-white' : 'text-black'
+							}`}
+						>
+							EDUCATION
+						</Text>
+						<Text
+							style={tw`text-sm font-poppins ${
+								theme === 'dark' ? 'text-white' : 'text-gray-700'
+							}`}
+						>
 							Master&apos;s Degree on Bouncing Balls
 						</Text>
 					</View>
 					<View
-						style={tw`flex flex-col p-4 gap-2 shadow-md bg-white rounded-lg my-5 mx-1`}
+						style={tw`flex flex-col p-4 gap-2 shadow-md ${
+							theme === 'dark' ? 'bg-lightDark' : 'bg-white'
+						} rounded-lg my-5 mx-1`}
 					>
-						<Text style={tw`text-sm font-poppinsSemiBold`}>LOCATION</Text>
+						<Text
+							style={tw`text-sm font-poppinsSemiBold ${
+								theme === 'dark' ? 'text-white' : 'text-black'
+							}`}
+						>
+							LOCATION
+						</Text>
 						<View style={tw`flex flex-row items-center gap-2`}>
 							<SvgXml xml={iconLocationLarge} />
 							<View style={tw`flex flex-col`}>
-								<Text style={tw`text-sm font-poppins`}>New York, NY</Text>
-								<Text style={tw`text-sm font-poppins text-gray-700`}>
+								<Text
+									style={tw`text-sm font-poppins ${
+										theme === 'dark' ? 'text-white' : 'text-black'
+									}`}
+								>
+									New York, NY
+								</Text>
+								<Text
+									style={tw`text-sm font-poppins ${
+										theme === 'dark' ? 'text-white' : 'text-gray-700'
+									}`}
+								>
 									2 miles away
 								</Text>
 							</View>
@@ -309,7 +429,9 @@ export function ProfileCard({
 					<View style={tw`flex flex-col gap-4 w-full py-6 mb-20`}>
 						<View style={tw`flex w-full items-center justify-center`}>
 							<TouchableOpacity
-								style={tw`w-12 h-12 rounded-full bg-white shadow-lg shadow-[#00B7DC] items-center justify-center`}
+								style={tw`w-12 h-12 rounded-full ${
+									theme === 'dark' ? 'bg-lightDark' : 'bg-white'
+								} shadow-lg shadow-[#00B7DC] items-center justify-center`}
 								onPress={() => setSuperLikeModal(true)}
 							>
 								<SvgXml xml={iconSuperLike} />
@@ -319,13 +441,17 @@ export function ProfileCard({
 							style={tw`flex flex-row w-full px-8 items-center justify-between`}
 						>
 							<TouchableOpacity
-								style={tw`w-12 h-12 rounded-full bg-white shadow-lg shadow-[#FF0000] items-center justify-center`}
+								style={tw`w-12 h-12 rounded-full ${
+									theme === 'dark' ? 'bg-lightDark' : 'bg-white'
+								} shadow-lg shadow-[#FF0000] items-center justify-center`}
 								onPress={handleDisLike}
 							>
 								<SvgXml xml={iconNope} />
 							</TouchableOpacity>
 							<TouchableOpacity
-								style={tw`w-12 h-12 rounded-full bg-white shadow-lg shadow-[#AC48FF] items-center justify-center`}
+								style={tw`w-12 h-12 rounded-full ${
+									theme === 'dark' ? 'bg-lightDark' : 'bg-white'
+								} shadow-lg shadow-[#AC48FF] items-center justify-center`}
 								onPress={handleLike}
 							>
 								<SvgXml xml={iconLike} />
@@ -335,7 +461,13 @@ export function ProfileCard({
 							style={tw`flex flex-col gap-5 items-center justify-center w-full absolute bottom-[-10]`}
 						>
 							<TouchableOpacity>
-								<Text style={tw`text-lg font-poppinsSemiBold`}>Block</Text>
+								<Text
+									style={tw`text-lg font-poppinsSemiBold ${
+										theme === 'dark' ? 'text-white' : 'text-black'
+									}`}
+								>
+									Block
+								</Text>
 							</TouchableOpacity>
 							<TouchableOpacity>
 								<Text style={tw`text-lg font-poppinsSemiBold text-red-500`}>

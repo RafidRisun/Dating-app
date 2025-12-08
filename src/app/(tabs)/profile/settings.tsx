@@ -118,6 +118,19 @@ export default function Settings() {
 						</TouchableOpacity>
 						<TouchableOpacity
 							style={tw`flex flex-row gap-4 justify-between items-center border-b-[0.2px] border-gray-400 pb-4`}
+							onPress={() => router.push('/(tabs)/profile/settings/theme')}
+						>
+							<SvgXml xml={iconPrivacySettings} />
+							<View style={tw`flex flex-col gap-1 flex-1`}>
+								<Text style={tw`text-sm font-poppins`}>Theme</Text>
+								<Text style={tw`text-xs font-poppins text-gray-600`}>
+									Select your preferred theme
+								</Text>
+							</View>
+							<SvgXml xml={iconRightArrowGradient} />
+						</TouchableOpacity>
+						<TouchableOpacity
+							style={tw`flex flex-row gap-4 justify-between items-center border-b-[0.2px] border-gray-400 pb-4`}
 							onPress={() =>
 								router.push('/(tabs)/profile/settings/notifications')
 							}

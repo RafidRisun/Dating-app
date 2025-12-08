@@ -1,5 +1,6 @@
 import { iconLocked } from '@/assets/icon';
 import tw from '@/src/lib/tailwind';
+import { useTheme } from '@/src/lib/ThemeContext';
 import { BlurView } from 'expo-blur';
 import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -21,6 +22,7 @@ const screenWidth = Dimensions.get('window').width;
 const cardWidth = (screenWidth * 43) / 100;
 
 export default function Likes() {
+	const { theme } = useTheme();
 	const [index, setIndex] = React.useState(0);
 	const pagerRef = useRef<PagerView>(null); // Properly type the PagerView ref
 	const router = useRouter();
@@ -31,11 +33,22 @@ export default function Likes() {
 	};
 
 	return (
-		<SafeAreaView edges={['top']} style={tw`flex-1 bg-white`}>
-			<StatusBar barStyle="dark-content" />
-			<View style={tw`flex-1 bg-white`}>
+		<SafeAreaView
+			edges={['top']}
+			style={tw`flex-1 ${theme === 'dark' ? 'bg-dark' : 'bg-white'}`}
+		>
+			<StatusBar
+				barStyle={theme === 'dark' ? 'light-content' : 'dark-content'}
+			/>
+			<View style={tw`flex-1 ${theme === 'dark' ? 'bg-dark' : 'bg-white'}`}>
 				<View style={tw`flex flex-row w-full items-center justify-start p-4`}>
-					<Text style={tw`font-poppinsSemiBold text-2xl`}>Likes</Text>
+					<Text
+						style={tw`font-poppinsSemiBold text-2xl ${
+							theme === 'dark' ? 'text-white' : 'text-black'
+						}`}
+					>
+						Likes
+					</Text>
 				</View>
 				<View
 					style={tw`flex flex-row w-full items-center border-b border-gray-200`}

@@ -4,6 +4,7 @@ import { ProfileCard } from '@/src/components/Card/ProfileCard';
 import ProfileDetails from '@/src/components/Card/ProfileDetails';
 import ConfirmationModal from '@/src/components/ConfirmationModal';
 import tw from '@/src/lib/tailwind';
+import { useTheme } from '@/src/lib/ThemeContext';
 import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { BlurView } from 'expo-blur';
 import { useRouter } from 'expo-router';
@@ -14,6 +15,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { SvgXml } from 'react-native-svg';
 
 export default function SwipeScreen() {
+	const { theme, toggleTheme, setTheme, isHydrated } = useTheme();
+
 	const router = useRouter();
 	const [cards, setCards] = useState(profiles);
 
@@ -34,13 +37,27 @@ export default function SwipeScreen() {
 
 	return (
 		<GestureHandlerRootView style={{ flex: 1 }}>
-			<SafeAreaView style={tw`flex-1 bg-white`}>
-				<StatusBar barStyle="dark-content" />
-				<View style={tw`flex-1 bg-white relative`}>
+			<SafeAreaView
+				style={tw`flex-1 ${theme === 'dark' ? 'bg-dark' : 'bg-white'}`}
+			>
+				<StatusBar
+					barStyle={theme === 'dark' ? 'light-content' : 'dark-content'}
+				/>
+				<View
+					style={tw`flex-1 ${
+						theme === 'dark' ? 'bg-dark' : 'bg-white'
+					} relative`}
+				>
 					<View
 						style={tw`flex flex-row w-full items-center justify-between p-4`}
 					>
-						<Text style={tw`font-poppinsSemiBold text-2xl`}>Soulflag</Text>
+						<Text
+							style={tw`font-poppinsSemiBold text-2xl ${
+								theme === 'dark' ? 'text-white' : 'text-black'
+							}`}
+						>
+							Soulflag
+						</Text>
 						<View style={tw`flex flex-row items-center gap-8`}>
 							<TouchableOpacity onPress={() => setGobackModal(true)}>
 								<SvgXml xml={iconReload} />

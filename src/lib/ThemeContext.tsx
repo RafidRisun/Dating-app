@@ -1,6 +1,6 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { Appearance } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type Theme = 'light' | 'dark';
 
@@ -8,6 +8,8 @@ type ThemeContextValue = {
 	theme: Theme;
 	setTheme: (t: Theme) => Promise<void>;
 	toggleTheme: () => Promise<void>;
+	/** Remove saved preference and revert to system color scheme */
+	resetThemeToSystem: () => Promise<void>;
 	isHydrated: boolean;
 };
 
@@ -15,7 +17,9 @@ const STORAGE_KEY = 'user_theme_preference';
 
 const ThemeContext = createContext<ThemeContextValue | undefined>(undefined);
 
-export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
+	children,
+}) => {
 	const [theme, setThemeState] = useState<Theme>(() => {
 		const sys = Appearance.getColorScheme();
 		return (sys === 'dark' ? 'dark' : 'light') as Theme;
@@ -50,8 +54,20 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 		await setTheme(theme === 'dark' ? 'light' : 'dark');
 	};
 
+	const resetThemeToSystem = async () => {
+		try {
+			await AsyncStorage.removeItem(STORAGE_KEY);
+		} catch {
+			// ignore
+		}
+		const sys = Appearance.getColorScheme();
+		setThemeState(sys === 'dark' ? 'dark' : 'light');
+	};
+
 	return (
-		<ThemeContext.Provider value={{ theme, setTheme, toggleTheme, isHydrated }}>
+		<ThemeContext.Provider
+			value={{ theme, setTheme, toggleTheme, resetThemeToSystem, isHydrated }}
+		>
 			{children}
 		</ThemeContext.Provider>
 	);
