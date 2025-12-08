@@ -3,6 +3,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useTheme } from '../lib/ThemeContext';
 
 export default function OneTimePaymentModal({
 	title,
@@ -13,6 +14,7 @@ export default function OneTimePaymentModal({
 	subtitle: string;
 	action: () => void;
 }) {
+	const { theme } = useTheme();
 	const insets = useSafeAreaInsets();
 	const plans = [
 		{
@@ -43,12 +45,24 @@ export default function OneTimePaymentModal({
 	return (
 		<View
 			style={[
-				tw`w-full bg-white rounded-t-3xl p-6`,
+				tw`w-full bg-${theme === 'dark' ? 'dark' : 'white'} rounded-t-3xl p-6`,
 				{ paddingBottom: Math.max(insets.bottom, 16), overflow: 'hidden' },
 			]}
 		>
-			<Text style={tw`text-center text-lg font-poppinsSemiBold`}>{title}</Text>
-			<Text style={tw`text-center text-sm font-poppins mt-4`}>{subtitle}</Text>
+			<Text
+				style={tw`text-center text-lg font-poppinsSemiBold text-${
+					theme === 'dark' ? 'white' : 'black'
+				}`}
+			>
+				{title}
+			</Text>
+			<Text
+				style={tw`text-center text-sm font-poppins mt-4 text-${
+					theme === 'dark' ? 'white' : 'black'
+				}`}
+			>
+				{subtitle}
+			</Text>
 			<ScrollView
 				horizontal
 				showsHorizontalScrollIndicator={false}
@@ -89,7 +103,11 @@ export default function OneTimePaymentModal({
 				</View>
 			</ScrollView>
 			<View style={tw`w-full h-1 border-b border-gray-300 rounded-full mt-6`} />
-			<Text style={tw`text-xs font-poppins mt-6`}>
+			<Text
+				style={tw`text-xs font-poppins mt-6 ${
+					theme === 'dark' ? 'text-white' : 'text-black'
+				}`}
+			>
 				One-time payment. By purchasing, you agree to this transaction and our
 				terms.
 			</Text>

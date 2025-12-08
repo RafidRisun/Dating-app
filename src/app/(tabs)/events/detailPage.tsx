@@ -1,9 +1,13 @@
 import {
+	iconBack,
+	iconBackDark,
 	iconCalendarGradient,
 	iconLocationPinGradient,
+	iconShareDark,
 	iconShareLarge,
 } from '@/assets/icon';
 import tw from '@/src/lib/tailwind';
+import { useTheme } from '@/src/lib/ThemeContext';
 import { Image } from 'expo-image';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import React, { useState } from 'react';
@@ -18,6 +22,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { SvgXml } from 'react-native-svg';
 
 export default function DetailPage() {
+	const { theme } = useTheme();
 	const router = useRouter();
 	const { eventId } = useLocalSearchParams();
 	console.log(eventId);
@@ -25,21 +30,26 @@ export default function DetailPage() {
 	const [isExpanded, setIsExpanded] = useState(false);
 
 	return (
-		<SafeAreaView edges={['top']} style={tw`flex-1 bg-white`}>
-			<StatusBar barStyle="dark-content" />
+		<SafeAreaView
+			edges={['top']}
+			style={tw`flex-1 bg-${theme === 'dark' ? 'dark' : 'white'}`}
+		>
+			<StatusBar
+				barStyle={theme === 'dark' ? 'light-content' : 'dark-content'}
+			/>
 			<View style={tw`flex flex-row w-full items-center justify-between p-4`}>
 				<TouchableOpacity style={tw`self-start `} onPress={() => router.back()}>
-					<Image
-						source={require('../../../../assets/images/backbutton.png')}
-						style={tw`w-4 h-7`}
-						contentFit="contain"
-					/>
+					<SvgXml xml={theme === 'dark' ? iconBackDark : iconBack} />
 				</TouchableOpacity>
-				<Text style={tw`self-center text-lg font-poppinsSemiBold`}>
+				<Text
+					style={tw`self-center text-lg font-poppinsSemiBold ${
+						theme === 'dark' ? 'text-white' : 'text-black'
+					}`}
+				>
 					Summer Music Festival
 				</Text>
 				<TouchableOpacity>
-					<SvgXml xml={iconShareLarge} />
+					<SvgXml xml={theme === 'dark' ? iconShareDark : iconShareLarge} />
 				</TouchableOpacity>
 			</View>
 			<ScrollView style={tw`flex-1`}>
@@ -49,28 +59,48 @@ export default function DetailPage() {
 						style={tw`w-full h-64 rounded-lg`}
 						contentFit="cover"
 					/>
-					<Text style={tw`text-2xl font-poppinsSemiBold`}>
+					<Text
+						style={tw`text-2xl font-poppinsSemiBold ${
+							theme === 'dark' ? 'text-white' : 'text-black'
+						}`}
+					>
 						Summer Music Festival
 					</Text>
 					<View style={tw`flex flex-col gap-3`}>
 						<View style={tw`flex flex-row items-center gap-2`}>
 							<SvgXml xml={iconCalendarGradient} />
-							<Text style={tw`text-sm font-poppins text-gray-600`}>
+							<Text
+								style={tw`text-sm font-poppins ${
+									theme === 'dark' ? 'text-white' : 'text-gray-600'
+								}`}
+							>
 								Saturday, August 15, 2024 • 3:00 PM - 10:00 PM
 							</Text>
 						</View>
 						<View style={tw`flex flex-row items-center gap-2`}>
 							<SvgXml xml={iconLocationPinGradient} />
-							<Text style={tw`text-sm font-poppins text-gray-600`}>
+							<Text
+								style={tw`text-sm font-poppins ${
+									theme === 'dark' ? 'text-white' : 'text-gray-600'
+								}`}
+							>
 								123 Music Ave, Melody City
 							</Text>
 						</View>
 					</View>
 					<View style={tw`flex flex-col gap-1`}>
-						<Text style={tw`text-lg font-poppinsSemiBold`}>
+						<Text
+							style={tw`text-lg font-poppinsSemiBold ${
+								theme === 'dark' ? 'text-white' : 'text-gray-600'
+							}`}
+						>
 							Ticket Sales Points
 						</Text>
-						<Text style={tw`text-sm font-poppins text-gray-600`}>
+						<Text
+							style={tw`text-sm font-poppins ${
+								theme === 'dark' ? 'text-white' : 'text-gray-600'
+							}`}
+						>
 							Click, compare and socialize
 						</Text>
 					</View>
@@ -105,11 +135,19 @@ export default function DetailPage() {
 								Go
 							</Text>
 						</TouchableOpacity>
-						<Text style={tw`text-xs text-gray-500 font-poppins`}>
+						<Text
+							style={tw`text-xs ${
+								theme === 'dark' ? 'text-white' : 'text-gray-500'
+							} font-poppins`}
+						>
 							Prices are subject to change
 						</Text>
 					</View>
-					<Text style={tw`text-sm font-poppins text-gray-700 text-justify`}>
+					<Text
+						style={tw`text-sm font-poppins ${
+							theme === 'dark' ? 'text-white' : 'text-gray-700'
+						} text-justify`}
+					>
 						{isExpanded ? (
 							<>
 								Join us for the biggest summer music festival of the year!
@@ -136,7 +174,11 @@ export default function DetailPage() {
 						)}
 					</Text>
 					<View style={tw`flex flex-col gap-3`}>
-						<Text style={tw`text-lg font-poppinsSemiBold`}>
+						<Text
+							style={tw`text-lg font-poppinsSemiBold ${
+								theme === 'dark' ? 'text-white' : 'text-black'
+							}`}
+						>
 							People that wants to attend
 						</Text>
 						<View style={tw`flex flex-row w-full items-center justify-between`}>

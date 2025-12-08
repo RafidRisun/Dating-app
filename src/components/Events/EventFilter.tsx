@@ -10,6 +10,7 @@ import {
 
 import { iconCalendarBlack, iconCloseSmall } from '@/assets/icon';
 import tw from '@/src/lib/tailwind';
+import { useTheme } from '@/src/lib/ThemeContext';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Calendar } from 'react-native-calendars';
 import { SvgXml } from 'react-native-svg';
@@ -21,6 +22,7 @@ export default function EventFilter({
 	visible: boolean;
 	setVisible: (visible: boolean) => void;
 }) {
+	const { theme } = useTheme();
 	const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
 	const [selectedDates, setSelectedDates] = useState<string[]>([]);
 
@@ -37,7 +39,11 @@ export default function EventFilter({
 				{ zIndex: 1000 }, // Ensure modal has the highest zIndex
 			]}
 		>
-			<View style={tw`w-full h-8/9 bg-white rounded-lg p-6 flex items-center`}>
+			<View
+				style={tw`w-full h-8/9 bg-${
+					theme === 'dark' ? 'dark' : 'white'
+				} rounded-lg p-6 flex items-center`}
+			>
 				<Text style={tw`text-xl font-poppinsSemiBold mb-4`}>Filters</Text>
 				<ScrollView
 					style={tw`w-full`}

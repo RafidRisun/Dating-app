@@ -1,6 +1,7 @@
 import { iconFilter, iconLocationXS, iconRightArrowBlue } from '@/assets/icon';
 import EventFilter from '@/src/components/Events/EventFilter';
 import tw from '@/src/lib/tailwind';
+import { useTheme } from '@/src/lib/ThemeContext';
 import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
@@ -20,16 +21,28 @@ const screenWidth = Dimensions.get('window').width;
 const cardWidth = (screenWidth * 43) / 100;
 
 export default function Events() {
+	const { theme } = useTheme();
 	const router = useRouter();
 	const [selectedCategory, setSelectedCategory] = React.useState(categories[0]);
 	const [modalVisible, setModalVisible] = React.useState(false);
 
 	return (
-		<SafeAreaView edges={['top']} style={tw`flex-1 bg-white`}>
-			<StatusBar barStyle="dark-content" />
-			<View style={tw`flex-1 bg-white`}>
+		<SafeAreaView
+			edges={['top']}
+			style={tw`flex-1 bg-${theme === 'dark' ? 'dark' : 'white'}`}
+		>
+			<StatusBar
+				barStyle={theme === 'dark' ? 'light-content' : 'dark-content'}
+			/>
+			<View style={tw`flex-1 bg-${theme === 'dark' ? 'dark' : 'white'}`}>
 				<View style={tw`flex flex-row w-full items-center justify-between p-4`}>
-					<Text style={tw`font-poppinsSemiBold text-2xl`}>Events</Text>
+					<Text
+						style={tw`font-poppinsSemiBold text-2xl ${
+							theme === 'dark' ? 'text-white' : 'text-black'
+						}`}
+					>
+						Events
+					</Text>
 					<View style={tw`flex flex-col items-end justify-center gap-2`}>
 						<TouchableOpacity onPress={() => setModalVisible(true)}>
 							<SvgXml xml={iconFilter} />
@@ -50,7 +63,9 @@ export default function Events() {
 								style={tw`flex items-center justify-center px-4 py-2 mr-3 ${
 									selectedCategory.id === category.id
 										? ''
-										: 'bg-white border border-gray-400'
+										: `bg-${
+												theme === 'dark' ? 'lightDark' : 'white'
+										  } border border-gray-400`
 								} rounded-lg`}
 								onPress={() => setSelectedCategory(category)}
 							>
@@ -64,7 +79,9 @@ export default function Events() {
 								)}
 								<Text
 									style={tw`font-poppins text-base text-center ${
-										selectedCategory.id === category.id ? 'text-white' : ''
+										selectedCategory.id === category.id
+											? 'text-white'
+											: `${theme === 'dark' ? 'text-white' : 'text-black'}`
 									}`}
 								>
 									{category.name}
@@ -78,7 +95,9 @@ export default function Events() {
 						{events.map(event => (
 							<TouchableOpacity
 								key={event.id}
-								style={tw`flex flex-col w-[${cardWidth}px] h-75 justify-between rounded-xl bg-white shadow-sm`}
+								style={tw`flex flex-col w-[${cardWidth}px] h-75 justify-between rounded-xl bg-${
+									theme === 'dark' ? 'dark' : 'white'
+								} shadow-sm`}
 								onPress={() =>
 									router.push({
 										pathname: '/(tabs)/events/detailPage',
@@ -92,7 +111,11 @@ export default function Events() {
 										style={tw`w-full h-30 rounded-xl`}
 									/>
 									<View style={tw`flex flex-col gap-2 px-2 pb-2`}>
-										<Text style={tw`text-base font-poppinsSemiBold`}>
+										<Text
+											style={tw`text-base font-poppinsSemiBold ${
+												theme === 'dark' ? 'text-white' : 'text-black'
+											}`}
+										>
 											{event.title}
 										</Text>
 										<Text style={tw`text-xs font-poppins text-gray-400`}>

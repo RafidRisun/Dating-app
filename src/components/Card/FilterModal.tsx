@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 // Replacing RNPickerSelect with a custom modal for Expo Go reliability
 // import RangeSlider from 'react-native-range-slider-expo';
+import { useTheme } from '@/src/lib/ThemeContext';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
 import { SvgXml } from 'react-native-svg';
 
@@ -21,6 +22,8 @@ export default function FilterModal({
 	visible: boolean;
 	setVisible: (visible: boolean) => void;
 }) {
+	const { theme } = useTheme();
+
 	const [verifiedProfile, setVerifiedProfile] = useState(false);
 	const toggleVerifiedProfileSwitch = () =>
 		setVerifiedProfile(previousState => !previousState);
@@ -69,56 +72,114 @@ export default function FilterModal({
 				{ zIndex: 1000 }, // Ensure modal has the highest zIndex
 			]}
 		>
-			<View style={tw`w-full h-8/9 bg-white rounded-lg p-6 flex items-center`}>
-				<Text style={tw`text-xl font-poppinsSemiBold mb-4`}>Filters</Text>
+			<View
+				style={tw`w-full h-8/9 bg-${
+					theme === 'dark' ? 'dark' : 'white'
+				} rounded-lg p-6 flex items-center`}
+			>
+				<Text
+					style={tw`text-xl font-poppinsSemiBold mb-4 ${
+						theme === 'dark' ? 'text-white' : 'text-black'
+					}`}
+				>
+					Filters
+				</Text>
 				<ScrollView
 					style={tw`w-full`}
 					contentContainerStyle={tw`gap-4`}
 					showsVerticalScrollIndicator={false}
 				>
-					<Text style={tw`font-poppinsSemiBold text-gray-600 mb-4`}>
+					<Text
+						style={tw`font-poppinsSemiBold ${
+							theme === 'dark' ? 'text-white' : 'text-gray-600'
+						} mb-4`}
+					>
 						Who would you like to date?
 					</Text>
 					<View style={tw`flex flex-col gap-2 w-full mb-4`}>
 						<TouchableOpacity
-							style={tw`w-full items-center p-3 border border-gray-300 bg-gray-100 rounded-lg`}
+							style={tw`w-full items-center p-3 border border-gray-300 bg-${
+								theme === 'dark' ? 'lightDark' : 'gray-100'
+							} rounded-lg`}
 						>
-							<Text style={tw`font-poppinsSemiBold text-base text-gray-600`}>
+							<Text
+								style={tw`font-poppinsSemiBold text-base ${
+									theme === 'dark' ? 'text-white' : 'text-gray-600'
+								}`}
+							>
 								Men
 							</Text>
 						</TouchableOpacity>
 						<TouchableOpacity
-							style={tw`w-full items-center p-3 border border-gray-300 bg-gray-100 rounded-lg`}
+							style={tw`w-full items-center p-3 border border-gray-300 bg-${
+								theme === 'dark' ? 'lightDark' : 'gray-100'
+							} rounded-lg`}
 						>
-							<Text style={tw`font-poppinsSemiBold text-base text-gray-600`}>
+							<Text
+								style={tw`font-poppinsSemiBold text-base ${
+									theme === 'dark' ? 'text-white' : 'text-gray-600'
+								}`}
+							>
 								Women
 							</Text>
 						</TouchableOpacity>
 						<TouchableOpacity
-							style={tw`w-full items-center p-3 border border-gray-300 bg-gray-100 rounded-lg`}
+							style={tw`w-full items-center p-3 border border-gray-300 bg-${
+								theme === 'dark' ? 'lightDark' : 'gray-100'
+							} rounded-lg`}
 						>
-							<Text style={tw`font-poppinsSemiBold text-base text-gray-600`}>
+							<Text
+								style={tw`font-poppinsSemiBold text-base ${
+									theme === 'dark' ? 'text-white' : 'text-gray-600'
+								}`}
+							>
 								Non-Binary
 							</Text>
 						</TouchableOpacity>
 						<TouchableOpacity
-							style={tw`w-full items-center p-3 border border-gray-300 bg-gray-100 rounded-lg`}
+							style={tw`w-full items-center p-3 border border-gray-300 bg-${
+								theme === 'dark' ? 'lightDark' : 'gray-100'
+							} rounded-lg`}
 						>
-							<Text style={tw`font-poppinsSemiBold text-base text-gray-600`}>
+							<Text
+								style={tw`font-poppinsSemiBold text-base ${
+									theme === 'dark' ? 'text-white' : 'text-gray-600'
+								}`}
+							>
 								I&apos;m open to anyone
 							</Text>
 						</TouchableOpacity>
 					</View>
-					<Text style={tw`font-poppinsSemiBold text-gray-600 mb-4`}>
+					<Text
+						style={tw`font-poppinsSemiBold ${
+							theme === 'dark' ? 'text-white' : 'text-gray-600'
+						} mb-4`}
+					>
 						Age Range
 					</Text>
 					<View style={tw`flex flex-col w-full`}>
 						<View style={tw`flex flex-row items-center justify-between`}>
-							<Text style={tw`text-sm font-poppins text-gray-600`}>18</Text>
-							<Text style={tw`text-sm font-poppinsSemiBold text-gray-800`}>
+							<Text
+								style={tw`text-sm font-poppins ${
+									theme === 'dark' ? 'text-white' : 'text-gray-600'
+								}`}
+							>
+								18
+							</Text>
+							<Text
+								style={tw`text-sm font-poppinsSemiBold ${
+									theme === 'dark' ? 'text-white' : 'text-gray-600'
+								}`}
+							>
 								{fromValue} - {toValue}
 							</Text>
-							<Text style={tw`text-sm font-poppins text-gray-600`}>65+</Text>
+							<Text
+								style={tw`text-sm font-poppins ${
+									theme === 'dark' ? 'text-white' : 'text-gray-600'
+								}`}
+							>
+								65+
+							</Text>
 						</View>
 						<View style={tw`w-full items-center`}>
 							<MultiSlider
@@ -139,23 +200,41 @@ export default function FilterModal({
 					</View>
 					<View style={[tw`w-full`, { zIndex: 20 }]}>
 						<TouchableOpacity
-							style={tw`w-full p-3 border border-gray-300 bg-gray-100 rounded-lg flex flex-row items-center justify-between`}
+							style={tw`w-full p-3 border border-gray-300 bg-${
+								theme === 'dark' ? 'lightDark' : 'gray-100'
+							} rounded-lg flex flex-row items-center justify-between`}
 							onPress={() => setCityModalOpen(true)}
 						>
-							<Text style={tw`font-poppinsSemiBold text-xs text-gray-600`}>
+							<Text
+								style={tw`font-poppinsSemiBold text-xs ${
+									theme === 'dark' ? 'text-white' : 'text-gray-600'
+								}`}
+							>
 								{city ? cityLabelMap[city] : 'City'}
 							</Text>
 						</TouchableOpacity>
-						<Text style={tw`text-xs font-poppins text-gray-500`}>
+						<Text
+							style={tw`text-xs font-poppins ${
+								theme === 'dark' ? 'text-white' : 'text-gray-600'
+							}`}
+						>
 							Travel Mode {'(multi-city)'} is a Premium feature
 						</Text>
 					</View>
 					<View style={tw`flex flex-col gap-4 w-full mb-20`}>
-						<Text style={tw`font-poppinsSemiBold text-gray-600`}>
+						<Text
+							style={tw`font-poppinsSemiBold ${
+								theme === 'dark' ? 'text-white' : 'text-gray-600'
+							}`}
+						>
 							Premium Filters
 						</Text>
 						<View style={tw`flex flex-row w-full items-center justify-between`}>
-							<Text style={tw`text-sm font-poppins text-gray-600`}>
+							<Text
+								style={tw`text-sm font-poppins ${
+									theme === 'dark' ? 'text-white' : 'text-gray-600'
+								}`}
+							>
 								Verified profiles only
 							</Text>
 							<Switch
@@ -167,7 +246,11 @@ export default function FilterModal({
 							/>
 						</View>
 						<View style={tw`flex flex-row w-full items-center justify-between`}>
-							<Text style={tw`text-sm font-poppins text-gray-600`}>
+							<Text
+								style={tw`text-sm font-poppins ${
+									theme === 'dark' ? 'text-white' : 'text-gray-600'
+								}`}
+							>
 								Travel Mode
 							</Text>
 							<Switch
@@ -179,7 +262,11 @@ export default function FilterModal({
 							/>
 						</View>
 						<View style={tw`flex flex-row w-full items-center justify-between`}>
-							<Text style={tw`text-sm font-poppins text-gray-600`}>
+							<Text
+								style={tw`text-sm font-poppins ${
+									theme === 'dark' ? 'text-white' : 'text-gray-600'
+								}`}
+							>
 								Only visible to profiles you liked
 							</Text>
 							<Switch
@@ -209,21 +296,37 @@ export default function FilterModal({
 				<View
 					style={tw`absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center px-5`}
 				>
-					<View style={tw`w-full h-1/2 bg-white rounded-lg p-4`}>
-						<Text style={tw`text-base font-poppinsSemiBold mb-3`}>
+					<View
+						style={tw`w-full h-1/2 bg-${
+							theme === 'dark' ? 'lightDark' : 'white'
+						} rounded-lg p-4`}
+					>
+						<Text
+							style={tw`text-base font-poppinsSemiBold mb-3 ${
+								theme === 'dark' ? 'text-white' : 'text-black'
+							}`}
+						>
 							Select City (Turkey)
 						</Text>
 						<ScrollView style={tw`w-full`} showsVerticalScrollIndicator={false}>
 							{turkishCities.map(c => (
 								<TouchableOpacity
 									key={c.value}
-									style={tw`w-full p-3 border border-gray-200 rounded-lg mb-2`}
+									style={tw`w-full p-3 border border-gray-200 bg-${
+										theme === 'dark' ? 'dark' : 'white'
+									} rounded-lg mb-2`}
 									onPress={() => {
 										setCity(c.value);
 										setCityModalOpen(false);
 									}}
 								>
-									<Text style={tw`font-poppins text-gray-800`}>{c.label}</Text>
+									<Text
+										style={tw`font-poppins ${
+											theme === 'dark' ? 'text-white' : 'text-gray-800'
+										}`}
+									>
+										{c.label}
+									</Text>
 								</TouchableOpacity>
 							))}
 						</ScrollView>

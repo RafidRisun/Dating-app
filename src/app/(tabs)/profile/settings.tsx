@@ -9,6 +9,7 @@ import {
 	iconRateUs,
 	iconRightArrowGradient,
 	iconShare,
+	iconTheme,
 } from '@/assets/icon';
 import WrapperWithHeader from '@/src/components/WrapperWithHeader';
 import tw from '@/src/lib/tailwind';
@@ -120,7 +121,7 @@ export default function Settings() {
 							style={tw`flex flex-row gap-4 justify-between items-center border-b-[0.2px] border-gray-400 pb-4`}
 							onPress={() => router.push('/(tabs)/profile/settings/theme')}
 						>
-							<SvgXml xml={iconPrivacySettings} />
+							<SvgXml xml={iconTheme} />
 							<View style={tw`flex flex-col gap-1 flex-1`}>
 								<Text style={tw`text-sm font-poppins`}>Theme</Text>
 								<Text style={tw`text-xs font-poppins text-gray-600`}>

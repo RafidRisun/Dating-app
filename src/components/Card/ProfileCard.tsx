@@ -1,8 +1,8 @@
 import {
 	iconDownArrow,
 	iconLike,
-	iconLocationLarge,
 	iconLocationSmall,
+	iconLocationSmallDark,
 	iconNope,
 	iconShareSmall,
 	iconSuperLike,
@@ -407,7 +407,11 @@ export function ProfileCard({
 							LOCATION
 						</Text>
 						<View style={tw`flex flex-row items-center gap-2`}>
-							<SvgXml xml={iconLocationLarge} />
+							{theme === 'dark' ? (
+								<SvgXml xml={iconLocationSmallDark} />
+							) : (
+								<SvgXml xml={iconLocationSmall} />
+							)}
 							<View style={tw`flex flex-col`}>
 								<Text
 									style={tw`text-sm font-poppins ${

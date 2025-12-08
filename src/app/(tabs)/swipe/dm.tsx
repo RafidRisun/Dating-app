@@ -1,5 +1,6 @@
-import { iconBack, iconSendMessage } from '@/assets/icon';
+import { iconBack, iconBackDark, iconSendMessage } from '@/assets/icon';
 import tw from '@/src/lib/tailwind';
+import { useTheme } from '@/src/lib/ThemeContext';
 import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
@@ -17,6 +18,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { SvgXml } from 'react-native-svg';
 
 export default function Dm() {
+	const { theme } = useTheme();
 	const router = useRouter();
 
 	const [dmCount, setDmCount] = React.useState(5);
@@ -54,24 +56,39 @@ export default function Dm() {
 	);
 
 	return (
-		<SafeAreaView edges={['top']} style={tw`flex-1 bg-white`}>
+		<SafeAreaView
+			edges={['top']}
+			style={tw`flex-1 bg-${theme === 'dark' ? 'dark' : 'white'}`}
+		>
 			<KeyboardAvoidingView behavior="padding" style={tw`flex-1`}>
-				<View style={tw`flex-1 bg-gray-100`}>
+				<View
+					style={tw`flex-1 bg-${theme === 'dark' ? 'lightDark' : 'gray-100'}`}
+				>
 					{/* Header */}
 					<View
-						style={tw`flex flex-row bg-white w-full items-center justify-between gap-4 p-4`}
+						style={tw`flex flex-row bg-${
+							theme === 'dark' ? 'dark' : 'white'
+						} w-full items-center justify-between gap-4 p-4`}
 					>
 						<TouchableOpacity onPress={() => router.back()}>
-							<SvgXml xml={iconBack} />
+							<SvgXml xml={theme === 'dark' ? iconBackDark : iconBack} />
 						</TouchableOpacity>
-						<View style={tw`flex-1 items-center`}>
-							<Text>Jackson, 27</Text>
+						<View style={tw`flex-1 items-center `}>
+							<Text
+								style={tw`${theme === 'dark' ? 'text-white' : 'text-black'}`}
+							>
+								Jackson, 27
+							</Text>
 						</View>
 						<View style={tw`flex flex-col items-end gap-1`}>
 							<View
 								style={tw`w-6 h-6 flex items-center justify-center border border-gray-300 rounded-full`}
 							>
-								<Text>{dmCount}</Text>
+								<Text
+									style={tw`${theme === 'dark' ? 'text-white' : 'text-black'}`}
+								>
+									{dmCount}
+								</Text>
 							</View>
 							{dmCount === 0 && (
 								<LinearGradient
@@ -123,10 +140,16 @@ export default function Dm() {
 					/>
 
 					{/* Input Field */}
-					<View style={tw`flex flex-row items-center gap-4 px-4 py-2 bg-white`}>
+					<View
+						style={tw`flex flex-row items-center gap-4 px-4 py-2 bg-${
+							theme === 'dark' ? 'dark' : 'white'
+						}`}
+					>
 						<TextInput
 							placeholder={dmCount > 0 ? 'Type a message...' : 'No DMs left'}
-							style={tw`flex-1 border border-gray-300 rounded-full px-4 py-2`}
+							style={tw`flex-1 border border-gray-300 rounded-full px-4 py-2 text-${
+								theme === 'dark' ? 'white' : 'black'
+							}`}
 							value={inputText}
 							onChangeText={setInputText}
 							editable={dmCount > 0}

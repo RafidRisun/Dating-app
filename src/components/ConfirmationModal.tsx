@@ -10,6 +10,7 @@ import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { SvgXml } from 'react-native-svg';
 import tw from '../lib/tailwind';
+import { useTheme } from '../lib/ThemeContext';
 
 export default function ConfirmationModal({
 	icon,
@@ -30,13 +31,16 @@ export default function ConfirmationModal({
 	const outOfLikes = iconOutOfLikes;
 	const goBack = iconGoBack;
 	const unMatch = iconUnmatch;
+	const { theme } = useTheme();
 	return (
 		<View
 			style={tw`flex items-center justify-center w-full absolute inset-0 z-50`}
 		>
 			<View style={tw`flex-1 w-full bg-black opacity-10 absolute inset-0`} />
 			<View
-				style={tw`flex items-center justify-center w-9/10 p-4 gap-2 bg-white rounded-lg`}
+				style={tw`flex items-center justify-center w-9/10 p-4 gap-2 bg-${
+					theme === 'dark' ? 'dark' : 'white'
+				} rounded-lg`}
 			>
 				<SvgXml
 					xml={
@@ -55,7 +59,11 @@ export default function ConfirmationModal({
 							: null
 					}
 				/>
-				<Text style={tw`text-lg font-poppinsSemiBold text-center`}>
+				<Text
+					style={tw`text-lg font-poppinsSemiBold text-center text-${
+						theme === 'dark' ? 'white' : 'black'
+					}`}
+				>
 					{confirmationText}
 				</Text>
 				<Text style={tw`text-sm font-poppins text-gray-400 text-center`}>
@@ -75,7 +83,11 @@ export default function ConfirmationModal({
 					style={tw`w-full border border-gray-300 rounded-lg py-3`}
 					onPress={onCancel}
 				>
-					<Text style={tw`text-gray-600 text-center text-base font-poppins`}>
+					<Text
+						style={tw`${
+							theme === 'dark' ? 'text-white' : 'text-gray-700'
+						} text-center text-base font-poppins`}
+					>
 						Cancel
 					</Text>
 				</TouchableOpacity>
