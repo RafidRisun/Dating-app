@@ -1,4 +1,5 @@
 import tw from '@/src/lib/tailwind';
+import { useTheme } from '@/src/lib/ThemeContext';
 import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
 import {
@@ -11,16 +12,30 @@ import {
 } from 'react-native';
 
 export default function RateModal() {
+	const { theme } = useTheme();
 	const [rating, setRating] = React.useState(0);
 	const [opinion, setOpinion] = React.useState('');
 
 	return (
 		<TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-			<View style={tw`w-full bg-white rounded-t-3xl p-6`}>
-				<Text style={tw`text-center text-lg font-poppinsSemiBold`}>
+			{/* <KeyboardAvoidingView behavior="padding"> */}
+			<View
+				style={tw`w-full ${
+					theme === 'dark' ? 'bg-dark' : 'bg-white'
+				} rounded-t-3xl p-6`}
+			>
+				<Text
+					style={tw`text-center text-lg font-poppinsSemiBold ${
+						theme === 'dark' ? 'text-white' : 'text-black'
+					}`}
+				>
 					Enjoying Soulflag?
 				</Text>
-				<Text style={tw`text-center text-sm font-poppins mt-4`}>
+				<Text
+					style={tw`text-center text-sm font-poppins mt-4 ${
+						theme === 'dark' ? 'text-gray-300' : 'text-gray-600'
+					}`}
+				>
 					Your feedback helps us improve the app and provide a better experience
 					for you.
 				</Text>
@@ -52,7 +67,11 @@ export default function RateModal() {
 					))}
 				</View>
 				<TextInput
-					style={tw`w-full h-40 p-3 bg-gray-100 border border-gray-300 rounded-lg mt-6 text-base font-poppins text-gray-800`}
+					style={tw`w-full h-40 p-3 ${
+						theme === 'dark' ? 'bg-gray-800' : 'bg-gray-100'
+					} border border-gray-300 rounded-lg mt-6 text-base font-poppins ${
+						theme === 'dark' ? 'text-gray-200' : 'text-gray-800'
+					}`}
 					placeholder="Tell us more about your experience..."
 					multiline
 					numberOfLines={6}
@@ -70,6 +89,7 @@ export default function RateModal() {
 					</Text>
 				</TouchableOpacity>
 			</View>
+			{/* </KeyboardAvoidingView> */}
 		</TouchableWithoutFeedback>
 	);
 }

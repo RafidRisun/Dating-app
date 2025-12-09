@@ -13,6 +13,7 @@ import {
 } from '@/assets/icon';
 import WrapperWithHeader from '@/src/components/WrapperWithHeader';
 import tw from '@/src/lib/tailwind';
+import { useTheme } from '@/src/lib/ThemeContext';
 import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
@@ -28,6 +29,7 @@ import {
 import { SvgXml } from 'react-native-svg';
 
 export default function Settings() {
+	const { theme } = useTheme();
 	const router = useRouter();
 	const [dateMode, setDateMode] = React.useState(false);
 	const toggleDateModeSwitch = () =>
@@ -41,7 +43,9 @@ export default function Settings() {
 			>
 				<View style={tw`gap-4 py-4`}>
 					<View
-						style={tw`flex flex-col w-full p-4 gap-4 bg-white border-[0.2px] border-gray-400 rounded-lg`}
+						style={tw`flex flex-col w-full p-4 gap-4 ${
+							theme === 'dark' ? 'bg-dark' : 'bg-white'
+						} border-[0.2px] border-gray-400 rounded-lg`}
 					>
 						<TouchableOpacity
 							style={tw`flex flex-row gap-4 justify-between items-center border-b-[0.2px] border-gray-400 pb-4`}
@@ -60,8 +64,18 @@ export default function Settings() {
 								style={tw`flex flex-col gap-1 flex-1`}
 								onPress={() => router.push('/(tabs)/profile/editProfile')}
 							>
-								<Text style={tw`text-sm font-poppins`}>Dem Clapperz</Text>
-								<Text style={tw`text-xs font-poppins text-gray-600`}>
+								<Text
+									style={tw`text-sm font-poppins ${
+										theme === 'dark' ? 'text-white' : 'text-black'
+									}`}
+								>
+									Dem Clapperz
+								</Text>
+								<Text
+									style={tw`text-xs font-poppins ${
+										theme === 'dark' ? 'text-gray-400' : 'text-gray-600'
+									}`}
+								>
 									Edit Profile
 								</Text>
 							</TouchableOpacity>
@@ -70,7 +84,13 @@ export default function Settings() {
 						<View
 							style={tw`flex flex-col gap-2 border-b-[0.2px] border-gray-400 pb-4`}
 						>
-							<Text style={tw`text-base font-poppins`}>Date Mode</Text>
+							<Text
+								style={tw`text-sm font-poppins ${
+									theme === 'dark' ? 'text-white' : 'text-black'
+								}`}
+							>
+								Date Mode
+							</Text>
 							<View style={tw`flex flex-row justify-between items-center`}>
 								<Text
 									style={tw`text-sm font-poppins text-gray-600 flex-1 pr-1`}
@@ -93,7 +113,13 @@ export default function Settings() {
 						>
 							<SvgXml xml={iconAccountSettings} />
 							<View style={tw`flex flex-col gap-1 flex-1`}>
-								<Text style={tw`text-sm font-poppins`}>Account</Text>
+								<Text
+									style={tw`text-sm font-poppins ${
+										theme === 'dark' ? 'text-white' : 'text-black'
+									}`}
+								>
+									Account
+								</Text>
 								<Text style={tw`text-xs font-poppins text-gray-600`}>
 									View your account information
 								</Text>
@@ -108,7 +134,11 @@ export default function Settings() {
 						>
 							<SvgXml xml={iconPrivacySettings} />
 							<View style={tw`flex flex-col gap-1 flex-1`}>
-								<Text style={tw`text-sm font-poppins`}>
+								<Text
+									style={tw`text-sm font-poppins ${
+										theme === 'dark' ? 'text-white' : 'text-black'
+									}`}
+								>
 									Privacy and Security
 								</Text>
 								<Text style={tw`text-xs font-poppins text-gray-600`}>
@@ -123,8 +153,18 @@ export default function Settings() {
 						>
 							<SvgXml xml={iconTheme} />
 							<View style={tw`flex flex-col gap-1 flex-1`}>
-								<Text style={tw`text-sm font-poppins`}>Theme</Text>
-								<Text style={tw`text-xs font-poppins text-gray-600`}>
+								<Text
+									style={tw`text-sm font-poppins ${
+										theme === 'dark' ? 'text-white' : 'text-black'
+									}`}
+								>
+									Theme
+								</Text>
+								<Text
+									style={tw`text-xs font-poppins ${
+										theme === 'dark' ? 'text-gray-400' : 'text-gray-600'
+									}`}
+								>
 									Select your preferred theme
 								</Text>
 							</View>
@@ -138,8 +178,18 @@ export default function Settings() {
 						>
 							<SvgXml xml={iconNotificationSettings} />
 							<View style={tw`flex flex-col gap-1 flex-1`}>
-								<Text style={tw`text-sm font-poppins`}>Notifications</Text>
-								<Text style={tw`text-xs font-poppins text-gray-600`}>
+								<Text
+									style={tw`text-sm font-poppins ${
+										theme === 'dark' ? 'text-white' : 'text-black'
+									}`}
+								>
+									Notifications
+								</Text>
+								<Text
+									style={tw`text-xs font-poppins ${
+										theme === 'dark' ? 'text-gray-400' : 'text-gray-600'
+									}`}
+								>
 									Manage your notification preferences
 								</Text>
 							</View>
@@ -151,8 +201,18 @@ export default function Settings() {
 						>
 							<SvgXml xml={iconLanguageSettings} />
 							<View style={tw`flex flex-col gap-1 flex-1`}>
-								<Text style={tw`text-sm font-poppins`}>Language</Text>
-								<Text style={tw`text-xs font-poppins text-gray-600`}>
+								<Text
+									style={tw`text-sm font-poppins ${
+										theme === 'dark' ? 'text-white' : 'text-black'
+									}`}
+								>
+									Language
+								</Text>
+								<Text
+									style={tw`text-xs font-poppins ${
+										theme === 'dark' ? 'text-gray-400' : 'text-gray-600'
+									}`}
+								>
 									Select your preferred language
 								</Text>
 							</View>
@@ -160,17 +220,27 @@ export default function Settings() {
 						</TouchableOpacity>
 					</View>
 					<View
-						style={tw`flex flex-col w-full p-4 gap-4 bg-white border-[0.2px] border-gray-400 rounded-lg`}
+						style={tw`flex flex-col w-full p-4 gap-4 ${
+							theme === 'dark' ? 'bg-dark' : 'bg-white'
+						} border-[0.2px] border-gray-400 rounded-lg`}
 					>
 						<TouchableOpacity
 							style={tw`flex flex-row gap-4 justify-between items-center`}
 						>
 							<SvgXml xml={iconShare} />
 							<View style={tw`flex flex-col gap-1 flex-1`}>
-								<Text style={tw`text-sm font-poppins`}>
+								<Text
+									style={tw`text-sm font-poppins ${
+										theme === 'dark' ? 'text-white' : 'text-black'
+									}`}
+								>
 									Recommend to a friend
 								</Text>
-								<Text style={tw`text-xs font-poppins text-gray-600`}>
+								<Text
+									style={tw`text-xs font-poppins ${
+										theme === 'dark' ? 'text-gray-400' : 'text-gray-600'
+									}`}
+								>
 									Recommend to a friend and get a 1-month Soulflag Plus
 									subscription, the first month free for both of you.
 								</Text>
@@ -179,14 +249,22 @@ export default function Settings() {
 						</TouchableOpacity>
 					</View>
 					<View
-						style={tw`flex flex-col w-full p-4 gap-4 bg-white border-[0.2px] border-gray-400 rounded-lg`}
+						style={tw`flex flex-col w-full p-4 gap-4 ${
+							theme === 'dark' ? 'bg-dark' : 'bg-white'
+						} border-[0.2px] border-gray-400 rounded-lg`}
 					>
 						<TouchableOpacity
 							style={tw`flex flex-row gap-4 justify-between items-center border-b-[0.2px] border-gray-400 pb-4`}
 							onPress={() => router.push('/(tabs)/profile/rateModal')}
 						>
 							<SvgXml xml={iconRateUs} />
-							<Text style={tw`text-sm font-poppins`}>Rate Us</Text>
+							<Text
+								style={tw`text-sm font-poppins ${
+									theme === 'dark' ? 'text-white' : 'text-black'
+								}`}
+							>
+								Rate Us
+							</Text>
 							<SvgXml xml={iconRightArrowGradient} />
 						</TouchableOpacity>
 						<TouchableOpacity
@@ -194,7 +272,13 @@ export default function Settings() {
 							onPress={() => router.push('/(tabs)/profile/settings/about')}
 						>
 							<SvgXml xml={iconAboutUs} />
-							<Text style={tw`text-sm font-poppins`}>About</Text>
+							<Text
+								style={tw`text-sm font-poppins ${
+									theme === 'dark' ? 'text-white' : 'text-black'
+								}`}
+							>
+								About
+							</Text>
 							<SvgXml xml={iconRightArrowGradient} />
 						</TouchableOpacity>
 						<TouchableOpacity
@@ -202,12 +286,20 @@ export default function Settings() {
 							onPress={() => router.push('/(tabs)/profile/settings/help')}
 						>
 							<SvgXml xml={iconHelp} />
-							<Text style={tw`text-sm font-poppins`}>Help</Text>
+							<Text
+								style={tw`text-sm font-poppins ${
+									theme === 'dark' ? 'text-white' : 'text-black'
+								}`}
+							>
+								Help
+							</Text>
 							<SvgXml xml={iconRightArrowGradient} />
 						</TouchableOpacity>
 					</View>
 					<View
-						style={tw`flex flex-col w-full p-4 gap-4 bg-white border-[0.2px] border-gray-400 rounded-lg`}
+						style={tw`flex flex-col w-full p-4 gap-4 ${
+							theme === 'dark' ? 'bg-dark' : 'bg-white'
+						} border-[0.2px] border-gray-400 rounded-lg`}
 					>
 						<TouchableOpacity
 							style={tw`flex flex-row gap-4 justify-between items-center`}
@@ -228,7 +320,13 @@ export default function Settings() {
 							}
 						>
 							<SvgXml xml={iconLogout} />
-							<Text style={tw`text-sm font-poppins`}>Log Out</Text>
+							<Text
+								style={tw`text-sm font-poppins ${
+									theme === 'dark' ? 'text-white' : 'text-black'
+								}`}
+							>
+								Log Out
+							</Text>
 							<SvgXml xml={iconRightArrowGradient} />
 						</TouchableOpacity>
 					</View>

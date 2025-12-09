@@ -1,11 +1,13 @@
 import WrapperWithHeader from '@/src/components/WrapperWithHeader';
 import tw from '@/src/lib/tailwind';
+import { useTheme } from '@/src/lib/ThemeContext';
 import { Image } from 'expo-image';
 import { useRouter } from 'expo-router';
 import React from 'react';
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 
 export default function Blocked() {
+	const { theme } = useTheme();
 	const router = useRouter();
 	return (
 		<WrapperWithHeader name="Blocked Users">
@@ -15,14 +17,22 @@ export default function Blocked() {
 						{blockedUsers.map(user => (
 							<View
 								key={user.id}
-								style={tw`flex flex-row w-full items-center justify-between p-4 bg-white shadow rounded-lg`}
+								style={tw`flex flex-row w-full items-center justify-between p-4 ${
+									theme === 'dark' ? 'bg-dark' : 'bg-white'
+								} shadow rounded-lg`}
 							>
 								<View style={tw`flex flex-row items-center gap-4`}>
 									<Image
 										source={user.image}
 										style={tw`w-12 h-12 rounded-full`}
 									/>
-									<Text style={tw`text-base`}>{user.name}</Text>
+									<Text
+										style={tw`text-base ${
+											theme === 'dark' ? 'text-white' : 'text-black'
+										} font-poppinsMedium`}
+									>
+										{user.name}
+									</Text>
 								</View>
 								{user.status === 'Blocked' ? (
 									<TouchableOpacity

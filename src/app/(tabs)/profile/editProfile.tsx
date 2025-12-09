@@ -2,6 +2,7 @@ import EditProfileComponent from '@/src/components/EditProfile/EditProfile';
 import ProfileComponent from '@/src/components/ProfileComponent';
 import WrapperWithHeader from '@/src/components/WrapperWithHeader';
 import tw from '@/src/lib/tailwind';
+import { useTheme } from '@/src/lib/ThemeContext';
 import * as ImagePicker from 'expo-image-picker';
 import { useRouter } from 'expo-router';
 import React, { useRef, useState } from 'react';
@@ -9,6 +10,7 @@ import { Text, TouchableOpacity, View } from 'react-native';
 import PagerView from 'react-native-pager-view';
 
 export default function EditProfile() {
+	const { theme } = useTheme();
 	const [index, setIndex] = useState(0);
 	const pagerRef = useRef<PagerView>(null); // Properly type the PagerView ref
 	const router = useRouter();
@@ -45,7 +47,9 @@ export default function EditProfile() {
 	};
 	return (
 		<WrapperWithHeader name="Edit Profile">
-			<View style={tw`flex-1 bg-[#FDFDFD]`}>
+			<View
+				style={tw`flex-1 ${theme === 'dark' ? 'bg-lightDark' : 'bg-[#FDFDFD]'}`}
+			>
 				<View
 					style={tw`flex flex-row w-full items-center border-b border-gray-200`}
 				>

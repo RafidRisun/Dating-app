@@ -1,6 +1,7 @@
 import { iconPlus } from '@/assets/icon';
 import WrapperWithHeader from '@/src/components/WrapperWithHeader';
 import tw from '@/src/lib/tailwind';
+import { useTheme } from '@/src/lib/ThemeContext';
 import { Image } from 'expo-image';
 import * as ImagePicker from 'expo-image-picker';
 import React from 'react';
@@ -8,6 +9,7 @@ import { Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { SvgXml } from 'react-native-svg';
 
 export default function Others() {
+	const { theme } = useTheme();
 	const [photo, setPhoto] = React.useState<string | null>(null);
 
 	const handlePhotoUpload = async () => {
@@ -25,10 +27,18 @@ export default function Others() {
 	return (
 		<WrapperWithHeader name="Others">
 			<View style={tw`flex w-full py-4 gap-3`}>
-				<Text style={tw`text-xl font-poppinsBold`}>
+				<Text
+					style={tw`text-xl font-poppinsBold ${
+						theme === 'dark' ? 'text-white' : 'text-black'
+					}`}
+				>
 					Would you like to tell us the reason?
 				</Text>
-				<Text style={tw`text-sm font-poppins text-gray-500`}>
+				<Text
+					style={tw`text-sm font-poppins ${
+						theme === 'dark' ? 'text-gray-200' : 'text-gray-500'
+					}`}
+				>
 					So we can give you a better experience.
 				</Text>
 				<TextInput
@@ -38,7 +48,11 @@ export default function Others() {
 					textAlignVertical="top"
 					placeholderTextColor="#6B7280"
 				/>
-				<Text style={tw`text-sm font-poppins text-gray-800`}>
+				<Text
+					style={tw`text-sm font-poppins ${
+						theme === 'dark' ? 'text-gray-200' : 'text-gray-500'
+					}`}
+				>
 					Add Image {'(Optional)'}
 				</Text>
 				<TouchableOpacity

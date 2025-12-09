@@ -11,15 +11,31 @@ export default function Theme() {
 
 	return (
 		<WrapperWithHeader name="Theme">
-			<View style={tw`w-full p-4 bg-white rounded-lg shadow-sm gap-3 mt-6`}>
+			<View
+				style={tw`w-full p-4 ${
+					theme === 'dark' ? 'bg-dark' : 'bg-white'
+				} rounded-lg shadow-sm gap-3 mt-6`}
+			>
 				<TouchableOpacity
 					style={tw`flex p-2 border-b border-gray-300 w-full`}
 					onPress={() => setTheme('light')}
 				>
 					<View style={tw`flex-row justify-between items-center`}>
-						<Text style={tw`text-sm font-poppins`}>Light</Text>
+						<Text
+							style={tw`text-sm font-poppins ${
+								theme === 'dark' ? 'text-white' : 'text-black'
+							}`}
+						>
+							Light
+						</Text>
 						{theme === 'light' && (
-							<Text style={tw`text-sm font-poppins`}>✓</Text>
+							<Text
+								style={tw`text-sm font-poppins ${
+									theme === 'light' ? 'text-black' : 'text-white'
+								}`}
+							>
+								✓
+							</Text>
 						)}
 					</View>
 				</TouchableOpacity>
@@ -29,9 +45,21 @@ export default function Theme() {
 					onPress={() => setTheme('dark')}
 				>
 					<View style={tw`flex-row justify-between items-center`}>
-						<Text style={tw`text-sm font-poppins`}>Dark</Text>
+						<Text
+							style={tw`text-sm font-poppins ${
+								theme === 'dark' ? 'text-white' : 'text-black'
+							}`}
+						>
+							Dark
+						</Text>
 						{theme === 'dark' && (
-							<Text style={tw`text-sm font-poppins`}>✓</Text>
+							<Text
+								style={tw`text-sm font-poppins ${
+									theme === 'dark' ? 'text-white' : 'text-black'
+								}`}
+							>
+								✓
+							</Text>
 						)}
 					</View>
 				</TouchableOpacity>
@@ -41,11 +69,23 @@ export default function Theme() {
 					onPress={() => resetThemeToSystem()}
 				>
 					<View style={tw`flex-row justify-between items-center`}>
-						<Text style={tw`text-sm font-poppins`}>System Default</Text>
+						<Text
+							style={tw`text-sm font-poppins ${
+								theme === 'dark' ? 'text-white' : 'text-black'
+							}`}
+						>
+							System Default
+						</Text>
 						{/* Show check if current theme matches system */}
 						{theme ===
 							(Appearance.getColorScheme() === 'dark' ? 'dark' : 'light') && (
-							<Text style={tw`text-sm font-poppins`}>✓</Text>
+							<Text
+								style={tw`text-sm font-poppins ${
+									theme === 'dark' ? 'text-white' : 'text-black'
+								}`}
+							>
+								✓
+							</Text>
 						)}
 					</View>
 				</TouchableOpacity>

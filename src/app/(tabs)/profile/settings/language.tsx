@@ -1,24 +1,36 @@
 import { iconTick } from '@/assets/icon';
 import WrapperWithHeader from '@/src/components/WrapperWithHeader';
 import tw from '@/src/lib/tailwind';
+import { useTheme } from '@/src/lib/ThemeContext';
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { SvgXml } from 'react-native-svg';
 
 export default function Language() {
+	const { theme } = useTheme();
 	const [selectedLanguage, setSelectedLanguage] = React.useState('tk');
 
 	return (
 		<WrapperWithHeader name="Language">
 			<View style={tw`flex-1 w-full`}>
-				<View style={tw`w-full p-4 bg-white rounded-lg shadow-sm gap-2 mt-6`}>
+				<View
+					style={tw`w-full p-4 ${
+						theme === 'dark' ? 'bg-dark' : 'bg-white'
+					} rounded-lg shadow-sm gap-2 mt-6`}
+				>
 					<TouchableOpacity
 						onPress={() => setSelectedLanguage('tk')}
 						style={tw`flex flex-row items-center ${
 							selectedLanguage === 'tk' ? 'justify-between' : 'justify-start'
 						} w-full pb-4 border-b border-gray-200`}
 					>
-						<Text>Turkish</Text>
+						<Text
+							style={tw`text-sm font-poppins ${
+								theme === 'dark' ? 'text-white' : 'text-black'
+							}`}
+						>
+							Turkish
+						</Text>
 						{selectedLanguage === 'tk' && <SvgXml xml={iconTick} />}
 					</TouchableOpacity>
 					<TouchableOpacity
@@ -27,7 +39,13 @@ export default function Language() {
 							selectedLanguage === 'en' ? 'justify-between' : 'justify-start'
 						} w-full pb-4 border-b border-gray-200`}
 					>
-						<Text>English</Text>
+						<Text
+							style={tw`text-sm font-poppins ${
+								theme === 'dark' ? 'text-white' : 'text-black'
+							}`}
+						>
+							English
+						</Text>
 						{selectedLanguage === 'en' && <SvgXml xml={iconTick} />}
 					</TouchableOpacity>
 					<TouchableOpacity
@@ -36,7 +54,13 @@ export default function Language() {
 							selectedLanguage === 'es' ? 'justify-between' : 'justify-start'
 						} w-full`}
 					>
-						<Text>Spanish</Text>
+						<Text
+							style={tw`text-sm font-poppins ${
+								theme === 'dark' ? 'text-white' : 'text-black'
+							}`}
+						>
+							Spanish
+						</Text>
 						{selectedLanguage === 'es' && <SvgXml xml={iconTick} />}
 					</TouchableOpacity>
 				</View>

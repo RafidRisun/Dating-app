@@ -1,5 +1,6 @@
 import { iconPlus, iconRightArrowGradient } from '@/assets/icon';
 import tw from '@/src/lib/tailwind';
+import { useTheme } from '@/src/lib/ThemeContext';
 import { Image } from 'expo-image';
 import { useRouter } from 'expo-router';
 import React from 'react';
@@ -13,9 +14,15 @@ export default function EditProfileComponent({
 	photos: (string | null)[];
 	handlePhotoUpload: (index: number) => void;
 }) {
+	const { theme } = useTheme();
 	const router = useRouter();
 	return (
-		<ScrollView style={tw`flex-1 w-full`} showsVerticalScrollIndicator={false}>
+		<ScrollView
+			style={tw`flex-1 w-full ${
+				theme === 'dark' ? 'bg-lightDark' : 'bg-white'
+			}`}
+			showsVerticalScrollIndicator={false}
+		>
 			<View style={tw`flex flex-col gap-4`}>
 				<View
 					style={tw`flex flex-row items-center justify-center flex-wrap mt-5 gap-4`}
@@ -24,7 +31,9 @@ export default function EditProfileComponent({
 					{photos.map((photo, index) => (
 						<TouchableOpacity
 							key={index}
-							style={tw`w-25 h-25 rounded-lg bg-gray-100 items-center justify-center`}
+							style={tw`w-25 h-25 rounded-lg ${
+								theme === 'dark' ? 'bg-lighterDark' : 'bg-gray-100'
+							} items-center justify-center`}
 							onPress={() => handlePhotoUpload(index)}
 						>
 							{photo ? (
@@ -38,11 +47,17 @@ export default function EditProfileComponent({
 						</TouchableOpacity>
 					))}
 				</View>
-				<Text style={tw`text-sm font-poppinsSemiBold`}>
+				<Text
+					style={tw`text-sm font-poppinsSemiBold ${
+						theme === 'dark' ? 'text-white' : 'text-black'
+					} px-4`}
+				>
 					Personal Information
 				</Text>
 				<View
-					style={tw`flex flex-col gap-2 p-4 bg-white border-[0.5px] border-gray-200 rounded-lg`}
+					style={tw`flex flex-col gap-2 p-4 ${
+						theme === 'dark' ? 'bg-dark' : 'bg-white'
+					} border-[0.5px] border-gray-200 rounded-lg`}
 				>
 					<TouchableOpacity
 						style={tw`flex flex-row items-center justify-between border-b border-gray-200 pb-2`}
@@ -50,7 +65,13 @@ export default function EditProfileComponent({
 							router.push('/(tabs)/profile/personalInformation/nameSettings')
 						}
 					>
-						<Text style={tw`text-base font-poppins`}>Name</Text>
+						<Text
+							style={tw`text-base font-poppins ${
+								theme === 'dark' ? 'text-white' : 'text-black'
+							}`}
+						>
+							Name
+						</Text>
 						<View style={tw`flex flex-row items-center gap-2`}>
 							<Text style={tw`text-sm font-poppins text-gray-600`}>
 								Dem Clapperz
@@ -66,7 +87,13 @@ export default function EditProfileComponent({
 							)
 						}
 					>
-						<Text style={tw`text-base font-poppins`}>Number</Text>
+						<Text
+							style={tw`text-base font-poppins ${
+								theme === 'dark' ? 'text-white' : 'text-black'
+							}`}
+						>
+							Number
+						</Text>
 						<View style={tw`flex flex-row items-center gap-2`}>
 							<Text style={tw`text-sm font-poppins text-gray-600`}>
 								+1 234 567 8901
@@ -80,7 +107,13 @@ export default function EditProfileComponent({
 							router.push('/(tabs)/profile/personalInformation/emailSettings')
 						}
 					>
-						<Text style={tw`text-base font-poppins`}>Email</Text>
+						<Text
+							style={tw`text-base font-poppins ${
+								theme === 'dark' ? 'text-white' : 'text-black'
+							}`}
+						>
+							Email
+						</Text>
 						<View style={tw`flex flex-row items-center gap-2`}>
 							<Text style={tw`text-sm font-poppins text-gray-600`}>
 								demclapperz@example.com
@@ -114,7 +147,13 @@ export default function EditProfileComponent({
 							router.push('/(tabs)/profile/personalInformation/heightSettings')
 						}
 					>
-						<Text style={tw`text-base font-poppins`}>Height</Text>
+						<Text
+							style={tw`text-base font-poppins ${
+								theme === 'dark' ? 'text-white' : 'text-black'
+							}`}
+						>
+							Height
+						</Text>
 						<View style={tw`flex flex-row items-center gap-2`}>
 							<Text style={tw`text-sm font-poppins text-gray-600`}>
 								6&apos;0&quot;
@@ -128,7 +167,13 @@ export default function EditProfileComponent({
 							router.push('/(tabs)/profile/personalInformation/bioSettings')
 						}
 					>
-						<Text style={tw`text-base font-poppins`}>Bio</Text>
+						<Text
+							style={tw`text-base font-poppins ${
+								theme === 'dark' ? 'text-white' : 'text-black'
+							}`}
+						>
+							Bio
+						</Text>
 						<View style={tw`flex flex-row items-center gap-2`}>
 							<Text style={tw`text-sm font-poppins text-gray-600`}>
 								{`Hello! I\'m Dem, a music lover and adventurer.`.length > 30
@@ -149,7 +194,13 @@ export default function EditProfileComponent({
 							)
 						}
 					>
-						<Text style={tw`text-base font-poppins`}>Looking for</Text>
+						<Text
+							style={tw`text-base font-poppins ${
+								theme === 'dark' ? 'text-white' : 'text-black'
+							}`}
+						>
+							Looking for
+						</Text>
 						<View style={tw`flex flex-row items-center gap-2`}>
 							<Text style={tw`text-sm font-poppins text-gray-600`}>
 								Casual Dates
@@ -165,7 +216,13 @@ export default function EditProfileComponent({
 							)
 						}
 					>
-						<Text style={tw`text-base font-poppins`}>Interests</Text>
+						<Text
+							style={tw`text-base font-poppins ${
+								theme === 'dark' ? 'text-white' : 'text-black'
+							}`}
+						>
+							Interests
+						</Text>
 						<View style={tw`flex flex-row items-center gap-2`}>
 							<Text style={tw`text-sm font-poppins text-gray-600`}>
 								Music, Travel, Sports
@@ -181,7 +238,13 @@ export default function EditProfileComponent({
 							)
 						}
 					>
-						<Text style={tw`text-base font-poppins`}>Education</Text>
+						<Text
+							style={tw`text-base font-poppins ${
+								theme === 'dark' ? 'text-white' : 'text-black'
+							}`}
+						>
+							Education
+						</Text>
 						<View style={tw`flex flex-row items-center gap-2`}>
 							<Text style={tw`text-sm font-poppins text-gray-600`}>
 								University of Clappers
