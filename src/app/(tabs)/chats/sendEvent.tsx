@@ -1,5 +1,6 @@
 import { iconCloseSmall } from '@/assets/icon';
 import tw from '@/src/lib/tailwind';
+import { useTheme } from '@/src/lib/ThemeContext';
 import { Image } from 'expo-image';
 import { useRouter } from 'expo-router';
 import React from 'react';
@@ -7,6 +8,7 @@ import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { SvgXml } from 'react-native-svg';
 
 export default function SendEvent() {
+	const { theme } = useTheme();
 	const router = useRouter();
 	const [selectedEvents, setSelectedEvents] = React.useState<number[]>([]);
 	return (
@@ -14,7 +16,9 @@ export default function SendEvent() {
 			style={tw`flex-1 px-6 py-10 justify-center items-center bg-black bg-opacity-10`}
 		>
 			<View
-				style={tw`w-full h-full bg-white rounded-lg p-4 justify-start items-center`}
+				style={tw`w-full h-full bg-${
+					theme === 'dark' ? 'lighterDark' : 'white'
+				} rounded-lg p-4 justify-start items-center`}
 			>
 				<TouchableOpacity
 					style={tw`w-6 h-6 flex items-center justify-center bg-gray-300 rounded-full absolute top-4 right-4`}
@@ -22,13 +26,23 @@ export default function SendEvent() {
 				>
 					<SvgXml xml={iconCloseSmall} />
 				</TouchableOpacity>
-				<Text style={tw`text-lg font-semibold mt-6`}>Suggest an Event</Text>
+				<Text
+					style={tw`text-lg font-semibold mt-6 ${
+						theme === 'dark' ? 'text-white' : 'text-black'
+					}`}
+				>
+					Suggest an Event
+				</Text>
 				<ScrollView style={tw`w-full py-4`} contentContainerStyle={tw`gap-4`}>
 					{events.map(event => (
 						<TouchableOpacity
 							key={event.id}
-							style={tw`flex flex-row w-full h-20 border border-gray-200 rounded-lg p-2 ${
-								selectedEvents.includes(event.id) ? 'bg-blue' : 'bg-white'
+							style={tw`flex flex-row w-full h-20 rounded-lg p-2 ${
+								selectedEvents.includes(event.id)
+									? 'bg-blue'
+									: theme === 'dark'
+									? 'bg-lightDark'
+									: 'bg-white border border-gray-200'
 							}`}
 							onPress={() =>
 								setSelectedEvents(prev =>
@@ -46,14 +60,22 @@ export default function SendEvent() {
 							<View style={tw`flex flex-col items-start justify-start px-4`}>
 								<Text
 									style={tw`font-poppinsSemiBold text-sm ${
-										selectedEvents.includes(event.id) ? 'text-white' : ''
+										selectedEvents.includes(event.id)
+											? 'text-white'
+											: theme === 'dark'
+											? 'text-white'
+											: 'text-black'
 									}`}
 								>
 									{event.title}
 								</Text>
 								<Text
-									style={tw`text-xs text-gray-600 ${
-										selectedEvents.includes(event.id) ? 'text-white' : ''
+									style={tw`text-xs ${
+										selectedEvents.includes(event.id)
+											? 'text-white'
+											: theme === 'dark'
+											? 'text-white'
+											: 'text-gray-600'
 									}`}
 								>
 									{event.date} • {event.location}
@@ -62,7 +84,7 @@ export default function SendEvent() {
 						</TouchableOpacity>
 					))}
 				</ScrollView>
-				<View style={tw`w-full flex gap-2 py-4 bg-white`}>
+				<View style={tw`w-full flex gap-2 py-4 `}>
 					<TouchableOpacity
 						style={tw`w-full bg-blue rounded-lg p-3 items-center justify-center`}
 						onPress={() => router.back()}
