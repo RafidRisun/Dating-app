@@ -56,15 +56,23 @@ export default function EventFilter({
 					contentContainerStyle={tw`gap-4`}
 					showsVerticalScrollIndicator={false}
 				>
-					<Text style={tw`font-poppinsSemiBold text-gray-600`}>Categories</Text>
+					<Text
+						style={tw`font-poppinsSemiBold ${
+							theme === 'dark' ? 'text-white' : 'text-gray-600'
+						}`}
+					>
+						Categories
+					</Text>
 					<View style={tw`flex flex-col gap-2 w-full mb-4`}>
 						{categories.map((category, index) => (
 							<TouchableOpacity
 								key={index}
-								style={tw`w-full p-3 border border-gray-300 ${
+								style={tw`w-full p-3 ${
 									selectedFilters.includes(category.id)
 										? 'bg-blue'
-										: 'bg-gray-100'
+										: theme === 'dark'
+										? 'bg-lightDark'
+										: 'bg-gray-100 border border-gray-300'
 								} rounded-lg`}
 								onPress={() => {
 									if (selectedFilters.includes(category.id)) {
@@ -90,13 +98,23 @@ export default function EventFilter({
 							</TouchableOpacity>
 						))}
 					</View>
-					<Text style={tw`font-poppinsSemiBold text-gray-600`}>Date</Text>
+					<Text
+						style={tw`font-poppinsSemiBold ${
+							theme === 'dark' ? 'text-white' : 'text-gray-600'
+						}`}
+					>
+						Date
+					</Text>
 					<View style={tw`flex flex-col gap-2 w-full mb-4`}>
 						{dates.map((date, index) => (
 							<TouchableOpacity
 								key={index}
-								style={tw`w-full p-3 border border-gray-300 ${
-									selectedDates.includes(date.id) ? 'bg-blue' : 'bg-gray-100'
+								style={tw`w-full p-3 ${
+									selectedDates.includes(date.id)
+										? 'bg-blue'
+										: theme === 'dark'
+										? 'bg-lightDark'
+										: 'bg-gray-100 border border-gray-300'
 								} rounded-lg`}
 								onPress={() => {
 									if (selectedDates.includes(date.id)) {
@@ -120,13 +138,21 @@ export default function EventFilter({
 							</TouchableOpacity>
 						))}
 					</View>
-					<Text style={tw`font-poppinsSemiBold text-gray-600`}>
+					<Text
+						style={tw`font-poppinsSemiBold ${
+							theme === 'dark' ? 'text-white' : 'text-gray-600'
+						}`}
+					>
 						Specific Date Range:
 					</Text>
 					{Platform.OS === 'ios' ? (
 						<>
 							<TouchableOpacity
-								style={tw`w-full p-3 border border-gray-300 bg-gray-100 rounded-lg flex flex-row  items-center justify-between`}
+								style={tw`w-full p-3 ${
+									theme === 'dark'
+										? 'bg-lightDark'
+										: 'bg-gray-100 border border-gray-300'
+								} rounded-lg flex flex-row  items-center justify-between mb-10`}
 								onPress={() => setOpenFrom(true)}
 							>
 								<Text style={tw`font-poppinsSemiBold text-xs text-gray-600`}>
@@ -180,7 +206,11 @@ export default function EventFilter({
 					) : (
 						<>
 							<TouchableOpacity
-								style={tw`w-full p-3 border border-gray-300 bg-gray-100 rounded-lg flex flex-row  items-center justify-between`}
+								style={tw`w-full p-3 ${
+									theme === 'dark'
+										? 'bg-lightDark'
+										: 'bg-gray-100 border border-gray-300'
+								} rounded-lg flex flex-row  items-center justify-between`}
 								onPress={() => setOpenFrom(true)}
 							>
 								<Text style={tw`font-poppinsSemiBold text-xs text-gray-600`}>
@@ -208,11 +238,21 @@ export default function EventFilter({
 							)}
 						</>
 					)}
-					<Text style={tw`font-poppinsSemiBold text-gray-600`}>To:</Text>
+					<Text
+						style={tw`font-poppinsSemiBold ${
+							theme === 'dark' ? 'text-white' : 'text-gray-600'
+						}`}
+					>
+						To:
+					</Text>
 					{Platform.OS === 'ios' ? (
 						<>
 							<TouchableOpacity
-								style={tw`w-full p-3 border border-gray-300 bg-gray-100 rounded-lg flex flex-row  items-center justify-between mb-10`}
+								style={tw`w-full p-3 ${
+									theme === 'dark'
+										? 'bg-lightDark'
+										: 'bg-gray-100 border border-gray-300'
+								} rounded-lg flex flex-row  items-center justify-between mb-10`}
 								onPress={() => setOpenTo(true)}
 							>
 								<Text style={tw`font-poppinsSemiBold text-xs text-gray-600`}>
@@ -266,7 +306,11 @@ export default function EventFilter({
 					) : (
 						<>
 							<TouchableOpacity
-								style={tw`w-full p-3 border border-gray-300 bg-gray-100 rounded-lg flex flex-row  items-center justify-between mb-10`}
+								style={tw`w-full p-3 ${
+									theme === 'dark'
+										? 'bg-lightDark'
+										: 'bg-gray-100 border border-gray-300'
+								} rounded-lg flex flex-row  items-center justify-between mb-10`}
 								onPress={() => setOpenTo(true)}
 							>
 								<Text style={tw`font-poppinsSemiBold text-xs text-gray-600`}>

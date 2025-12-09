@@ -24,7 +24,9 @@ export default function WrapperWithHeader({
 				theme === 'dark' ? 'bg-lightDark' : 'bg-[#FDFDFD]'
 			} p-5`}
 		>
-			<StatusBar barStyle="dark-content" />
+			<StatusBar
+				barStyle={theme === 'dark' ? 'light-content' : 'dark-content'}
+			/>
 			{/* header */}
 			<View
 				style={tw`flex flex-row ${

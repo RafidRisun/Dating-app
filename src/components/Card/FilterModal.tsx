@@ -100,12 +100,12 @@ export default function FilterModal({
 					</Text>
 					<View style={tw`flex flex-col gap-2 w-full mb-4`}>
 						<TouchableOpacity
-							style={tw`w-full items-center p-3 border border-gray-300 bg-${
+							style={tw`w-full items-center p-3 ${
 								gender === 'Men'
-									? 'blue'
+									? 'bg-blue'
 									: theme === 'dark'
-									? 'lightDark'
-									: 'gray-100'
+									? 'bg-lightDark'
+									: 'bg-gray-100 border border-gray-300 '
 							} rounded-lg`}
 							onPress={() => setGender('Men')}
 						>
@@ -118,12 +118,12 @@ export default function FilterModal({
 							</Text>
 						</TouchableOpacity>
 						<TouchableOpacity
-							style={tw`w-full items-center p-3 border border-gray-300 bg-${
+							style={tw`w-full items-center p-3 ${
 								gender === 'Women'
-									? 'blue'
+									? 'bg-blue'
 									: theme === 'dark'
-									? 'lightDark'
-									: 'gray-100'
+									? 'bg-lightDark'
+									: 'bg-gray-100 border border-gray-300 '
 							} rounded-lg`}
 							onPress={() => setGender('Women')}
 						>
@@ -136,12 +136,12 @@ export default function FilterModal({
 							</Text>
 						</TouchableOpacity>
 						<TouchableOpacity
-							style={tw`w-full items-center p-3 border border-gray-300 bg-${
+							style={tw`w-full items-center p-3 ${
 								gender === 'Non-Binary'
-									? 'blue'
+									? 'bg-blue'
 									: theme === 'dark'
-									? 'lightDark'
-									: 'gray-100'
+									? 'bg-lightDark'
+									: 'bg-gray-100 border border-gray-300 '
 							} rounded-lg`}
 							onPress={() => setGender('Non-Binary')}
 						>
@@ -154,12 +154,12 @@ export default function FilterModal({
 							</Text>
 						</TouchableOpacity>
 						<TouchableOpacity
-							style={tw`w-full items-center p-3 border border-gray-300 bg-${
+							style={tw`w-full items-center p-3 ${
 								gender === "I'm open to anyone"
-									? 'blue'
+									? 'bg-blue'
 									: theme === 'dark'
-									? 'lightDark'
-									: 'gray-100'
+									? 'bg-lightDark'
+									: 'bg-gray-100 border border-gray-300 '
 							} rounded-lg`}
 							onPress={() => setGender("I'm open to anyone")}
 						>
@@ -222,8 +222,10 @@ export default function FilterModal({
 					</View>
 					<View style={[tw`w-full`, { zIndex: 20 }]}>
 						<TouchableOpacity
-							style={tw`w-full p-3 border border-gray-300 bg-${
-								theme === 'dark' ? 'lightDark' : 'gray-100'
+							style={tw`w-full p-3 ${
+								theme === 'dark'
+									? 'bg-lightDark'
+									: 'bg-gray-100 border border-gray-300'
 							} rounded-lg flex flex-row items-center justify-between`}
 							onPress={() => setCityModalOpen(true)}
 						>
