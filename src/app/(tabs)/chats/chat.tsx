@@ -1,5 +1,6 @@
 import {
 	iconBack,
+	iconBackDark,
 	iconCall,
 	iconEvents,
 	iconOptions,
@@ -8,6 +9,7 @@ import {
 	iconVideoCall,
 } from '@/assets/icon';
 import tw from '@/src/lib/tailwind';
+import { useTheme } from '@/src/lib/ThemeContext';
 import { Image } from 'expo-image';
 import { useRouter } from 'expo-router';
 import React, { useRef } from 'react';
@@ -23,6 +25,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { SvgXml } from 'react-native-svg';
 
 export default function Chat() {
+	const { theme } = useTheme();
 	const router = useRouter();
 	// const { chatId } = useLocalSearchParams();
 	// const [index, setIndex] = React.useState(messages.length - 1);
@@ -35,16 +38,27 @@ export default function Chat() {
 	};
 
 	return (
-		<SafeAreaView edges={['top']} style={tw`flex-1 bg-white`}>
+		<SafeAreaView
+			edges={['top']}
+			style={tw`flex-1 bg-${theme === 'dark' ? 'dark' : 'white'}`}
+		>
 			<KeyboardAvoidingView behavior="padding" style={tw`flex-1`}>
 				{/* <TouchableWithoutFeedback onPress={Keyboard.dismiss}> */}
-				<View style={tw`flex-1 bg-gray-100`}>
+				<View
+					style={tw`flex-1 bg-${theme === 'dark' ? 'lightDark' : 'gray-100'}`}
+				>
 					{/* Header */}
 					<View
-						style={tw`flex flex-row bg-white w-full items-center justify-between gap-4 p-4`}
+						style={tw`flex flex-row bg-${
+							theme === 'dark' ? 'dark' : 'white'
+						} w-full items-center justify-between gap-4 p-4`}
 					>
 						<TouchableOpacity onPress={() => router.back()}>
-							<SvgXml xml={iconBack} />
+							{theme === 'dark' ? (
+								<SvgXml xml={iconBackDark} />
+							) : (
+								<SvgXml xml={iconBack} />
+							)}
 						</TouchableOpacity>
 						<View style={tw`flex flex-row items-center gap-4 flex-1`}>
 							<Image
@@ -52,7 +66,13 @@ export default function Chat() {
 								style={tw`w-10 h-10 rounded-full`}
 							/>
 							<View>
-								<Text style={tw`font-poppinsSemiBold text-sm`}>Jane Doe</Text>
+								<Text
+									style={tw`font-poppinsSemiBold text-sm ${
+										theme === 'dark' ? 'text-white' : 'text-black'
+									}`}
+								>
+									Jane Doe
+								</Text>
 								<Text style={tw`text-xs font-poppinsSemiBold text-green-500`}>
 									Online
 								</Text>
@@ -113,7 +133,11 @@ export default function Chat() {
 					/>
 
 					{/* Input Field */}
-					<View style={tw`flex flex-row items-center gap-4 px-4 py-2 bg-white`}>
+					<View
+						style={tw`flex flex-row items-center gap-4 px-4 py-2 bg-${
+							theme === 'dark' ? 'dark' : 'white'
+						}`}
+					>
 						<TouchableOpacity
 							onPress={() => router.push('/(tabs)/chats/sendEvent')}
 						>
@@ -121,7 +145,9 @@ export default function Chat() {
 						</TouchableOpacity>
 						<TextInput
 							placeholder="Type a message..."
-							style={tw`flex-1 border border-gray-300 rounded-full px-4 py-2`}
+							style={tw`flex-1 border border-gray-300 rounded-full px-4 py-2 ${
+								theme === 'dark' ? 'text-white' : 'text-black'
+							}`}
 							placeholderTextColor="#6B7280"
 						/>
 						<TouchableOpacity>

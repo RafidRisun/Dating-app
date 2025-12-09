@@ -28,8 +28,8 @@ export default function ProfileLayout() {
 			<Stack.Screen name="settings/others" />
 			<Stack.Screen name="settings/blocked" />
 			<Stack.Screen name="settings/theme" />
-			<Stack.Screen name="personalInformation/bio" />
-			<Stack.Screen name="personalInformation/name" />
+			<Stack.Screen name="personalInformation/bioSettings" />
+			<Stack.Screen name="personalInformation/nameSettings" />
 			<Stack.Screen name="personalInformation/emailSettings" />
 			<Stack.Screen name="personalInformation/phoneNumberSettings" />
 			<Stack.Screen name="personalInformation/educationSettings" />

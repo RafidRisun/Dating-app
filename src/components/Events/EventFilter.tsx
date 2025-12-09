@@ -41,10 +41,16 @@ export default function EventFilter({
 		>
 			<View
 				style={tw`w-full h-8/9 bg-${
-					theme === 'dark' ? 'dark' : 'white'
+					theme === 'dark' ? 'lighterDark' : 'white'
 				} rounded-lg p-6 flex items-center`}
 			>
-				<Text style={tw`text-xl font-poppinsSemiBold mb-4`}>Filters</Text>
+				<Text
+					style={tw`text-xl font-poppinsSemiBold mb-4 ${
+						theme === 'dark' ? 'text-white' : 'text-black'
+					}`}
+				>
+					Filters
+				</Text>
 				<ScrollView
 					style={tw`w-full`}
 					contentContainerStyle={tw`gap-4`}

@@ -65,6 +65,8 @@ export default function FilterModal({
 		{} as Record<string, string>
 	);
 
+	const [gender, setGender] = useState('Women');
+
 	return (
 		<View
 			style={[
@@ -74,7 +76,7 @@ export default function FilterModal({
 		>
 			<View
 				style={tw`w-full h-8/9 bg-${
-					theme === 'dark' ? 'dark' : 'white'
+					theme === 'dark' ? 'lighterDark' : 'white'
 				} rounded-lg p-6 flex items-center`}
 			>
 				<Text
@@ -99,8 +101,13 @@ export default function FilterModal({
 					<View style={tw`flex flex-col gap-2 w-full mb-4`}>
 						<TouchableOpacity
 							style={tw`w-full items-center p-3 border border-gray-300 bg-${
-								theme === 'dark' ? 'lightDark' : 'gray-100'
+								gender === 'Men'
+									? 'blue'
+									: theme === 'dark'
+									? 'lightDark'
+									: 'gray-100'
 							} rounded-lg`}
+							onPress={() => setGender('Men')}
 						>
 							<Text
 								style={tw`font-poppinsSemiBold text-base ${
@@ -112,8 +119,13 @@ export default function FilterModal({
 						</TouchableOpacity>
 						<TouchableOpacity
 							style={tw`w-full items-center p-3 border border-gray-300 bg-${
-								theme === 'dark' ? 'lightDark' : 'gray-100'
+								gender === 'Women'
+									? 'blue'
+									: theme === 'dark'
+									? 'lightDark'
+									: 'gray-100'
 							} rounded-lg`}
+							onPress={() => setGender('Women')}
 						>
 							<Text
 								style={tw`font-poppinsSemiBold text-base ${
@@ -125,8 +137,13 @@ export default function FilterModal({
 						</TouchableOpacity>
 						<TouchableOpacity
 							style={tw`w-full items-center p-3 border border-gray-300 bg-${
-								theme === 'dark' ? 'lightDark' : 'gray-100'
+								gender === 'Non-Binary'
+									? 'blue'
+									: theme === 'dark'
+									? 'lightDark'
+									: 'gray-100'
 							} rounded-lg`}
+							onPress={() => setGender('Non-Binary')}
 						>
 							<Text
 								style={tw`font-poppinsSemiBold text-base ${
@@ -138,8 +155,13 @@ export default function FilterModal({
 						</TouchableOpacity>
 						<TouchableOpacity
 							style={tw`w-full items-center p-3 border border-gray-300 bg-${
-								theme === 'dark' ? 'lightDark' : 'gray-100'
+								gender === "I'm open to anyone"
+									? 'blue'
+									: theme === 'dark'
+									? 'lightDark'
+									: 'gray-100'
 							} rounded-lg`}
+							onPress={() => setGender("I'm open to anyone")}
 						>
 							<Text
 								style={tw`font-poppinsSemiBold text-base ${

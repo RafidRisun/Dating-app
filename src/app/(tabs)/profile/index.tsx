@@ -8,6 +8,7 @@ import {
 } from '@/assets/icon';
 import SubscriptionPackages from '@/src/components/SubscriptionPackages';
 import tw from '@/src/lib/tailwind';
+import { useTheme } from '@/src/lib/ThemeContext';
 import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
@@ -18,10 +19,13 @@ import { SvgXml } from 'react-native-svg';
 
 export default function Profile() {
 	const router = useRouter();
+	const { theme } = useTheme();
 	return (
 		<SafeAreaView
 			edges={['top', 'left', 'right']}
-			style={tw`flex-1 items-center justify-start bg-white p-2`}
+			style={tw`flex-1 items-center justify-start bg-${
+				theme === 'dark' ? 'dark' : 'white'
+			} p-2`}
 		>
 			<ScrollView
 				nestedScrollEnabled={true}
@@ -53,7 +57,13 @@ export default function Profile() {
 					</View>
 					<View style={tw`flex flex-col gap-3`}>
 						<View style={tw`flex flex-row items-center gap-2`}>
-							<Text style={tw`text-xl font-poppins`}>Dem Clapperz, 23</Text>
+							<Text
+								style={tw`text-xl font-poppins ${
+									theme === 'dark' ? 'text-white' : 'text-black'
+								}`}
+							>
+								Dem Clapperz, 23
+							</Text>
 							<SvgXml xml={iconSuperLike} height={20} width={20} />
 						</View>
 						<TouchableOpacity
@@ -74,13 +84,23 @@ export default function Profile() {
 					</View>
 				</View>
 				<View
-					style={tw`flex flex-col items-center justify-center gap-4 w-full p-4 mt-6 bg-white shadow-md rounded-lg`}
+					style={tw`flex flex-col items-center justify-center gap-4 w-full p-4 mt-6 bg-${
+						theme === 'dark' ? 'lightDark' : 'white'
+					} shadow-md rounded-lg`}
 				>
 					<View style={tw`flex flex-col items-center gap-2`}>
-						<Text style={tw`text-base font-poppinsSemiBold`}>
+						<Text
+							style={tw`text-base font-poppinsSemiBold ${
+								theme === 'dark' ? 'text-white' : 'text-black'
+							}`}
+						>
 							Daily Reward Streak
 						</Text>
-						<Text style={tw`text-sm font-poppins text-gray-500`}>
+						<Text
+							style={tw`text-sm font-poppins ${
+								theme === 'dark' ? 'text-white' : 'text-black'
+							}`}
+						>
 							Visit 7 days in a row for a free Profile Boost!
 						</Text>
 					</View>
@@ -116,35 +136,63 @@ export default function Profile() {
 							</View>
 						))}
 					</View>
-					<Text style={tw`text-center text-xs font-poppins text-gray-500`}>
+					<Text
+						style={tw`text-center text-xs font-poppins ${
+							theme === 'dark' ? 'text-white' : 'text-black'
+						}`}
+					>
 						Keep it up! 3 more days to go. We will remind you before your streak
 						resets.
 					</Text>
 				</View>
 				<View style={tw`flex flex-row gap-4 mt-4`}>
 					<TouchableOpacity
-						style={tw`flex-1 py-4 bg-white shadow-md rounded-lg items-center justify-between h-30`}
+						style={tw`flex-1 py-4 bg-${
+							theme === 'dark' ? 'lightDark' : 'white'
+						} shadow-md rounded-lg items-center justify-between h-30`}
 					>
 						<SvgXml xml={iconSuperLike} width={32} height={32} />
-						<Text style={tw`text-sm font-poppinsSemiBold`}>0 Favorite</Text>
+						<Text
+							style={tw`text-sm font-poppinsSemiBold ${
+								theme === 'dark' ? 'text-white' : 'text-black'
+							}`}
+						>
+							0 Favorite
+						</Text>
 						<Text style={tw`text-xs font-poppinsSemiBold text-blue`}>
 							GET MORE
 						</Text>
 					</TouchableOpacity>
 					<TouchableOpacity
-						style={tw`flex-1 py-4 bg-white shadow-md rounded-lg items-center justify-between h-30`}
+						style={tw`flex-1 py-4 bg-${
+							theme === 'dark' ? 'lightDark' : 'white'
+						} shadow-md rounded-lg items-center justify-between h-30`}
 					>
 						<SvgXml xml={iconStandout} width={32} height={32} />
-						<Text style={tw`text-sm font-poppinsSemiBold`}>0 Stand out</Text>
+						<Text
+							style={tw`text-sm font-poppinsSemiBold ${
+								theme === 'dark' ? 'text-white' : 'text-black'
+							}`}
+						>
+							0 Stand out
+						</Text>
 						<Text style={tw`text-xs font-poppinsSemiBold text-[#612B8C]`}>
 							GET MORE
 						</Text>
 					</TouchableOpacity>
 					<TouchableOpacity
-						style={tw`flex-1 py-4 bg-white shadow-md rounded-lg items-center justify-between h-30`}
+						style={tw`flex-1 py-4 bg-${
+							theme === 'dark' ? 'lightDark' : 'white'
+						} shadow-md rounded-lg items-center justify-between h-30`}
 					>
 						<SvgXml xml={iconDM} width={32} height={32} />
-						<Text style={tw`text-sm font-poppinsSemiBold`}>0 DM</Text>
+						<Text
+							style={tw`text-sm font-poppinsSemiBold ${
+								theme === 'dark' ? 'text-white' : 'text-black'
+							}`}
+						>
+							0 DM
+						</Text>
 						<Text style={tw`text-xs font-poppinsSemiBold text-blue`}>
 							GET MORE
 						</Text>

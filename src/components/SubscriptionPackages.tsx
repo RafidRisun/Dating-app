@@ -6,8 +6,10 @@ import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import PagerView from 'react-native-pager-view';
 import { SvgXml } from 'react-native-svg';
 import tw from '../lib/tailwind';
+import { useTheme } from '../lib/ThemeContext';
 
 export default function SubscriptionPackages() {
+	const { theme } = useTheme();
 	const [index, setIndex] = React.useState(0);
 	const pagerRef = useRef<PagerView>(null); // Properly type the PagerView ref
 	const handlePageChange = (pageIndex: number) => {
@@ -24,7 +26,7 @@ export default function SubscriptionPackages() {
 	);
 
 	return (
-		<View style={tw`flex-1 bg-white mt-12`}>
+		<View style={tw`flex-1 bg-${theme === 'dark' ? 'dark' : 'white'} mt-12`}>
 			<View
 				style={tw`flex flex-row w-full items-center border-b border-gray-200`}
 			>
@@ -130,7 +132,13 @@ export default function SubscriptionPackages() {
 									style={tw`flex flex-row items-center w-full px-6`}
 								>
 									<SvgXml xml={iconFeature} />
-									<Text style={tw`ml-4 text-base font-poppins`}>{feature}</Text>
+									<Text
+										style={tw`ml-4 text-base font-poppins ${
+											theme === 'dark' ? 'text-white' : 'text-black'
+										}`}
+									>
+										{feature}
+									</Text>
 								</View>
 							))}
 
@@ -141,7 +149,13 @@ export default function SubscriptionPackages() {
 									style={tw`flex flex-row items-center w-full px-6`}
 								>
 									<SvgXml xml={iconLack} />
-									<Text style={tw`ml-4 text-base font-poppins`}>{lack}</Text>
+									<Text
+										style={tw`ml-4 text-base font-poppins ${
+											theme === 'dark' ? 'text-white' : 'text-black'
+										}`}
+									>
+										{lack}
+									</Text>
 								</View>
 							))}
 						{seeMore === false ? (

@@ -1,4 +1,5 @@
 import tw from '@/src/lib/tailwind';
+import { useTheme } from '@/src/lib/ThemeContext';
 import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
@@ -25,19 +26,29 @@ import Animated, {
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function Chat() {
+	const { theme } = useTheme();
 	const router = useRouter();
 	const [status, setStatus] = React.useState<'All' | 'Unread'>('All');
 	// manage messages in state so we can delete one
 	const [messagesState, setMessagesState] = React.useState(messages);
 	return (
 		<GestureHandlerRootView style={{ flex: 1 }}>
-			<SafeAreaView edges={['top']} style={tw`flex-1 bg-white`}>
+			<SafeAreaView
+				edges={['top']}
+				style={tw`flex-1 bg-${theme === 'dark' ? 'dark' : 'white'}`}
+			>
 				<StatusBar barStyle="dark-content" />
-				<View style={tw`flex-1 bg-white`}>
+				<View style={tw`flex-1 bg-${theme === 'dark' ? 'dark' : 'white'}`}>
 					<View
 						style={tw`flex flex-row w-full items-center justify-between p-4`}
 					>
-						<Text style={tw`font-poppinsSemiBold text-2xl`}>Messages</Text>
+						<Text
+							style={tw`font-poppinsSemiBold text-2xl ${
+								theme === 'dark' ? 'text-white' : 'text-black'
+							}`}
+						>
+							Messages
+						</Text>
 						<View style={tw`flex flex-row items-center gap-2`}>
 							<TouchableOpacity
 								style={tw`px-4 py-2 ${
@@ -55,7 +66,11 @@ export default function Chat() {
 								)}
 								<Text
 									style={tw`text-xs font-poppinsSemiBold ${
-										status === 'All' ? 'text-white' : ''
+										theme === 'dark'
+											? 'text-white'
+											: status === 'All'
+											? 'text-white'
+											: 'text-black'
 									}`}
 								>
 									All
@@ -77,7 +92,11 @@ export default function Chat() {
 								)}
 								<Text
 									style={tw`text-xs font-poppinsSemiBold ${
-										status === 'Unread' ? 'text-white' : ''
+										theme === 'dark'
+											? 'text-white'
+											: status === 'Unread'
+											? 'text-white'
+											: 'text-black'
 									}`}
 								>
 									Unread
@@ -88,7 +107,11 @@ export default function Chat() {
 					<ScrollView>
 						<View style={tw`flex w-full items-center justify-center p-4 gap-4`}>
 							<View style={tw`flex gap-4 w-full`}>
-								<Text style={tw`font-poppinsSemiBold text-base w-full`}>
+								<Text
+									style={tw`font-poppinsSemiBold text-base w-full  ${
+										theme === 'dark' ? 'text-white' : 'text-black'
+									}`}
+								>
 									Matches
 								</Text>
 								<ScrollView
@@ -105,13 +128,23 @@ export default function Chat() {
 												source={match.image}
 												style={tw`w-16 h-16 rounded-full`}
 											/>
-											<Text style={tw`text-center mt-2`}>{match.name}</Text>
+											<Text
+												style={tw`text-center mt-2  ${
+													theme === 'dark' ? 'text-white' : 'text-black'
+												}`}
+											>
+												{match.name}
+											</Text>
 										</View>
 									))}
 								</ScrollView>
 							</View>
 							<View style={tw`flex gap-4 w-full`}>
-								<Text style={tw`font-poppinsSemiBold text-base w-full`}>
+								<Text
+									style={tw`font-poppinsSemiBold text-base w-full  ${
+										theme === 'dark' ? 'text-white' : 'text-black'
+									}`}
+								>
 									Messages
 								</Text>
 								{messagesState.map(message => (
@@ -260,6 +293,7 @@ function MessageRow({
 	onOpenChat: () => void;
 	onDelete: () => void;
 }) {
+	const { theme } = useTheme();
 	const translateX = useSharedValue(0);
 	const maxTranslate = -90; // width of delete button
 	const touchBlocked = React.useRef(false);
@@ -337,7 +371,9 @@ function MessageRow({
 				<Animated.View
 					style={
 						[
-							tw`flex flex-row items-center p-4 bg-white shadow rounded-lg gap-4`,
+							tw`flex flex-row items-center p-4 bg-${
+								theme === 'dark' ? 'dark' : 'white'
+							} shadow rounded-lg gap-4`,
 							animatedStyle,
 						] as any
 					}
@@ -354,14 +390,14 @@ function MessageRow({
 							<Text
 								style={tw`${
 									message.read ? 'font-poppinsSemiBold' : 'font-poppins'
-								} text-base`}
+								} text-base  ${theme === 'dark' ? 'text-white' : 'text-black'}`}
 							>
 								{message.name}
 							</Text>
 							<Text
 								style={tw`${
 									message.read ? 'font-poppinsSemiBold' : 'font-poppins'
-								}`}
+								}  ${theme === 'dark' ? 'text-white' : 'text-black'}`}
 							>
 								{message.lastMessage}
 							</Text>
@@ -370,7 +406,7 @@ function MessageRow({
 					<Text
 						style={tw`${
 							message.read ? 'font-poppinsSemiBold' : 'font-poppins'
-						} text-sm`}
+						} text-sm  ${theme === 'dark' ? 'text-white' : 'text-black'}`}
 					>
 						{message.timeAgo}
 					</Text>

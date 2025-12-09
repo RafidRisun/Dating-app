@@ -1,10 +1,12 @@
 import {
 	iconBack,
+	iconBackDark,
 	iconCalendarBlack,
 	iconCloseSmall,
 	iconSynastryGradient,
 } from '@/assets/icon';
 import tw from '@/src/lib/tailwind';
+import { useTheme } from '@/src/lib/ThemeContext';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
@@ -40,6 +42,7 @@ export default function SynastryChart() {
 	const [matchCityModalOpen, setMatchCityModalOpen] = React.useState(false);
 	const [matchCountryModalOpen, setMatchCountryModalOpen] =
 		React.useState(false);
+	const { theme } = useTheme();
 
 	const cityOptions = [
 		{ label: 'Istanbul', value: 'istanbul' },
@@ -78,7 +81,10 @@ export default function SynastryChart() {
 	const [ReportVisible, setReportVisible] = React.useState(false);
 
 	return (
-		<SafeAreaView edges={['top']} style={tw`flex-1 p-4 bg-white`}>
+		<SafeAreaView
+			edges={['top']}
+			style={tw`flex-1 p-4 bg-${theme === 'dark' ? 'black' : 'white'}`}
+		>
 			<ScrollView
 				style={tw`flex-1`}
 				contentContainerStyle={tw`gap-6`}
@@ -89,25 +95,45 @@ export default function SynastryChart() {
 						style={tw`self-start `}
 						onPress={() => router.back()}
 					>
-						<SvgXml xml={iconBack} />
+						{theme === 'dark' ? (
+							<SvgXml xml={iconBackDark} />
+						) : (
+							<SvgXml xml={iconBack} />
+						)}
 					</TouchableOpacity>
-					<Text style={tw`font-poppinsSemiBold text-2xl`}>
+					<Text
+						style={tw`font-poppinsSemiBold text-2xl ${
+							theme === 'dark' ? 'text-white' : 'text-black'
+						}`}
+					>
 						Synastry Match Details
 					</Text>
 				</View>
-				<Text style={tw`font-poppins text-xs text-gray-700`}>
+				<Text
+					style={tw`font-poppins text-xs ${
+						theme === 'dark' ? 'text-white' : 'text-gray-700'
+					}`}
+				>
 					Date Mode offers a dual-use experience focused on dating when enabled
 					and event discovery when disabled.
 				</Text>
 				<View
-					style={tw`flex items-center justify-center bg-[#F4F4F4] rounded-lg gap-2 p-4`}
+					style={tw`flex items-center justify-center bg-${
+						theme === 'dark' ? 'lighterDark' : '[#F4F4F4]'
+					} rounded-lg gap-2 p-4`}
 				>
-					<Text style={tw`font-poppinsSemiBold text-base w-full`}>
+					<Text
+						style={tw`font-poppinsSemiBold text-base w-full ${
+							theme === 'dark' ? 'text-white' : 'text-black'
+						}`}
+					>
 						Your Birth
 					</Text>
 					<View>
 						<TouchableOpacity
-							style={tw`w-full p-3 border border-gray-300 bg-white rounded-lg flex flex-row  items-center justify-between`}
+							style={tw`w-full p-3 border border-gray-300 ${
+								theme === 'dark' ? 'bg-lightDark' : 'bg-white'
+							} rounded-lg flex flex-row  items-center justify-between`}
 							onPress={() => setOpenUserDateModal(true)}
 						>
 							<Text style={tw`font-poppinsSemiBold text-xs text-gray-600`}>
@@ -135,9 +161,15 @@ export default function SynastryChart() {
 					</View>
 					<View style={tw`flex flex-row w-full gap-2 items-center`}>
 						<View style={tw`flex flex-1 gap-2`}>
-							<Text>Time</Text>
+							<Text
+								style={tw`${theme === 'dark' ? 'text-white' : 'text-black'}`}
+							>
+								Time
+							</Text>
 							<TouchableOpacity
-								style={tw`flex-1 p-3 border border-gray-300 bg-white rounded-lg flex flex-row  items-center justify-between`}
+								style={tw`flex-1 p-3 border border-gray-300 ${
+									theme === 'dark' ? 'bg-lightDark' : 'bg-white'
+								} rounded-lg flex flex-row  items-center justify-between`}
 								onPress={() => setOpenUserTimeModal(true)}
 							>
 								<Text style={tw`font-poppinsSemiBold text-xs text-gray-600`}>
@@ -147,8 +179,16 @@ export default function SynastryChart() {
 							</TouchableOpacity>
 						</View>
 						<View style={tw`flex flex-1 gap-2`}>
-							<Text>City of Birth</Text>
-							<View style={tw`border border-gray-300 bg-white rounded-lg`}>
+							<Text
+								style={tw`${theme === 'dark' ? 'text-white' : 'text-black'}`}
+							>
+								City of Birth
+							</Text>
+							<View
+								style={tw`border border-gray-300 ${
+									theme === 'dark' ? 'bg-lightDark' : 'bg-white'
+								} rounded-lg`}
+							>
 								<TouchableOpacity
 									style={tw`w-full p-3 flex flex-row items-center justify-between`}
 									onPress={() => setUserCityModalOpen(true)}
@@ -178,8 +218,14 @@ export default function SynastryChart() {
 						/>
 					)}
 					<View style={tw`flex w-full gap-2`}>
-						<Text>Country of Birth</Text>
-						<View style={tw`border border-gray-300 bg-white rounded-lg`}>
+						<Text style={tw`${theme === 'dark' ? 'text-white' : 'text-black'}`}>
+							Country of Birth
+						</Text>
+						<View
+							style={tw`border border-gray-300 ${
+								theme === 'dark' ? 'bg-lightDark' : 'bg-white'
+							} rounded-lg`}
+						>
 							<TouchableOpacity
 								style={tw`w-full p-3 flex flex-row items-center justify-between`}
 								onPress={() => setUserCountryModalOpen(true)}
@@ -192,15 +238,25 @@ export default function SynastryChart() {
 					</View>
 				</View>
 				<View
-					style={tw`flex items-center justify-center bg-[#F4F4F4] rounded-lg gap-2 p-4`}
+					style={tw`flex items-center justify-center bg-${
+						theme === 'dark' ? 'lighterDark' : '[#F4F4F4]'
+					} rounded-lg gap-2 p-4`}
 				>
-					<Text style={tw`font-poppinsSemiBold text-base w-full`}>
+					<Text
+						style={tw`font-poppinsSemiBold text-base w-full ${
+							theme === 'dark' ? 'text-white' : 'text-black'
+						}`}
+					>
 						Match&apos;s Birth
 					</Text>
 					<View style={tw`w-full gap-2`}>
-						<Text>Match&apos;s Name {'(for display only)'}</Text>
+						<Text style={tw`${theme === 'dark' ? 'text-white' : 'text-black'}`}>
+							Match&apos;s Name {'(for display only)'}
+						</Text>
 						<View
-							style={tw`w-full border border-gray-300 bg-white rounded-lg flex  items-center px-2 py-1`}
+							style={tw`w-full border border-gray-300 ${
+								theme === 'dark' ? 'bg-lightDark' : 'bg-white'
+							} rounded-lg flex  items-center px-2 py-1`}
 						>
 							<TextInput
 								placeholder="Full Name"
@@ -210,9 +266,13 @@ export default function SynastryChart() {
 						</View>
 					</View>
 					<View style={tw`flex w-full gap-2`}>
-						<Text>Date of birth</Text>
+						<Text style={tw`${theme === 'dark' ? 'text-white' : 'text-black'}`}>
+							Date of birth
+						</Text>
 						<TouchableOpacity
-							style={tw`w-full p-3 border border-gray-300 bg-white rounded-lg flex flex-row  items-center justify-between`}
+							style={tw`w-full p-3 border border-gray-300 ${
+								theme === 'dark' ? 'bg-lightDark' : 'bg-white'
+							} rounded-lg flex flex-row  items-center justify-between`}
 							onPress={() => setOpenMatchDateModal(true)}
 						>
 							<Text style={tw`font-poppinsSemiBold text-xs text-gray-600`}>
@@ -240,9 +300,15 @@ export default function SynastryChart() {
 					</View>
 					<View style={tw`flex flex-row w-full gap-2 items-center`}>
 						<View style={tw`flex flex-1 gap-2`}>
-							<Text>Time</Text>
+							<Text
+								style={tw`${theme === 'dark' ? 'text-white' : 'text-black'}`}
+							>
+								Time
+							</Text>
 							<TouchableOpacity
-								style={tw`flex-1 p-3 border border-gray-300 bg-white rounded-lg flex flex-row  items-center justify-between`}
+								style={tw`flex-1 p-3 border border-gray-300 ${
+									theme === 'dark' ? 'bg-lightDark' : 'bg-white'
+								} rounded-lg flex flex-row  items-center justify-between`}
 								onPress={() => setOpenMatchTimeModal(true)}
 							>
 								<Text style={tw`font-poppinsSemiBold text-xs text-gray-600`}>
@@ -252,8 +318,16 @@ export default function SynastryChart() {
 							</TouchableOpacity>
 						</View>
 						<View style={tw`flex flex-1 gap-2`}>
-							<Text>City of Birth</Text>
-							<View style={tw`border border-gray-300 bg-white rounded-lg`}>
+							<Text
+								style={tw`${theme === 'dark' ? 'text-white' : 'text-black'}`}
+							>
+								City of Birth
+							</Text>
+							<View
+								style={tw`border border-gray-300 ${
+									theme === 'dark' ? 'bg-lightDark' : 'bg-white'
+								} rounded-lg`}
+							>
 								<TouchableOpacity
 									style={tw`w-full p-3 flex flex-row items-center justify-between`}
 									onPress={() => setMatchCityModalOpen(true)}
@@ -283,8 +357,14 @@ export default function SynastryChart() {
 						/>
 					)}
 					<View style={tw`flex w-full gap-2`}>
-						<Text>Country of Birth</Text>
-						<View style={tw`border border-gray-300 bg-white rounded-lg`}>
+						<Text style={tw`${theme === 'dark' ? 'text-white' : 'text-black'}`}>
+							Country of Birth
+						</Text>
+						<View
+							style={tw`border border-gray-300 ${
+								theme === 'dark' ? 'bg-lightDark' : 'bg-white'
+							} rounded-lg`}
+						>
 							<TouchableOpacity
 								style={tw`w-full p-3 flex flex-row items-center justify-between`}
 								onPress={() => setMatchCountryModalOpen(true)}
@@ -310,25 +390,51 @@ export default function SynastryChart() {
 					style={tw`absolute inset-0 bg-black bg-opacity-15 flex items-center justify-center px-5`}
 				>
 					<View
-						style={tw`flex w-full bg-white rounded-xl gap-4 p-4 items-center justify-center`}
+						style={tw`flex w-full ${
+							theme === 'dark' ? 'bg-lightDark' : 'bg-white'
+						} rounded-xl gap-4 p-4 items-center justify-center`}
 					>
 						<SvgXml xml={iconSynastryGradient} />
-						<Text style={tw`font-poppinsSemiBold text-lg`}>
+						<Text
+							style={tw`font-poppinsSemiBold text-lg ${
+								theme === 'dark' ? 'text-white' : 'text-black'
+							}`}
+						>
 							Synastry Report
 						</Text>
-						<Text style={tw`font-poppins text-center text-gray-700`}>
+						<Text
+							style={tw`font-poppins text-center ${
+								theme === 'dark' ? 'text-white' : 'text-gray-700'
+							}`}
+						>
 							Your compatibility with Elena
 						</Text>
-						<Text style={tw`font-poppins text-sm text-center text-gray-700`}>
+						<Text
+							style={tw`font-poppins text-sm text-center ${
+								theme === 'dark' ? 'text-white' : 'text-gray-700'
+							}`}
+						>
 							☀️{' '}
-							<Text style={tw`font-poppinsSemiBold text-center text-gray-700`}>
+							<Text
+								style={tw`font-poppinsSemiBold text-center ${
+									theme === 'dark' ? 'text-white' : 'text-gray-700'
+								}`}
+							>
 								Sun Sign:
 							</Text>{' '}
 							You {'(Leo)'} and Elena {'(Aries)'}
 						</Text>
-						<Text style={tw`font-poppins text-sm text-center text-gray-700`}>
+						<Text
+							style={tw`font-poppins text-sm text-center ${
+								theme === 'dark' ? 'text-white' : 'text-gray-700'
+							}`}
+						>
 							🌕{' '}
-							<Text style={tw`font-poppinsSemiBold text-center text-gray-700`}>
+							<Text
+								style={tw`font-poppinsSemiBold text-center ${
+									theme === 'dark' ? 'text-white' : 'text-gray-700'
+								}`}
+							>
 								Moon Sign:
 							</Text>{' '}
 							You {'(Taurus)'} and Elena {'(Scorpio)'}
@@ -348,7 +454,11 @@ export default function SynastryChart() {
 								for a lasting relationship.
 							</Text>
 						</View>
-						<Text style={tw`font-poppins text-gray-700 text-center`}>
+						<Text
+							style={tw`font-poppins ${
+								theme === 'dark' ? 'text-white' : 'text-gray-700'
+							} text-center`}
+						>
 							We hope this helps you understand your compatibility better!
 						</Text>
 						<TouchableOpacity

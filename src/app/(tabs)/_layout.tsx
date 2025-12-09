@@ -99,6 +99,8 @@ export default function TabLayout() {
 										? iconMessagesTabInactiveDark
 										: iconMessagesTabInactive
 								}
+								width={28}
+								height={28}
 							/>
 						</View>
 					),
