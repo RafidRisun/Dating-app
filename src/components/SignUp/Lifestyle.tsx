@@ -1,9 +1,11 @@
 import tw from '@/src/lib/tailwind';
+import { useTheme } from '@/src/lib/ThemeContext';
 import React from 'react';
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import TitleAndSubtitle from '../Register/TitleAndSubtitle';
 
 export default function Lifestyle() {
+	const { theme } = useTheme();
 	const [drinkingFrequency, setDrinkingFrequency] = React.useState<
 		string | null
 	>(null);
@@ -18,163 +20,119 @@ export default function Lifestyle() {
 				subtitle="How often do you drink?"
 			/>
 			<View style={tw`mt-5 flex flex-col gap-4 items-center justify-center`}>
-				<TouchableOpacity
-					style={tw`w-full p-4 border border-gray-300 bg-gray-100 rounded-lg ${
-						drinkingFrequency === 'Not for me' ? 'bg-blue' : ''
-					}`}
-					onPress={() => {
-						if (drinkingFrequency === 'Not for me') {
-							setDrinkingFrequency(null);
-						} else {
-							setDrinkingFrequency('Not for me');
-						}
-					}}
-				>
-					<Text
-						style={tw`font-poppinsSemiBold text-lg ${
-							drinkingFrequency === 'Not for me'
-								? 'text-white'
-								: 'text-gray-600'
-						}`}
-					>
-						Not for me
-					</Text>
-				</TouchableOpacity>
-				<TouchableOpacity
-					style={tw`w-full p-4 border border-gray-300 bg-gray-100 rounded-lg ${
-						drinkingFrequency === 'On special occasions' ? 'bg-blue' : ''
-					}`}
-					onPress={() => {
-						if (drinkingFrequency === 'On special occasions') {
-							setDrinkingFrequency(null);
-						} else {
-							setDrinkingFrequency('On special occasions');
-						}
-					}}
-				>
-					<Text
-						style={tw`font-poppinsSemiBold text-lg ${
-							drinkingFrequency === 'On special occasions'
-								? 'text-white'
-								: 'text-gray-600'
-						}`}
-					>
-						On special occasions
-					</Text>
-				</TouchableOpacity>
-				<TouchableOpacity
-					style={tw`w-full p-4 border border-gray-300 bg-gray-100 rounded-lg ${
-						drinkingFrequency === 'Social Drinker' ? 'bg-blue' : ''
-					}`}
-					onPress={() => {
-						if (drinkingFrequency === 'Social Drinker') {
-							setDrinkingFrequency(null);
-						} else {
-							setDrinkingFrequency('Social Drinker');
-						}
-					}}
-				>
-					<Text
-						style={tw`font-poppinsSemiBold text-lg ${
-							drinkingFrequency === 'Social Drinker'
-								? 'text-white'
-								: 'text-gray-600'
-						}`}
-					>
-						Social Drinker
-					</Text>
-				</TouchableOpacity>
-				<TouchableOpacity
-					style={tw`w-full p-4 border border-gray-300 bg-gray-100 rounded-lg ${
-						drinkingFrequency === 'Regular Drinker' ? 'bg-blue' : ''
-					}`}
-					onPress={() => {
-						if (drinkingFrequency === 'Regular Drinker') {
-							setDrinkingFrequency(null);
-						} else {
-							setDrinkingFrequency('Regular Drinker');
-						}
-					}}
-				>
-					<Text
-						style={tw`font-poppinsSemiBold text-lg ${
-							drinkingFrequency === 'Regular Drinker'
-								? 'text-white'
-								: 'text-gray-600'
-						}`}
-					>
-						Regular Drinker
-					</Text>
-				</TouchableOpacity>
+				{drinkingOptions.map(option => {
+					const selected = drinkingFrequency === option.label;
+					const disabled = false; // no max limit for single-choice
+					return (
+						<TouchableOpacity
+							key={option.id}
+							disabled={disabled}
+							style={tw`w-full p-4 border border-gray-300 ${
+								selected
+									? 'bg-blue'
+									: theme === 'dark'
+									? 'bg-lighterDark'
+									: 'bg-gray-100'
+							} rounded-lg ${disabled ? 'opacity-50' : ''}`}
+							onPress={() => {
+								if (selected) setDrinkingFrequency(null);
+								else if (!disabled) setDrinkingFrequency(option.label);
+							}}
+						>
+							<Text
+								style={tw`font-poppinsSemiBold text-lg ${
+									selected
+										? 'text-white'
+										: theme === 'dark'
+										? 'text-white'
+										: 'text-gray-600'
+								}`}
+							>
+								{option.label}
+							</Text>
+						</TouchableOpacity>
+					);
+				})}
 			</View>
 			<View style={{ height: 20 }} />
-			<Text style={tw`font-poppins text-base`}>How often do you smoke?</Text>
-			<View style={tw`mt-5 flex flex-col gap-4 items-center justify-center`}>
-				<TouchableOpacity
-					style={tw`w-full p-4 border border-gray-300 bg-gray-100 rounded-lg ${
-						smokingFrequency === 'Non-smoker' ? 'bg-blue' : ''
-					}`}
-					onPress={() => {
-						if (smokingFrequency === 'Non-smoker') {
-							setSmokingFrequency(null);
-						} else {
-							setSmokingFrequency('Non-smoker');
-						}
-					}}
-				>
-					<Text
-						style={tw`font-poppinsSemiBold text-lg ${
-							smokingFrequency === 'Non-smoker' ? 'text-white' : 'text-gray-600'
-						}`}
-					>
-						Non-smoker
-					</Text>
-				</TouchableOpacity>
-				<TouchableOpacity
-					style={tw`w-full p-4 border border-gray-300 bg-gray-100 rounded-lg ${
-						smokingFrequency === 'Occasional Smoker' ? 'bg-blue' : ''
-					}`}
-					onPress={() => {
-						if (smokingFrequency === 'Occasional Smoker') {
-							setSmokingFrequency(null);
-						} else {
-							setSmokingFrequency('Occasional Smoker');
-						}
-					}}
-				>
-					<Text
-						style={tw`font-poppinsSemiBold text-lg ${
-							smokingFrequency === 'Occasional Smoker'
-								? 'text-white'
-								: 'text-gray-600'
-						}`}
-					>
-						Occasional Smoker
-					</Text>
-				</TouchableOpacity>
-				<TouchableOpacity
-					style={tw`w-full p-4 border border-gray-300 bg-gray-100 rounded-lg ${
-						smokingFrequency === 'Regular Smoker' ? 'bg-blue' : ''
-					}`}
-					onPress={() => {
-						if (smokingFrequency === 'Regular Smoker') {
-							setSmokingFrequency(null);
-						} else {
-							setSmokingFrequency('Regular Smoker');
-						}
-					}}
-				>
-					<Text
-						style={tw`font-poppinsSemiBold text-lg ${
-							smokingFrequency === 'Regular Smoker'
-								? 'text-white'
-								: 'text-gray-600'
-						}`}
-					>
-						Regular Smoker
-					</Text>
-				</TouchableOpacity>
+			<Text
+				style={tw`font-poppins text-base ${
+					theme === 'dark' ? 'text-white' : 'text-gray-600'
+				}`}
+			>
+				How often do you smoke?
+			</Text>
+			<View
+				style={tw`mt-5 flex flex-col gap-4 items-center justify-center pb-10`}
+			>
+				{smokingOptions.map(option => {
+					const selected = smokingFrequency === option.label;
+					const disabled = false;
+					return (
+						<TouchableOpacity
+							key={option.id}
+							disabled={disabled}
+							style={tw`w-full p-4 border border-gray-300 ${
+								selected
+									? 'bg-blue'
+									: theme === 'dark'
+									? 'bg-lighterDark'
+									: 'bg-gray-100'
+							} rounded-lg ${disabled ? 'opacity-50' : ''}`}
+							onPress={() => {
+								if (selected) setSmokingFrequency(null);
+								else if (!disabled) setSmokingFrequency(option.label);
+							}}
+						>
+							<Text
+								style={tw`font-poppinsSemiBold text-lg ${
+									selected
+										? 'text-white'
+										: theme === 'dark'
+										? 'text-white'
+										: 'text-gray-600'
+								}`}
+							>
+								{option.label}
+							</Text>
+						</TouchableOpacity>
+					);
+				})}
 			</View>
 		</ScrollView>
 	);
 }
+
+const smokingOptions = [
+	{
+		id: 1,
+		label: 'Non-smoker',
+	},
+	{
+		id: 2,
+		label: 'Occasional Smoker',
+	},
+	{
+		id: 3,
+		label: 'Regular Smoker',
+	},
+];
+
+const drinkingOptions = [
+	{
+		id: 1,
+		label: 'Not for me',
+	},
+	{
+		id: 2,
+		label: 'On special occasions',
+	},
+	{
+		id: 3,
+		label: 'Social Drinker',
+	},
+	{
+		id: 4,
+		label: 'Regular Drinker',
+	},
+];

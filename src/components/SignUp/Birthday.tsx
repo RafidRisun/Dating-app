@@ -1,5 +1,6 @@
 import tw from '@/src/lib/tailwind';
 // import DateTimePicker from '@react-native-community/datetimepicker';
+import { useTheme } from '@/src/lib/ThemeContext';
 import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { DatePicker } from 'react-native-wheel-pick';
@@ -10,13 +11,13 @@ export default function Birthday({
 }: {
 	setAge: (age: number) => void;
 }) {
+	const { theme } = useTheme();
 	// default date to 18 years ago so picker doesn't start with a too-recent date
 	const [date, setDate] = useState(() => {
 		const d = new Date();
 		d.setFullYear(d.getFullYear() - 18);
 		return d;
 	});
-	const [showAndroidPicker, setShowAndroidPicker] = useState(true);
 
 	useEffect(() => {
 		const age = new Date().getFullYear() - date.getFullYear();
@@ -35,14 +36,18 @@ export default function Birthday({
 			/>
 			<View style={tw`mt-25 items-center justify-center`}>
 				<DatePicker
-					style={{ backgroundColor: 'white', width: 340, height: 240 }}
+					style={{
+						backgroundColor: theme === 'dark' ? '#121212' : 'white',
+						width: 340,
+						height: 240,
+					}}
 					minimumDate={new Date('1960-01-01')}
 					maximumDate={maxSelectableDate}
 					onDateChange={(date: Date) => {
 						setDate(date);
 					}}
-					textColor="black"
-					selectTextColor="black"
+					textColor={theme === 'dark' ? 'white' : 'black'}
+					selectTextColor={theme === 'dark' ? 'white' : 'black'}
 					textSize={18}
 					date={date}
 				/>

@@ -1,10 +1,12 @@
 import tw from '@/src/lib/tailwind';
+import { useTheme } from '@/src/lib/ThemeContext';
 import React, { useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { Picker } from 'react-native-wheel-pick';
 import TitleAndSubtitle from '../Register/TitleAndSubtitle';
 
 export default function Height() {
+	const { theme } = useTheme();
 	const [height, setHeight] = useState<string>('');
 	const [unit, setUnit] = useState<'cm' | 'ft'>('cm');
 	return (
@@ -13,23 +15,35 @@ export default function Height() {
 			<View style={tw`mt-25 items-center justify-center`}>
 				{unit === 'cm' ? (
 					<Picker
-						style={{ backgroundColor: 'white', width: 300, height: 215 }}
+						style={{
+							backgroundColor: theme === 'dark' ? '#121212' : 'white',
+							width: 300,
+							height: 215,
+						}}
 						selectedValue={height}
 						pickerData={heightsInCm}
 						onValueChange={(newHeight: string) => {
 							setHeight(newHeight);
 							console.log(newHeight);
 						}}
+						textColor={theme === 'dark' ? 'white' : 'black'}
+						selectTextColor={theme === 'dark' ? 'white' : 'black'}
 					/>
 				) : (
 					<Picker
-						style={{ backgroundColor: 'white', width: 300, height: 215 }}
+						style={{
+							backgroundColor: theme === 'dark' ? '#121212' : 'white',
+							width: 300,
+							height: 215,
+						}}
 						selectedValue={height}
 						pickerData={heightsInFeet}
 						onValueChange={(newHeight: string) => {
 							setHeight(newHeight);
 							console.log(newHeight);
 						}}
+						textColor={theme === 'dark' ? 'white' : 'black'}
+						selectTextColor={theme === 'dark' ? 'white' : 'black'}
 					/>
 				)}
 			</View>

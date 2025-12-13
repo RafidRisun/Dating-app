@@ -1,11 +1,13 @@
 import { iconYesIdLoveTo } from '@/assets/icon';
 import tw from '@/src/lib/tailwind';
+import { useTheme } from '@/src/lib/ThemeContext';
 import React, { useEffect } from 'react';
 import { Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { SvgXml } from 'react-native-svg';
 import TitleAndSubtitle from '../Register/TitleAndSubtitle';
 
 export default function Email() {
+	const { theme } = useTheme();
 	const [email, setEmail] = React.useState('');
 	const [isSubscribed, setIsSubscribed] = React.useState(false);
 
@@ -25,7 +27,11 @@ export default function Email() {
 				subtitle="Receive marketing emails about campaigns and offers."
 			/>
 			<TextInput
-				style={tw`border border-gray-300 rounded-lg bg-gray-100 px-4 py-3 mt-5 text-base font-poppins`}
+				style={tw`border border-gray-300 rounded-lg ${
+					theme === 'dark'
+						? 'bg-lighterDark text-white'
+						: 'bg-gray-100 text-black'
+				} px-4 py-3 mt-5 text-base font-poppins`}
 				placeholder="e.g., your.email@example.com"
 				value={email}
 				onChangeText={text => setEmail(text)}

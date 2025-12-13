@@ -1,3 +1,4 @@
+import { iconBack, iconBackDark } from '@/assets/icon';
 import PageWrapper from '@/src/components/PageWrapper';
 import AddPhotos from '@/src/components/SignUp/AddPhotos';
 import Bio from '@/src/components/SignUp/Bio';
@@ -13,6 +14,7 @@ import Name from '@/src/components/SignUp/Name';
 import OTP from '@/src/components/SignUp/OTP';
 import PhoneNumber from '@/src/components/SignUp/PhoneNumber';
 import tw from '@/src/lib/tailwind';
+import { useTheme } from '@/src/lib/ThemeContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -25,8 +27,10 @@ import {
 	TouchableOpacity,
 	View,
 } from 'react-native';
+import { SvgXml } from 'react-native-svg';
 
 export default function Signup() {
+	const { theme } = useTheme();
 	const router = useRouter();
 	const [progress, setProgress] = useState(1);
 
@@ -49,10 +53,25 @@ export default function Signup() {
 
 	return (
 		<PageWrapper>
-			<StatusBar barStyle="dark-content" backgroundColor="white" />
+			<StatusBar
+				barStyle={theme === 'dark' ? 'light-content' : 'dark-content'}
+			/>
 			<KeyboardAvoidingView behavior="padding" style={tw`flex-1 w-full`}>
 				<View style={tw`flex w-full h-15 items-center justify-end mb-10`}>
-					<View style={tw`flex w-full h-2 bg-gray-300 rounded-full mb-2`}>
+					<TouchableOpacity
+						style={tw`absolute left-0 bottom-7 flex px-3 py-1 items-center justify-center`}
+						onPress={() => {
+							setProgress(progress - 1);
+						}}
+						disabled={progress === 1}
+					>
+						<SvgXml xml={theme === 'dark' ? iconBackDark : iconBack} />
+					</TouchableOpacity>
+					<View
+						style={tw`flex w-full h-2 ${
+							theme === 'dark' ? 'bg-lighterDark' : 'bg-gray-300'
+						} rounded-full mb-2`}
+					>
 						{/* Progress Bar Background */}
 						<LinearGradient
 							colors={['#05C3DD', '#B14EFF']}

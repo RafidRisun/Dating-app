@@ -1,4 +1,5 @@
 import tw from '@/src/lib/tailwind';
+import { useTheme } from '@/src/lib/ThemeContext';
 import React, { useRef, useState } from 'react';
 import { View } from 'react-native';
 import CountryPicker, { CountryCode } from 'react-native-country-picker-modal';
@@ -6,6 +7,7 @@ import PhoneInput from 'react-native-phone-input';
 import TitleAndSubtitle from '../Register/TitleAndSubtitle';
 
 export default function PhoneNumber() {
+	const { theme } = useTheme();
 	const [phoneNumber, setPhoneNumber] = useState('');
 	const phoneInput = useRef<PhoneInput>(null);
 
@@ -30,7 +32,15 @@ export default function PhoneNumber() {
 			{/* phone number here */}
 			<PhoneInput
 				ref={phoneInput}
-				style={tw`border border-gray-300 rounded-lg bg-gray-100 px-4 py-3 mt-5 text-base font-poppins`}
+				style={tw`border border-gray-300 rounded-lg ${
+					theme === 'dark' ? 'bg-lighterDark' : 'bg-gray-100'
+				} px-4 py-3 mt-5`}
+				textStyle={tw`${
+					theme === 'dark' ? 'text-white' : 'text-black'
+				} text-base font-poppins`}
+				textProps={{
+					placeholderTextColor: theme === 'dark' ? '#9ca3af' : '#6b7280',
+				}}
 				initialValue={phoneNumber}
 				initialCountry={phoneCountryCode.toLowerCase()}
 				onPressFlag={() => setShowPhoneCountryPicker(true)}
