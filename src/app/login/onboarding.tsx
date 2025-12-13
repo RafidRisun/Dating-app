@@ -1,11 +1,12 @@
 import { iconGrayBack } from '@/assets/icon';
 import PageWrapper from '@/src/components/PageWrapper';
 import tw from '@/src/lib/tailwind';
+import { useTheme } from '@/src/lib/ThemeContext';
 import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import React from 'react';
-import { StatusBar, Text, TouchableOpacity, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import {
 	Gesture,
 	GestureDetector,
@@ -22,7 +23,7 @@ import { SvgXml } from 'react-native-svg';
 export default function Onboarding() {
 	const router = useRouter();
 	const [progress, setProgress] = React.useState(1);
-
+	const { theme } = useTheme();
 	const translateX = useSharedValue(0);
 
 	// JS function executed on the JS thread via runOnJS
@@ -50,7 +51,6 @@ export default function Onboarding() {
 		<GestureHandlerRootView style={{ flex: 1 }}>
 			<GestureDetector gesture={gesture}>
 				<PageWrapper>
-					<StatusBar barStyle="dark-content" backgroundColor="transparent" />
 					<View style={tw`flex-1 w-full items-center justify-start py-10`}>
 						{progress === 1 && (
 							<View style={tw`flex flex-col w-full flex-1 items-center gap-12`}>
@@ -59,10 +59,18 @@ export default function Onboarding() {
 									style={tw`w-full h-60 rounded-2xl`}
 									contentFit="cover"
 								/>
-								<Text style={tw`text-2xl font-semibold`}>
+								<Text
+									style={tw`text-2xl font-semibold ${
+										theme === 'dark' ? 'text-white' : 'text-black'
+									}`}
+								>
 									Social Experiences are Here
 								</Text>
-								<Text style={tw`text-center text-lg font-poppins`}>
+								<Text
+									style={tw`text-center text-lg font-poppins text-${
+										theme === 'dark' ? 'white' : 'black'
+									}`}
+								>
 									Meet new people, share real moments, and start meaningful
 									connections through experiences.
 								</Text>
@@ -88,10 +96,18 @@ export default function Onboarding() {
 									style={tw`w-full h-60 rounded-2xl`}
 									contentFit="cover"
 								/>
-								<Text style={tw`text-2xl font-semibold`}>
+								<Text
+									style={tw`text-2xl font-semibold ${
+										theme === 'dark' ? 'text-white' : 'text-black'
+									}`}
+								>
 									Whether to a Concert
 								</Text>
-								<Text style={tw`text-center text-lg font-poppins`}>
+								<Text
+									style={tw`text-center text-lg font-poppins ${
+										theme === 'dark' ? 'text-white' : 'text-black'
+									}`}
+								>
 									Feel the rhythm, meet the vibe. Let music bring you closer.
 								</Text>
 								<View
@@ -116,10 +132,18 @@ export default function Onboarding() {
 									style={tw`w-full h-60 rounded-2xl`}
 									contentFit="cover"
 								/>
-								<Text style={tw`text-2xl font-semibold`}>
+								<Text
+									style={tw`text-2xl font-semibold ${
+										theme === 'dark' ? 'text-white' : 'text-black'
+									}`}
+								>
 									Whether to the Festival
 								</Text>
-								<Text style={tw`text-center text-lg font-poppins`}>
+								<Text
+									style={tw`text-center text-lg font-poppins ${
+										theme === 'dark' ? 'text-white' : 'text-black'
+									}`}
+								>
 									Share the energy, live the moment, and find someone to dance
 									it with.
 								</Text>
@@ -145,10 +169,18 @@ export default function Onboarding() {
 									style={tw`w-full h-60 rounded-2xl`}
 									contentFit="cover"
 								/>
-								<Text style={tw`text-2xl font-semibold`}>
+								<Text
+									style={tw`text-2xl font-semibold ${
+										theme === 'dark' ? 'text-white' : 'text-black'
+									}`}
+								>
 									and More Experience
 								</Text>
-								<Text style={tw`text-center text-lg font-poppins`}>
+								<Text
+									style={tw`text-center text-lg font-poppins ${
+										theme === 'dark' ? 'text-white' : 'text-black'
+									}`}
+								>
 									Every event could be the start of a new story — yours begins
 									with Soulflag.
 								</Text>

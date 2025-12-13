@@ -27,6 +27,17 @@ import {
 	TouchableOpacity,
 	View,
 } from 'react-native';
+import {
+	Gesture,
+	GestureDetector,
+	GestureHandlerRootView,
+} from 'react-native-gesture-handler';
+import {
+	runOnJS,
+	useAnimatedStyle,
+	useSharedValue,
+	withSpring,
+} from 'react-native-reanimated';
 import { SvgXml } from 'react-native-svg';
 
 export default function Signup() {
@@ -46,6 +57,7 @@ export default function Signup() {
 		null,
 	]);
 	const [age, setAge] = useState(18);
+	const [gender, setGender] = useState<string | null>(null);
 	const [selectedLookingForIds, setSelectedLookingForIds] = useState<string[]>(
 		[]
 	);
@@ -77,108 +89,141 @@ export default function Signup() {
 		}, [progress])
 	);
 
+	const translateX = useSharedValue(0);
+
+	// JS function executed on the JS thread via runOnJS
+	function handleSwipe(translationX: number) {
+		if (translationX > 50 && progress > 1) {
+			setProgress(progress - 1);
+		} else if (translationX < -50 && progress < 13) {
+			setProgress(progress + 1);
+		}
+	}
+
+	const gesture = Gesture.Pan()
+		.activeOffsetX([-20, 20]) // Activate after 20px horizontal movement
+		.onEnd(({ translationX }) => {
+			// call handleSwipe on the JS thread to avoid calling React state setters from a worklet
+			runOnJS(handleSwipe)(translationX);
+			translateX.value = withSpring(0); // Reset translation
+		});
+
+	const animatedStyle = useAnimatedStyle(() => ({
+		transform: [{ translateX: translateX.value }],
+	}));
+
 	return (
-		<PageWrapper>
-			<StatusBar
-				barStyle={theme === 'dark' ? 'light-content' : 'dark-content'}
-			/>
-			<KeyboardAvoidingView behavior="padding" style={tw`flex-1 w-full`}>
-				<View style={tw`flex w-full h-15 items-center justify-end mb-10`}>
-					<TouchableOpacity
-						style={tw`absolute left-0 bottom-7 flex px-3 py-1 items-center justify-center`}
-						onPress={() => {
-							setProgress(progress - 1);
-						}}
-						disabled={progress === 1}
-					>
-						<SvgXml xml={theme === 'dark' ? iconBackDark : iconBack} />
-					</TouchableOpacity>
-					<View
-						style={tw`flex w-full h-2 ${
-							theme === 'dark' ? 'bg-lighterDark' : 'bg-gray-300'
-						} rounded-full mb-2`}
-					>
-						{/* Progress Bar Background */}
-						<LinearGradient
-							colors={['#05C3DD', '#B14EFF']}
-							start={{ x: 0, y: 0 }}
-							end={{ x: 1, y: 0 }}
-							style={tw`w-${progress}/13 h-2 rounded-full`}
-						/>
-						{/* Progress Bar Fill */}
-					</View>
-					{progress >= 7 && (
+		<GestureHandlerRootView style={{ flex: 1 }}>
+			<GestureDetector gesture={gesture}>
+				<PageWrapper>
+					<StatusBar
+						barStyle={theme === 'dark' ? 'light-content' : 'dark-content'}
+					/>
+					<KeyboardAvoidingView behavior="padding" style={tw`flex-1 w-full`}>
+						<View style={tw`flex w-full h-15 items-center justify-end mb-10`}>
+							{progress > 1 && (
+								<TouchableOpacity
+									style={tw`absolute left-[-2] top-0 flex px-3 py-1 items-center justify-center`}
+									onPress={() => {
+										setProgress(progress - 1);
+									}}
+									disabled={progress === 1}
+								>
+									<SvgXml xml={theme === 'dark' ? iconBackDark : iconBack} />
+								</TouchableOpacity>
+							)}
+							<View
+								style={tw`flex w-full h-2 ${
+									theme === 'dark' ? 'bg-lighterDark' : 'bg-gray-300'
+								} rounded-full mb-2`}
+							>
+								{/* Progress Bar Background */}
+								<LinearGradient
+									colors={['#05C3DD', '#B14EFF']}
+									start={{ x: 0, y: 0 }}
+									end={{ x: 1, y: 0 }}
+									style={tw`w-${progress}/13 h-2 rounded-full`}
+								/>
+								{/* Progress Bar Fill */}
+							</View>
+							{progress >= 7 && progress < 13 && (
+								<TouchableOpacity
+									style={tw`absolute right-0 bottom-7 flex px-3 py-1 items-center justify-center bg-purple rounded-md`}
+									onPress={() => {
+										if (progress < 13) setProgress(13);
+										else router.replace('/login/enableNotification');
+									}}
+								>
+									<Text style={tw`text-white font-poppins text-sm`}>Skip</Text>
+								</TouchableOpacity>
+							)}
+						</View>
+						<View style={tw`flex-1 w-full justify-between`}>
+							{progress === 1 && (
+								<PhoneNumber
+									phoneNumber={phoneNumber}
+									setPhoneNumber={setPhoneNumber}
+								/>
+							)}
+							{progress === 2 && <OTP otp={otp} setOtp={setOtp} />}
+							{progress === 3 && <Name name={name} setName={setName} />}
+							{progress === 4 && (
+								<AddPhotos photos={photos} setPhotos={setPhotos} />
+							)}
+							{progress === 5 && <Birthday setAge={setAge} />}
+							{progress === 6 && (
+								<Gender selectedGender={gender} setSelectedGender={setGender} />
+							)}
+							{progress === 7 && (
+								<LookingFor
+									selectedIds={selectedLookingForIds}
+									setSelectedIds={setSelectedLookingForIds}
+								/>
+							)}
+							{progress === 8 && (
+								<Interests interests={interests} setInterests={setInterests} />
+							)}
+							{progress === 9 && (
+								<Height height={height} setHeight={setHeight} />
+							)}
+							{progress === 10 && <Bio bio={bio} setBio={setBio} />}
+							{progress === 11 && (
+								<Lifestyle
+									drinkingFrequency={drinkingFrequency}
+									setDrinkingFrequency={setDrinkingFrequency}
+									smokingFrequency={smokingFrequency}
+									setSmokingFrequency={setSmokingFrequency}
+								/>
+							)}
+							{progress === 12 && (
+								<Education education={education} setEducation={setEducation} />
+							)}
+							{progress === 13 && (
+								<Email
+									email={email}
+									setEmail={setEmail}
+									isSubscribed={isSubscribed}
+									setIsSubscribed={setIsSubscribed}
+								/>
+							)}
+						</View>
 						<TouchableOpacity
-							style={tw`absolute right-0 bottom-7 flex px-3 py-1 items-center justify-center bg-purple rounded-md`}
+							style={tw`flex w-full gap-2 px-6 py-2 mb-6 items-center justify-center bg-blue rounded-full`}
 							onPress={() => {
-								if (progress < 13) setProgress(progress + 1);
+								if (progress < 13 && progress !== 5) setProgress(progress + 1);
+								else if (progress === 5)
+									router.push({
+										pathname: '/login/ageModal',
+										params: { age: age.toString() },
+									});
 								else router.replace('/login/enableNotification');
 							}}
 						>
-							<Text style={tw`text-white font-poppins text-sm`}>Skip</Text>
+							<Text style={tw`text-white font-poppins text-lg`}>Save</Text>
 						</TouchableOpacity>
-					)}
-				</View>
-				<View style={tw`flex-1 w-full justify-between`}>
-					{progress === 1 && (
-						<PhoneNumber
-							phoneNumber={phoneNumber}
-							setPhoneNumber={setPhoneNumber}
-						/>
-					)}
-					{progress === 2 && <OTP otp={otp} setOtp={setOtp} />}
-					{progress === 3 && <Name name={name} setName={setName} />}
-					{progress === 4 && (
-						<AddPhotos photos={photos} setPhotos={setPhotos} />
-					)}
-					{progress === 5 && <Birthday setAge={setAge} />}
-					{progress === 6 && <Gender />}
-					{progress === 7 && (
-						<LookingFor
-							selectedIds={selectedLookingForIds}
-							setSelectedIds={setSelectedLookingForIds}
-						/>
-					)}
-					{progress === 8 && (
-						<Interests interests={interests} setInterests={setInterests} />
-					)}
-					{progress === 9 && <Height height={height} setHeight={setHeight} />}
-					{progress === 10 && <Bio bio={bio} setBio={setBio} />}
-					{progress === 11 && (
-						<Lifestyle
-							drinkingFrequency={drinkingFrequency}
-							setDrinkingFrequency={setDrinkingFrequency}
-							smokingFrequency={smokingFrequency}
-							setSmokingFrequency={setSmokingFrequency}
-						/>
-					)}
-					{progress === 12 && (
-						<Education education={education} setEducation={setEducation} />
-					)}
-					{progress === 13 && (
-						<Email
-							email={email}
-							setEmail={setEmail}
-							isSubscribed={isSubscribed}
-							setIsSubscribed={setIsSubscribed}
-						/>
-					)}
-				</View>
-				<TouchableOpacity
-					style={tw`flex w-full gap-2 px-6 py-2 mb-6 items-center justify-center bg-blue rounded-full`}
-					onPress={() => {
-						if (progress < 13 && progress !== 5) setProgress(progress + 1);
-						else if (progress === 5)
-							router.push({
-								pathname: '/login/ageModal',
-								params: { age: age.toString() },
-							});
-						else router.replace('/login/enableNotification');
-					}}
-				>
-					<Text style={tw`text-white font-poppins text-lg`}>Save</Text>
-				</TouchableOpacity>
-			</KeyboardAvoidingView>
-		</PageWrapper>
+					</KeyboardAvoidingView>
+				</PageWrapper>
+			</GestureDetector>
+		</GestureHandlerRootView>
 	);
 }

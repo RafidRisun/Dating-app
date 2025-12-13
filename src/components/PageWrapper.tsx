@@ -18,7 +18,9 @@ export default function PageWrapper({
 					theme === 'dark' ? 'bg-dark' : 'bg-white'
 				} p-5`}
 			>
-				<StatusBar barStyle="dark-content" />
+				<StatusBar
+					barStyle={theme === 'dark' ? 'light-content' : 'dark-content'}
+				/>
 				{children}
 			</SafeAreaView>
 		</TouchableWithoutFeedback>

@@ -1,4 +1,5 @@
 import tw from '@/src/lib/tailwind';
+import { useTheme } from '@/src/lib/ThemeContext';
 import { Image } from 'expo-image';
 import { useRouter } from 'expo-router';
 import React from 'react';
@@ -6,7 +7,7 @@ import { StatusBar, Text, TouchableOpacity, View } from 'react-native';
 
 export default function EnableNotification() {
 	const router = useRouter();
-
+	const { theme } = useTheme();
 	// useEffect(() => {
 	// 	const checkNotificationPermission = async () => {
 	// 		const { status } = await Notifications.getPermissionsAsync();
@@ -23,16 +24,32 @@ export default function EnableNotification() {
 	// };
 
 	return (
-		<View style={tw`flex-1 justify-center items-center bg-white`}>
-			<StatusBar barStyle="dark-content" backgroundColor="white" />
+		<View
+			style={tw`flex-1 justify-center items-center ${
+				theme === 'dark' ? 'bg-dark' : 'bg-white'
+			}`}
+		>
+			<StatusBar
+				barStyle={theme === 'dark' ? 'light-content' : 'dark-content'}
+			/>
 			<View style={tw`flex flex-col w-full items-center gap-5 p-5`}>
 				<Image
 					source={require('../../../assets/images/notificaion.png')}
 					style={tw`w-25 h-25`}
 					contentFit="contain"
 				/>
-				<Text style={tw`text-2xl font-poppinsBold`}>Enable Notifications</Text>
-				<Text style={tw`text-sm font-poppins text-center`}>
+				<Text
+					style={tw`text-2xl font-poppinsBold text-${
+						theme === 'dark' ? 'white' : 'black'
+					}`}
+				>
+					Enable Notifications
+				</Text>
+				<Text
+					style={tw`text-sm font-poppins text-center text-${
+						theme === 'dark' ? 'white' : 'black'
+					}`}
+				>
 					Get notified about new messages, matches and event alerts so you
 					don&#39;t miss a thing
 				</Text>

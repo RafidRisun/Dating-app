@@ -38,6 +38,7 @@ export default function SwipeScreen() {
 	return (
 		<GestureHandlerRootView style={{ flex: 1 }}>
 			<SafeAreaView
+				edges={['top']}
 				style={tw`flex-1 ${theme === 'dark' ? 'bg-dark' : 'bg-white'}`}
 			>
 				<StatusBar

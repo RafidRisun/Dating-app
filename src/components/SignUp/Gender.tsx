@@ -4,11 +4,15 @@ import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import TitleAndSubtitle from '../Register/TitleAndSubtitle';
 
-export default function Gender() {
+export default function Gender({
+	selectedGender,
+	setSelectedGender,
+}: {
+	selectedGender: string | null;
+	setSelectedGender: (gender: string | null) => void;
+}) {
 	const { theme } = useTheme();
-	const [selectedGender, setSelectedGender] = React.useState<string | null>(
-		null
-	);
+
 	return (
 		<View style={tw`flex-1 w-full`}>
 			<TitleAndSubtitle title="Your Gender?" subtitle="Select your gender" />
