@@ -1,12 +1,18 @@
 import tw from '@/src/lib/tailwind';
 import { useTheme } from '@/src/lib/ThemeContext';
-import React, { useState } from 'react';
+import React from 'react';
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import TitleAndSubtitle from '../Register/TitleAndSubtitle';
 
-export default function Interests() {
+export default function Interests({
+	interests,
+	setInterests,
+}: {
+	interests: string[];
+	setInterests: React.Dispatch<React.SetStateAction<string[]>>;
+}) {
 	const { theme } = useTheme();
-	const [interests, setInterests] = useState<string[]>([]);
+
 	return (
 		<View style={tw`flex-1 w-full`}>
 			<TitleAndSubtitle

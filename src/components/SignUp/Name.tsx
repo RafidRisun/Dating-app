@@ -1,12 +1,17 @@
 import tw from '@/src/lib/tailwind';
 import { useTheme } from '@/src/lib/ThemeContext';
-import React, { useState } from 'react';
+import React from 'react';
 import { TextInput, View } from 'react-native';
 import TitleAndSubtitle from '../Register/TitleAndSubtitle';
 
-export default function Name() {
+export default function Name({
+	name,
+	setName,
+}: {
+	name: string;
+	setName: (name: string) => void;
+}) {
 	const { theme } = useTheme();
-	const [name, setName] = useState('');
 	return (
 		<View style={tw`flex-1 w-full`}>
 			<TitleAndSubtitle

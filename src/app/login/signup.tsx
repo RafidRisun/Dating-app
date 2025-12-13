@@ -34,7 +34,33 @@ export default function Signup() {
 	const router = useRouter();
 	const [progress, setProgress] = useState(1);
 
+	const [phoneNumber, setPhoneNumber] = useState('');
+	const [otp, setOtp] = useState('');
+	const [name, setName] = useState('');
+	const [photos, setPhotos] = useState<(string | null)[]>([
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+	]);
 	const [age, setAge] = useState(18);
+	const [selectedLookingForIds, setSelectedLookingForIds] = useState<string[]>(
+		[]
+	);
+	const [interests, setInterests] = useState<string[]>([]);
+	const [height, setHeight] = useState<string>('');
+	const [bio, setBio] = useState<string>('');
+	const [drinkingFrequency, setDrinkingFrequency] = React.useState<
+		string | null
+	>(null);
+	const [smokingFrequency, setSmokingFrequency] = React.useState<string | null>(
+		null
+	);
+	const [education, setEducation] = React.useState('');
+	const [email, setEmail] = React.useState('');
+	const [isSubscribed, setIsSubscribed] = React.useState(false);
 
 	// Check AsyncStorage for age confirmation whenever this screen regains focus
 	useFocusEffect(
@@ -94,19 +120,49 @@ export default function Signup() {
 					)}
 				</View>
 				<View style={tw`flex-1 w-full justify-between`}>
-					{progress === 1 && <PhoneNumber />}
-					{progress === 2 && <OTP />}
-					{progress === 3 && <Name />}
-					{progress === 4 && <AddPhotos />}
+					{progress === 1 && (
+						<PhoneNumber
+							phoneNumber={phoneNumber}
+							setPhoneNumber={setPhoneNumber}
+						/>
+					)}
+					{progress === 2 && <OTP otp={otp} setOtp={setOtp} />}
+					{progress === 3 && <Name name={name} setName={setName} />}
+					{progress === 4 && (
+						<AddPhotos photos={photos} setPhotos={setPhotos} />
+					)}
 					{progress === 5 && <Birthday setAge={setAge} />}
 					{progress === 6 && <Gender />}
-					{progress === 7 && <LookingFor />}
-					{progress === 8 && <Interests />}
-					{progress === 9 && <Height />}
-					{progress === 10 && <Bio />}
-					{progress === 11 && <Lifestyle />}
-					{progress === 12 && <Education />}
-					{progress === 13 && <Email />}
+					{progress === 7 && (
+						<LookingFor
+							selectedIds={selectedLookingForIds}
+							setSelectedIds={setSelectedLookingForIds}
+						/>
+					)}
+					{progress === 8 && (
+						<Interests interests={interests} setInterests={setInterests} />
+					)}
+					{progress === 9 && <Height height={height} setHeight={setHeight} />}
+					{progress === 10 && <Bio bio={bio} setBio={setBio} />}
+					{progress === 11 && (
+						<Lifestyle
+							drinkingFrequency={drinkingFrequency}
+							setDrinkingFrequency={setDrinkingFrequency}
+							smokingFrequency={smokingFrequency}
+							setSmokingFrequency={setSmokingFrequency}
+						/>
+					)}
+					{progress === 12 && (
+						<Education education={education} setEducation={setEducation} />
+					)}
+					{progress === 13 && (
+						<Email
+							email={email}
+							setEmail={setEmail}
+							isSubscribed={isSubscribed}
+							setIsSubscribed={setIsSubscribed}
+						/>
+					)}
 				</View>
 				<TouchableOpacity
 					style={tw`flex w-full gap-2 px-6 py-2 mb-6 items-center justify-center bg-blue rounded-full`}

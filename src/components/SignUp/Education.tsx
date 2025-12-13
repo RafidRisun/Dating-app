@@ -4,9 +4,15 @@ import React from 'react';
 import { TextInput, View } from 'react-native';
 import TitleAndSubtitle from '../Register/TitleAndSubtitle';
 
-export default function Education() {
+export default function Education({
+	education,
+	setEducation,
+}: {
+	education: string;
+	setEducation: React.Dispatch<React.SetStateAction<string>>;
+}) {
 	const { theme } = useTheme();
-	const [education, setEducation] = React.useState('');
+
 	return (
 		<View style={tw`flex-1 w-full`}>
 			<TitleAndSubtitle

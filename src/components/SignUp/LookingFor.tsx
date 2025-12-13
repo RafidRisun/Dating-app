@@ -1,13 +1,17 @@
 import tw from '@/src/lib/tailwind';
 import { useTheme } from '@/src/lib/ThemeContext';
-import React, { useState } from 'react';
+import React from 'react';
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import TitleAndSubtitle from '../Register/TitleAndSubtitle';
 
-export default function LookingFor() {
+export default function LookingFor({
+	selectedIds,
+	setSelectedIds,
+}: {
+	selectedIds: string[];
+	setSelectedIds: React.Dispatch<React.SetStateAction<string[]>>;
+}) {
 	const { theme } = useTheme();
-	// allow up to 2 selections
-	const [selectedIds, setSelectedIds] = useState<string[]>([]);
 
 	const toggleSelect = (id: string) => {
 		setSelectedIds(prev => {

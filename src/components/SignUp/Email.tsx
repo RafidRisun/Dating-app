@@ -6,10 +6,18 @@ import { Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { SvgXml } from 'react-native-svg';
 import TitleAndSubtitle from '../Register/TitleAndSubtitle';
 
-export default function Email() {
+export default function Email({
+	email,
+	setEmail,
+	isSubscribed,
+	setIsSubscribed,
+}: {
+	email: string;
+	setEmail: React.Dispatch<React.SetStateAction<string>>;
+	isSubscribed: boolean;
+	setIsSubscribed: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
 	const { theme } = useTheme();
-	const [email, setEmail] = React.useState('');
-	const [isSubscribed, setIsSubscribed] = React.useState(false);
 
 	useEffect(() => {
 		if (email.trim() === '') {

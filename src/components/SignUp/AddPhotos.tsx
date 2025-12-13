@@ -2,21 +2,18 @@ import { iconPlus } from '@/assets/icon';
 import tw from '@/src/lib/tailwind';
 import { Image } from 'expo-image';
 import * as ImagePicker from 'expo-image-picker';
-import React, { useState } from 'react';
+import React from 'react';
 import { TouchableOpacity, View } from 'react-native';
 import { SvgXml } from 'react-native-svg';
 import TitleAndSubtitle from '../Register/TitleAndSubtitle';
 
-export default function AddPhotos() {
-	const [photos, setPhotos] = useState<(string | null)[]>([
-		null,
-		null,
-		null,
-		null,
-		null,
-		null,
-	]);
-
+export default function AddPhotos({
+	photos,
+	setPhotos,
+}: {
+	photos: (string | null)[];
+	setPhotos: React.Dispatch<React.SetStateAction<(string | null)[]>>;
+}) {
 	const handlePhotoUpload = async (index: number) => {
 		const result = await ImagePicker.launchImageLibraryAsync({
 			mediaTypes: ImagePicker.MediaTypeOptions.Images,

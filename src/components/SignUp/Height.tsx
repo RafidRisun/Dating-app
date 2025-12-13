@@ -5,9 +5,15 @@ import { Text, TouchableOpacity, View } from 'react-native';
 import { Picker } from 'react-native-wheel-pick';
 import TitleAndSubtitle from '../Register/TitleAndSubtitle';
 
-export default function Height() {
+export default function Height({
+	height,
+	setHeight,
+}: {
+	height: string;
+	setHeight: React.Dispatch<React.SetStateAction<string>>;
+}) {
 	const { theme } = useTheme();
-	const [height, setHeight] = useState<string>('');
+
 	const [unit, setUnit] = useState<'cm' | 'ft'>('cm');
 	return (
 		<View style={tw`flex-1 w-full`}>

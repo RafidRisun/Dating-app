@@ -1,11 +1,16 @@
 import tw from '@/src/lib/tailwind';
-import React, { useState } from 'react';
+import React from 'react';
 import { View } from 'react-native';
 import { OtpInput } from 'react-native-otp-entry';
 import TitleAndSubtitle from '../Register/TitleAndSubtitle';
 
-export default function OTP() {
-	const [code, setCode] = useState('');
+export default function OTP({
+	otp,
+	setOtp,
+}: {
+	otp: string;
+	setOtp: (otp: string) => void;
+}) {
 	return (
 		<View style={tw`flex-1 w-full flex-col gap-4`}>
 			<TitleAndSubtitle
@@ -27,7 +32,7 @@ export default function OTP() {
 				theme={{
 					pinCodeTextStyle: { color: 'white' },
 				}}
-				onTextChange={text => console.log(text)}
+				onTextChange={text => setOtp(text)}
 				onFilled={text => console.log(`OTP is ${text}`)}
 			/>
 		</View>

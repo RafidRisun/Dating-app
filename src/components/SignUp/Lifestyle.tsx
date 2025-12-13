@@ -4,14 +4,18 @@ import React from 'react';
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import TitleAndSubtitle from '../Register/TitleAndSubtitle';
 
-export default function Lifestyle() {
+export default function Lifestyle({
+	drinkingFrequency,
+	setDrinkingFrequency,
+	smokingFrequency,
+	setSmokingFrequency,
+}: {
+	drinkingFrequency: string | null;
+	setDrinkingFrequency: React.Dispatch<React.SetStateAction<string | null>>;
+	smokingFrequency: string | null;
+	setSmokingFrequency: React.Dispatch<React.SetStateAction<string | null>>;
+}) {
 	const { theme } = useTheme();
-	const [drinkingFrequency, setDrinkingFrequency] = React.useState<
-		string | null
-	>(null);
-	const [smokingFrequency, setSmokingFrequency] = React.useState<string | null>(
-		null
-	);
 
 	return (
 		<ScrollView>

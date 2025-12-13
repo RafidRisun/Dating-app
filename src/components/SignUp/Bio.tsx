@@ -4,7 +4,13 @@ import React from 'react';
 import { TextInput, View } from 'react-native';
 import TitleAndSubtitle from '../Register/TitleAndSubtitle';
 
-export default function Bio() {
+export default function Bio({
+	bio,
+	setBio,
+}: {
+	bio: string;
+	setBio: React.Dispatch<React.SetStateAction<string>>;
+}) {
 	const { theme } = useTheme();
 	return (
 		<View style={tw`flex-1 w-full`}>
@@ -23,6 +29,8 @@ export default function Bio() {
 					multiline
 					textAlignVertical="top"
 					placeholderTextColor="#6B7280"
+					value={bio}
+					onChangeText={setBio}
 				/>
 			</View>
 		</View>

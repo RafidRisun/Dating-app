@@ -6,9 +6,14 @@ import CountryPicker, { CountryCode } from 'react-native-country-picker-modal';
 import PhoneInput from 'react-native-phone-input';
 import TitleAndSubtitle from '../Register/TitleAndSubtitle';
 
-export default function PhoneNumber() {
+export default function PhoneNumber({
+	phoneNumber,
+	setPhoneNumber,
+}: {
+	phoneNumber: string;
+	setPhoneNumber: (phone: string) => void;
+}) {
 	const { theme } = useTheme();
-	const [phoneNumber, setPhoneNumber] = useState('');
 	const phoneInput = useRef<PhoneInput>(null);
 
 	const [phoneCountryCode, setPhoneCountryCode] = useState<CountryCode>('US');
