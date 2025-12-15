@@ -33,7 +33,7 @@ export default function TabLayout() {
 		<>
 			<StatusBar
 				barStyle={theme === 'dark' ? 'light-content' : 'dark-content'}
-				backgroundColor={theme === 'dark' ? '#000' : '#fff'}
+				backgroundColor={theme === 'dark' ? '#151515' : '#fff'}
 			/>
 			<Tabs
 				screenOptions={{
@@ -42,11 +42,9 @@ export default function TabLayout() {
 					tabBarStyle: {
 						paddingTop: 15,
 						height: 100,
-						backgroundColor: theme === 'dark' ? '#000' : '#fff',
-						borderTopColor: theme === 'dark' ? '#111' : '#e5e7eb',
+						backgroundColor: theme === 'dark' ? '#151515' : '#fff',
+						borderTopColor: theme === 'dark' ? '#151515' : '#e5e7eb',
 					},
-					tabBarActiveTintColor: theme === 'dark' ? '#fff' : '#000',
-					tabBarInactiveTintColor: theme === 'dark' ? '#9ca3af' : '#6b7280',
 				}}
 			>
 				<Tabs.Screen

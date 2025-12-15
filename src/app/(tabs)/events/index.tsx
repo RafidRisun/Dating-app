@@ -129,7 +129,12 @@ export default function Events() {
 									</Text>
 									<TouchableOpacity
 										style={tw`flex flex-row items-center`}
-										onPress={() => router.push('/(tabs)/events/swipeScreen')}
+										onPress={() =>
+											router.push({
+												pathname: '/(tabs)/events/swipeScreen',
+												params: { eventId: event.id },
+											})
+										}
 									>
 										{event.userImages.map((userImage, index) => (
 											<Image

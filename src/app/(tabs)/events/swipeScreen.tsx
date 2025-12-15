@@ -1,4 +1,4 @@
-import { iconFilter, iconReload } from '@/assets/icon';
+import { iconBack, iconBackDark, iconFilter, iconReload } from '@/assets/icon';
 import FilterModal from '@/src/components/Card/FilterModal';
 import { ProfileCard } from '@/src/components/Card/ProfileCard';
 import ProfileDetails from '@/src/components/Card/ProfileDetails';
@@ -7,7 +7,7 @@ import tw from '@/src/lib/tailwind';
 import { useTheme } from '@/src/lib/ThemeContext';
 import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { BlurView } from 'expo-blur';
-import { useRouter } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import { StatusBar, Text, TouchableOpacity, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -15,6 +15,11 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { SvgXml } from 'react-native-svg';
 
 export default function SwipeScreen() {
+	const { eventId } = useLocalSearchParams();
+
+	const eventName =
+		events.find(event => event.id === eventId)?.title || 'Event Name';
+
 	const { theme } = useTheme();
 
 	const router = useRouter();
@@ -48,17 +53,32 @@ export default function SwipeScreen() {
 						theme === 'dark' ? 'bg-dark' : 'bg-white'
 					} relative`}
 				>
-					<View
-						style={tw`flex flex-row w-full items-center justify-between p-4`}
-					>
-						<Text
-							style={tw`font-poppinsSemiBold text-2xl ${
-								theme === 'dark' ? 'text-white' : 'text-black'
-							}`}
+					<View style={tw`w-full p-4 my-4 relative`}>
+						{/* Left: back button (absolute at start) */}
+						<TouchableOpacity
+							onPress={() => router.back()}
+							style={tw`absolute left-4 top-0 bottom-0 justify-center`}
 						>
-							Soulflag
-						</Text>
-						<View style={tw`flex flex-row items-center gap-8`}>
+							<SvgXml xml={theme === 'dark' ? iconBackDark : iconBack} />
+						</TouchableOpacity>
+
+						{/* Center: title (centered absolutely) */}
+						<View
+							style={tw`absolute left-0 right-0 top-0 bottom-0 items-center justify-center`}
+						>
+							<Text
+								style={tw`font-poppinsSemiBold text-lg ${
+									theme === 'dark' ? 'text-white' : 'text-black'
+								}`}
+							>
+								{eventName}
+							</Text>
+						</View>
+
+						{/* Right: action icons (absolute at end) */}
+						<View
+							style={tw`absolute right-4 top-0 bottom-0 flex-row items-center justify-end gap-4`}
+						>
 							<TouchableOpacity onPress={() => setGobackModal(true)}>
 								<SvgXml xml={iconReload} />
 							</TouchableOpacity>
@@ -137,7 +157,7 @@ export default function SwipeScreen() {
 						confirmationSubText="Go back to the last profile you passed."
 						onConfirm={() => {
 							setGobackModal(false);
-							router.push('/(tabs)/swipe/plansModal');
+							router.push('/(tabs)/events/plansModal');
 						}}
 						onCancel={() => setGobackModal(false)}
 					/>
@@ -195,5 +215,83 @@ const profiles = [
 		image: require('@/assets/images/hotGuy.png'),
 		verified: false,
 		distance: 9,
+	},
+];
+
+const events = [
+	{
+		id: '1',
+		title: 'Summer Music Festival',
+		day: 'Sat',
+		date: 'Jun 15',
+		address: 'Central Park, NYC',
+		image: require('@/assets/images/onboard1.png'),
+		price: '$50',
+		userImages: [
+			require('@/assets/images/hotGuy.png'),
+			require('@/assets/images/hotGuy.png'),
+			require('@/assets/images/hotGuy.png'),
+		],
+		participants: 120,
+	},
+	{
+		id: '2',
+		title: 'Food Truck Rally',
+		day: 'Sun',
+		date: 'Jun 16',
+		address: 'Downtown LA',
+		image: require('@/assets/images/onboard2.png'),
+		price: 'Free',
+		userImages: [
+			require('@/assets/images/hotGuy.png'),
+			require('@/assets/images/hotGuy.png'),
+			require('@/assets/images/hotGuy.png'),
+		],
+		participants: 85,
+	},
+	{
+		id: '3',
+		title: 'Food Truck Rally',
+		day: 'Sun',
+		date: 'Jun 16',
+		address: 'Downtown LA',
+		image: require('@/assets/images/onboard3.png'),
+		price: 'Free',
+		userImages: [
+			require('@/assets/images/hotGuy.png'),
+			require('@/assets/images/hotGuy.png'),
+			require('@/assets/images/hotGuy.png'),
+		],
+		participants: 85,
+	},
+	{
+		id: '4',
+		title: 'Food Truck Rally',
+		day: 'Sun',
+		date: 'Jun 16',
+		address: 'Downtown LA',
+		image: require('@/assets/images/onboard4.png'),
+		price: 'Free',
+		userImages: [
+			require('@/assets/images/hotGuy.png'),
+			require('@/assets/images/hotGuy.png'),
+			require('@/assets/images/hotGuy.png'),
+		],
+		participants: 85,
+	},
+	{
+		id: '5',
+		title: 'Food Truck Rally',
+		day: 'Sun',
+		date: 'Jun 16',
+		address: 'Downtown LA',
+		image: require('@/assets/images/onboard1.png'),
+		price: 'Free',
+		userImages: [
+			require('@/assets/images/hotGuy.png'),
+			require('@/assets/images/hotGuy.png'),
+			require('@/assets/images/hotGuy.png'),
+		],
+		participants: 85,
 	},
 ];

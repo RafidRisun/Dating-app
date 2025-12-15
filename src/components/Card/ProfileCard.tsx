@@ -32,21 +32,14 @@ import { snapPoint } from 'react-native-redash';
 import { SvgXml } from 'react-native-svg';
 import ConfirmationModal from '../ConfirmationModal';
 
-const { width: wWidth, height: wHeight } = Dimensions.get('window');
-
-// const SNAP_POINTS = [-wWidth, 0, wWidth];
-
-// Wrap SvgXml with Animated
-//const AnimatedSvgXml = Animated.createAnimatedComponent(SvgXml);
+const { width: wWidth } = Dimensions.get('window');
 
 export function ProfileCard({
 	profile,
-	index,
 	onSwipe,
 	style,
-	setBottomSheetVisible,
 }: ProfileCardProps & { style?: any }) {
-	const { theme, toggleTheme, setTheme, isHydrated } = useTheme();
+	const { theme } = useTheme();
 	const router = useRouter();
 
 	const translateX = useSharedValue(0);
@@ -536,7 +529,7 @@ export function ProfileCard({
 						confirmationSubText="You're 5x more likely to get a match! Stand out from the crowd."
 						onConfirm={() => {
 							setSuperLikeModal(false);
-							router.push('/(tabs)/swipe/plansModal');
+							router.push('/(tabs)/events/plansModal');
 						}}
 						onCancel={() => setSuperLikeModal(false)}
 					/>
@@ -548,7 +541,7 @@ export function ProfileCard({
 						confirmationSubText="You can start a private conversation with this user."
 						onConfirm={() => {
 							setDmModal(false);
-							router.push('/(tabs)/swipe/plansModal');
+							router.push('/(tabs)/events/plansModal');
 						}}
 						onCancel={() => setDmModal(false)}
 					/>

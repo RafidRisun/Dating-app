@@ -13,6 +13,7 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import {
 	ScrollView,
+	Share,
 	StatusBar,
 	Text,
 	TouchableOpacity,
@@ -48,7 +49,19 @@ export default function DetailPage() {
 				>
 					Summer Music Festival
 				</Text>
-				<TouchableOpacity>
+				<TouchableOpacity
+					onPress={async () => {
+						try {
+							await Share.share({
+								message:
+									'Check out this event: https://example.com/profile/' +
+									event.id,
+							});
+						} catch (error) {
+							console.error('Error sharing the link:', error);
+						}
+					}}
+				>
 					<SvgXml xml={theme === 'dark' ? iconShareDark : iconShareLarge} />
 				</TouchableOpacity>
 			</View>
@@ -179,7 +192,7 @@ export default function DetailPage() {
 								theme === 'dark' ? 'text-white' : 'text-black'
 							}`}
 						>
-							People that wants to attend
+							People want to come
 						</Text>
 						<View style={tw`flex flex-row w-full items-center justify-between`}>
 							<View style={tw`flex flex-row items-center`}>
@@ -202,6 +215,12 @@ export default function DetailPage() {
 							</View>
 							<TouchableOpacity
 								style={tw`flex items-center justify-center px-5 py-3 bg-blue rounded-xl`}
+								onPress={() =>
+									router.push({
+										pathname: '/(tabs)/events/swipeScreen',
+										params: { eventId: event.id },
+									})
+								}
 							>
 								<Text style={tw`text-white font-poppinsSemiBold`}>
 									Match with Event
