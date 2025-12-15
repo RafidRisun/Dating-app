@@ -33,6 +33,8 @@ export default function ChatLayout() {
 					contentStyle: { backgroundColor: 'transparent' },
 				}}
 			/>
+			<Stack.Screen name="reportReason" options={{ presentation: 'modal' }} />
+			<Stack.Screen name="profile" />
 		</Stack>
 	);
 }

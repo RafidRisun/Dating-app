@@ -17,7 +17,7 @@ export default function ReportModalComponent({
 	const router = useRouter();
 	return (
 		<View
-			style={tw`px-6 py-12 bg-${
+			style={tw`px-6 pt-12 pb-6 bg-${
 				theme === 'dark' ? 'lightDark' : 'white'
 			} rounded-t-2xl`}
 		>
@@ -47,6 +47,7 @@ export default function ReportModalComponent({
 					'Inappropriate Photos',
 					'Stolen Photos',
 					'Fake profile',
+					'Other',
 				].map((reason, index) => (
 					<TouchableOpacity
 						key={index}
@@ -77,11 +78,16 @@ export default function ReportModalComponent({
 				))}
 			</View>
 			<View style={tw`flex flex-col w-full gap-3 mt-6`}>
-				<TouchableOpacity style={tw`w-full bg-blue rounded-lg py-3 mt-4`}>
+				<TouchableOpacity
+					style={tw`w-full bg-blue rounded-lg py-3 mt-4`}
+					onPress={() => {
+						router.push('/(tabs)/chats/reportReason');
+					}}
+				>
 					<Text
 						style={tw`text-white text-center text-base font-poppinsSemiBold`}
 					>
-						Submit Report
+						Continue
 					</Text>
 				</TouchableOpacity>
 				<TouchableOpacity

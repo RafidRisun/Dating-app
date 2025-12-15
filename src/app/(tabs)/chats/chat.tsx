@@ -12,7 +12,7 @@ import tw from '@/src/lib/tailwind';
 import { useTheme } from '@/src/lib/ThemeContext';
 import { Image } from 'expo-image';
 import { useRouter } from 'expo-router';
-import React, { useRef } from 'react';
+import React from 'react';
 import {
 	FlatList,
 	KeyboardAvoidingView,
@@ -27,15 +27,6 @@ import { SvgXml } from 'react-native-svg';
 export default function Chat() {
 	const { theme } = useTheme();
 	const router = useRouter();
-	// const { chatId } = useLocalSearchParams();
-	// const [index, setIndex] = React.useState(messages.length - 1);
-	const flatListRef = useRef<FlatList>(null);
-
-	const scrollToTop = (isAnimated = false) => {
-		if (flatListRef.current) {
-			flatListRef.current.scrollToOffset({ offset: 0, animated: isAnimated });
-		}
-	};
 
 	return (
 		<SafeAreaView
@@ -61,10 +52,14 @@ export default function Chat() {
 							)}
 						</TouchableOpacity>
 						<View style={tw`flex flex-row items-center gap-4 flex-1`}>
-							<Image
-								source={require('@/assets/images/hotgirl1.png')}
-								style={tw`w-10 h-10 rounded-full`}
-							/>
+							<TouchableOpacity
+								onPress={() => router.push('/(tabs)/chats/profile')}
+							>
+								<Image
+									source={require('@/assets/images/hotgirl1.png')}
+									style={tw`w-10 h-10 rounded-full`}
+								/>
+							</TouchableOpacity>
 							<View>
 								<Text
 									style={tw`font-poppinsSemiBold text-sm ${

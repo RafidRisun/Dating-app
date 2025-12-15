@@ -37,7 +37,6 @@ export default function PlansModalComponent() {
 			>
 				<SvgXml xml={iconCloseSmall} />
 			</TouchableOpacity>
-			.
 			<ScrollView
 				nestedScrollEnabled
 				contentContainerStyle={{ flexGrow: 1 }}

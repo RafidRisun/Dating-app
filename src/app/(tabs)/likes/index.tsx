@@ -179,6 +179,7 @@ export default function Likes() {
 									<TouchableOpacity
 										key={like.id}
 										style={tw`flex flex-col w-[${cardWidth}px] h-[${cardWidth}px] justify-between rounded-xl bg-white shadow-sm`}
+										onPress={() => router.push('/(tabs)/likes/profile')}
 									>
 										<Image
 											source={like.image}

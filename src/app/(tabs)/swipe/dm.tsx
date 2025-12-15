@@ -25,8 +25,6 @@ export default function Dm() {
 	const [inputText, setInputText] = React.useState('');
 	const [messages, setMessages] = React.useState<Message[]>([]);
 
-	const [dmModal, setDmModal] = React.useState(false);
-
 	const handleSend = () => {
 		const newMessage: Message = {
 			id: messages.length + 1,
