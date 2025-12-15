@@ -45,7 +45,9 @@ export default function OneTimePaymentModal({
 	return (
 		<View
 			style={[
-				tw`w-full bg-${theme === 'dark' ? 'dark' : 'white'} rounded-t-3xl p-6`,
+				tw`w-full bg-${
+					theme === 'dark' ? 'lightDark' : 'white'
+				} rounded-t-3xl p-6`,
 				{ paddingBottom: Math.max(insets.bottom, 16), overflow: 'hidden' },
 			]}
 		>

@@ -31,7 +31,7 @@ export default function Login() {
 						contentFit="contain"
 					/>
 					<Text style={tw`font-poppins text-2xl text-white`}>
-						Find your match by event
+						Find your next experience
 					</Text>
 				</View>
 				<Animated.View

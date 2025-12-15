@@ -117,6 +117,8 @@ export function ProfileCard({
 
 	const [dmModal, setDmModal] = useState(false);
 
+	const [blockModal, setBlockModal] = useState(false);
+
 	const [viewHeight, setViewHeight] = useState(0);
 
 	const handleLike = () => {
@@ -153,7 +155,7 @@ export function ProfileCard({
 					<View style={{ width: '100%', height: viewHeight }}>
 						<Image
 							source={profile.image}
-							style={tw`w-full h-full`}
+							style={tw`w-full h-full rounded-lg`}
 							contentFit="cover"
 						/>
 						<View style={tw`absolute bottom-0 w-full p-4`}>
@@ -225,7 +227,7 @@ export function ProfileCard({
 					</View>
 					<Image
 						source={require('@/assets/images/hotGuy.png')}
-						style={tw`w-full h-150 my-4`}
+						style={tw`w-full h-150 my-4 rounded-lg`}
 					/>
 					<View
 						style={tw`flex flex-col p-4 gap-2 shadow-md ${
@@ -290,7 +292,7 @@ export function ProfileCard({
 					</View>
 					<Image
 						source={require('@/assets/images/hotGuy.png')}
-						style={tw`w-full h-150 my-4`}
+						style={tw`w-full h-150 my-4 rounded-lg`}
 					/>
 					<View
 						style={tw`flex flex-col p-4 gap-3 shadow-md ${
@@ -464,7 +466,7 @@ export function ProfileCard({
 						<View
 							style={tw`flex flex-col gap-5 items-center justify-center w-full absolute bottom-[-10]`}
 						>
-							<TouchableOpacity>
+							<TouchableOpacity onPress={() => setBlockModal(true)}>
 								<Text
 									style={tw`text-lg font-poppinsSemiBold ${
 										theme === 'dark' ? 'text-white' : 'text-black'
@@ -473,7 +475,9 @@ export function ProfileCard({
 									Block
 								</Text>
 							</TouchableOpacity>
-							<TouchableOpacity>
+							<TouchableOpacity
+								onPress={() => router.push('/(tabs)/swipe/reportModal')}
+							>
 								<Text style={tw`text-lg font-poppinsSemiBold text-red-500`}>
 									Report
 								</Text>
@@ -512,12 +516,28 @@ export function ProfileCard({
 					]}
 				/>
 
+				{blockModal && (
+					<ConfirmationModal
+						icon="block"
+						confirmationText="Block User?"
+						confirmationSubText="You can unblock them later at the settings."
+						onConfirm={() => {
+							// Add your block user logic here
+							setBlockModal(false);
+						}}
+						onCancel={() => setBlockModal(false)}
+					/>
+				)}
+
 				{superLikeModal && (
 					<ConfirmationModal
 						icon="star"
 						confirmationText="Get Favorite?"
 						confirmationSubText="You're 5x more likely to get a match! Stand out from the crowd."
-						onConfirm={() => router.push('/(tabs)/swipe/Modals/getFavorite')}
+						onConfirm={() => {
+							setSuperLikeModal(false);
+							router.push('/(tabs)/swipe/plansModal');
+						}}
 						onCancel={() => setSuperLikeModal(false)}
 					/>
 				)}
@@ -526,7 +546,10 @@ export function ProfileCard({
 						icon="dm"
 						confirmationText="Send a Direct Message?"
 						confirmationSubText="You can start a private conversation with this user."
-						onConfirm={() => router.push('/(tabs)/swipe/Modals/sendDM')}
+						onConfirm={() => {
+							setDmModal(false);
+							router.push('/(tabs)/swipe/plansModal');
+						}}
 						onCancel={() => setDmModal(false)}
 					/>
 				)}

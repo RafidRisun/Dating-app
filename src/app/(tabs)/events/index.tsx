@@ -127,7 +127,10 @@ export default function Events() {
 									<Text style={tw`text-sm font-poppinsBold text-green-500`}>
 										{event.price}
 									</Text>
-									<View style={tw`flex flex-row items-center`}>
+									<TouchableOpacity
+										style={tw`flex flex-row items-center`}
+										onPress={() => router.push('/(tabs)/events/swipeScreen')}
+									>
 										{event.userImages.map((userImage, index) => (
 											<Image
 												key={index}
@@ -147,7 +150,7 @@ export default function Events() {
 											</Text>
 										</View>
 										<SvgXml xml={iconRightArrowBlue} />
-									</View>
+									</TouchableOpacity>
 								</View>
 							</TouchableOpacity>
 						))}

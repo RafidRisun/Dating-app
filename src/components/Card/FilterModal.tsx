@@ -259,7 +259,7 @@ export default function FilterModal({
 									theme === 'dark' ? 'text-white' : 'text-gray-600'
 								}`}
 							>
-								Verified profiles only
+								All Star profiles only
 							</Text>
 							<Switch
 								trackColor={{ false: '#F2F2F2', true: '#017ADF' }}

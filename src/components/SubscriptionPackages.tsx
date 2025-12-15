@@ -1,14 +1,15 @@
-import { iconFeature, iconLack } from '@/assets/icon';
+import { iconFeature } from '@/assets/icon';
 import { Image } from 'expo-image';
-import { LinearGradient } from 'expo-linear-gradient';
+import { useRouter } from 'expo-router';
 import React, { useRef } from 'react';
-import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import PagerView from 'react-native-pager-view';
 import { SvgXml } from 'react-native-svg';
 import tw from '../lib/tailwind';
 import { useTheme } from '../lib/ThemeContext';
 
 export default function SubscriptionPackages() {
+	const router = useRouter();
 	const { theme } = useTheme();
 	const [index, setIndex] = React.useState(0);
 	const pagerRef = useRef<PagerView>(null); // Properly type the PagerView ref
@@ -16,14 +17,6 @@ export default function SubscriptionPackages() {
 		setIndex(pageIndex);
 		pagerRef.current?.setPage(pageIndex); // Scroll to the selected page
 	};
-	const [seeMore, setSeeMore] = React.useState(false);
-
-	const [selectedPlanPlus, setSelectedPlanPlus] = React.useState(
-		packages[0].plans[0].id
-	);
-	const [selectedPlanPremium, setSelectedPlanPremium] = React.useState(
-		packages[1].plans[0].id
-	);
 
 	return (
 		<View style={tw`flex-1 bg-${theme === 'dark' ? 'dark' : 'white'} mt-12`}>
@@ -65,7 +58,7 @@ export default function SubscriptionPackages() {
 			</View>
 			<PagerView
 				ref={pagerRef} // Attach the reference
-				style={tw`h-220`}
+				style={tw`h-140`}
 				initialPage={0}
 				scrollEnabled={true}
 				pageMargin={0}
@@ -76,114 +69,32 @@ export default function SubscriptionPackages() {
 						key={pkg.id}
 						style={tw`flex flex-col gap-2 flex-1 items-center`}
 					>
-						<Image source={pkg.photo} style={tw`w-full h-55`} />
-						<ScrollView
-							horizontal
-							showsHorizontalScrollIndicator={false}
-							contentContainerStyle={{ paddingHorizontal: 16 }}
-							style={{ flexGrow: 0 }}
-						>
-							<View style={tw`flex-row items-center gap-4 my-4`}>
-								{pkg.plans.map(plan => (
-									<TouchableOpacity
-										key={plan.id}
-										style={tw`w-55 p-4 items-start justify-center bg-gray-200 rounded-lg border border-gray-300`}
-										onPress={() =>
-											pkg.id === '1'
-												? setSelectedPlanPlus(plan.id)
-												: setSelectedPlanPremium(plan.id)
-										}
-									>
-										{(pkg.id === '1'
-											? selectedPlanPlus === plan.id
-											: selectedPlanPremium === plan.id) && (
-											<LinearGradient
-												colors={['#05C3DD', '#B14EFF']}
-												style={tw`absolute inset-0 rounded-lg opacity-60`}
-												start={{ x: 0, y: 0 }}
-												end={{ x: 1, y: 0 }}
-											/>
-										)}
-										<Text style={tw`font-poppinsSemiBold`}>{plan.name}</Text>
-										<Text style={tw`font-poppins text-sm mt-2`}>
-											{plan.price}
-										</Text>
-										<Text style={tw`font-poppins text-xs mt-2`}>
-											{plan.popularity ? plan.popularity : ''}
-										</Text>
-										<View
-											style={tw`flex items-center justify-center px-3 py-2 ${
-												plan.save ? 'bg-white' : ''
-											} rounded-full mt-4`}
-										>
-											<Text style={tw`font-poppinsSemiBold text-xs`}>
-												{plan.save}
-											</Text>
-										</View>
-									</TouchableOpacity>
-								))}
+						<Image source={pkg.photo} style={tw`w-full h-55 mb-4`} />
+						{pkg.features.slice(0, 6).map((feature, featureIndex) => (
+							<View
+								key={featureIndex}
+								style={tw`flex flex-row items-center w-full px-6`}
+							>
+								<SvgXml xml={iconFeature} />
+								<Text
+									style={tw`ml-4 text-base font-poppins ${
+										theme === 'dark' ? 'text-white' : 'text-black'
+									}`}
+								>
+									{feature}
+								</Text>
 							</View>
-						</ScrollView>
-						{pkg.features
-							.slice(0, seeMore ? pkg.features.length : 6)
-							.map((feature, featureIndex) => (
-								<View
-									key={featureIndex}
-									style={tw`flex flex-row items-center w-full px-6`}
-								>
-									<SvgXml xml={iconFeature} />
-									<Text
-										style={tw`ml-4 text-base font-poppins ${
-											theme === 'dark' ? 'text-white' : 'text-black'
-										}`}
-									>
-										{feature}
-									</Text>
-								</View>
-							))}
-
-						{seeMore &&
-							pkg.lacks.map((lack, lackIndex) => (
-								<View
-									key={lackIndex}
-									style={tw`flex flex-row items-center w-full px-6`}
-								>
-									<SvgXml xml={iconLack} />
-									<Text
-										style={tw`ml-4 text-base font-poppins ${
-											theme === 'dark' ? 'text-white' : 'text-black'
-										}`}
-									>
-										{lack}
-									</Text>
-								</View>
-							))}
-						{seeMore === false ? (
-							<TouchableOpacity
-								style={tw`mt-6 mb-4 px-6 py-3 bg-blue rounded-lg`}
-								onPress={() => setSeeMore(true)}
-							>
-								<Text style={tw`text-white text-center font-poppinsBold`}>
-									See all perks
-								</Text>
-							</TouchableOpacity>
-						) : (
-							<TouchableOpacity
-								style={tw`mt-6 mb-4 px-6 py-3 bg-blue rounded-lg`}
-							>
-								<Text style={tw`text-white text-center font-poppinsBold`}>
-									{pkg.name === 'Soulflag Plus'
-										? `Subscribe to Plus for ${
-												pkg.plans.find(p => p.id === selectedPlanPlus)?.price ??
-												pkg.plans[0].price
-										  }`
-										: `Subscribe to Premium for ${
-												pkg.plans.find(p => p.id === selectedPlanPremium)
-													?.price ?? pkg.plans[0].price
-										  }`}
-								</Text>
-							</TouchableOpacity>
-						)}
+						))}
+						<TouchableOpacity
+							style={tw`mt-6 mb-4 px-6 py-3 bg-blue rounded-lg`}
+							onPress={() => {
+								router.push('/(tabs)/profile/plansModal');
+							}}
+						>
+							<Text style={tw`text-white text-center font-poppinsBold`}>
+								See all Plans
+							</Text>
+						</TouchableOpacity>
 					</View>
 				))}
 			</PagerView>

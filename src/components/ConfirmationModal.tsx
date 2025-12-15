@@ -1,5 +1,6 @@
 import {
 	iconBell,
+	iconBlock,
 	iconDmModal,
 	iconGoBack,
 	iconOutOfLikes,
@@ -31,6 +32,7 @@ export default function ConfirmationModal({
 	const outOfLikes = iconOutOfLikes;
 	const goBack = iconGoBack;
 	const unMatch = iconUnmatch;
+	const block = iconBlock;
 	const { theme } = useTheme();
 	return (
 		<View
@@ -39,7 +41,7 @@ export default function ConfirmationModal({
 			<View style={tw`flex-1 w-full bg-black opacity-10 absolute inset-0`} />
 			<View
 				style={tw`flex items-center justify-center w-9/10 p-4 gap-2 bg-${
-					theme === 'dark' ? 'dark' : 'white'
+					theme === 'dark' ? 'lightDark' : 'white'
 				} rounded-lg`}
 			>
 				<SvgXml
@@ -56,8 +58,12 @@ export default function ConfirmationModal({
 							? unMatch
 							: icon === 'outOfLikes'
 							? outOfLikes
-							: null
+							: icon === 'block'
+							? block
+							: ''
 					}
+					width={80}
+					height={80}
 				/>
 				<Text
 					style={tw`text-lg font-poppinsSemiBold text-center text-${

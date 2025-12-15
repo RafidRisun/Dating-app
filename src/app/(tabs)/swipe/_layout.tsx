@@ -48,6 +48,15 @@ export default function SwipeLayout() {
 					contentStyle: { backgroundColor: 'transparent' },
 				}}
 			/>
+			<Stack.Screen
+				name="reportModal"
+				options={{
+					presentation: 'formSheet',
+					sheetAllowedDetents: 'fitToContents',
+					contentStyle: { backgroundColor: 'transparent' },
+				}}
+			/>
+			<Stack.Screen name="plansModal" options={{ presentation: 'modal' }} />
 		</Stack>
 	);
 }

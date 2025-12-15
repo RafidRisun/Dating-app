@@ -15,20 +15,19 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { SvgXml } from 'react-native-svg';
 
 export default function SwipeScreen() {
-	const { theme, toggleTheme, setTheme, isHydrated } = useTheme();
+	const { theme } = useTheme();
 
 	const router = useRouter();
 	const [cards, setCards] = useState(profiles);
 
 	const handleSwipe = (id: string) => {
-		// Add a slight delay to ensure the animation completes before removing the card
 		setTimeout(() => {
 			setCards(prev => prev.filter(card => card.id !== id));
-		}, 300); // Adjust the delay as needed to match the animation duration
+		}, 300);
 	};
 
 	const [filterModalVisible, setFilterModalVisible] = useState(false);
-	//const [detailsModalVisible, setDetailsModalVisible] = useState(false);
+
 	const [gobackModal, setGobackModal] = useState(false);
 
 	const [dateEnabled, setDateEnabled] = useState(false);

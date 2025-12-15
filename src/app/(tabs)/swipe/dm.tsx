@@ -25,6 +25,8 @@ export default function Dm() {
 	const [inputText, setInputText] = React.useState('');
 	const [messages, setMessages] = React.useState<Message[]>([]);
 
+	const [dmModal, setDmModal] = React.useState(false);
+
 	const handleSend = () => {
 		const newMessage: Message = {
 			id: messages.length + 1,
@@ -32,9 +34,15 @@ export default function Dm() {
 			time: new Date().toLocaleTimeString(),
 			sent: true,
 		};
-		setMessages(prevMessages => [...prevMessages, newMessage]);
-		setDmCount(prevCount => Math.max(prevCount - 1, 0));
-		setInputText('');
+
+		if (dmCount === 0) {
+			router.push('/(tabs)/swipe/Modals/sendDM');
+			return;
+		} else {
+			setMessages(prevMessages => [...prevMessages, newMessage]);
+			setDmCount(prevCount => Math.max(prevCount - 1, 0));
+			setInputText('');
+		}
 	};
 
 	const renderHeader = React.useCallback(
@@ -146,18 +154,17 @@ export default function Dm() {
 						}`}
 					>
 						<TextInput
-							placeholder={dmCount > 0 ? 'Type a message...' : 'No DMs left'}
+							placeholder="Type a message..."
 							style={tw`flex-1 border border-gray-300 rounded-full px-4 py-2 text-${
 								theme === 'dark' ? 'white' : 'black'
 							}`}
 							value={inputText}
 							onChangeText={setInputText}
-							editable={dmCount > 0}
 							placeholderTextColor="#6B7280"
 						/>
 						<TouchableOpacity
 							onPress={handleSend}
-							disabled={dmCount === 0 || inputText.trim() === ''}
+							disabled={inputText.trim() === ''}
 						>
 							<SvgXml xml={iconSendMessage} />
 						</TouchableOpacity>

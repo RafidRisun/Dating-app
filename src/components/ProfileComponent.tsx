@@ -1,4 +1,8 @@
-import { iconLocationSmall, iconLocationSmallDark } from '@/assets/icon';
+import {
+	iconLocationSmall,
+	iconLocationSmallDark,
+	iconSuperLike,
+} from '@/assets/icon';
 import { Image } from 'expo-image';
 import { useRouter } from 'expo-router';
 import React from 'react';
@@ -13,10 +17,20 @@ export default function ProfileComponent() {
 	return (
 		<ScrollView style={tw`flex-1 p-0.5`} showsVerticalScrollIndicator={false}>
 			{/* header */}
-			<Image
-				source={require('@/assets/images/hotGuy.png')}
-				style={tw`w-full h-150 my-4`}
-			/>
+			<View style={tw`w-full relative`}>
+				<Image
+					source={require('@/assets/images/hotGuy.png')}
+					style={tw`w-full h-150 my-4 rounded-lg`}
+				/>
+				<View
+					style={tw`absolute bottom-4 w-full p-4 flex-row items-center gap-3`}
+				>
+					<Text style={tw`text-white text-3xl font-poppinsSemiBold`}>
+						Shreks, 29
+					</Text>
+					<SvgXml xml={iconSuperLike} width={16} height={16} />
+				</View>
+			</View>
 			<View
 				style={tw`flex flex-col p-4 gap-2 shadow-md ${
 					theme === 'dark' ? 'bg-dark' : 'bg-white'
@@ -41,7 +55,7 @@ export default function ProfileComponent() {
 			</View>
 			<Image
 				source={require('@/assets/images/hotGuy.png')}
-				style={tw`w-full h-150 my-4`}
+				style={tw`w-full h-150 my-4 rounded-lg`}
 			/>
 			{/* <View
 				style={tw`flex flex-col p-4 gap-4 shadow-md ${
@@ -121,7 +135,7 @@ export default function ProfileComponent() {
 			</View>
 			<Image
 				source={require('@/assets/images/hotGuy.png')}
-				style={tw`w-full h-150 my-4`}
+				style={tw`w-full h-150 my-4 rounded-lg`}
 			/>
 			<View
 				style={tw`flex flex-col p-4 gap-3 shadow-md ${
