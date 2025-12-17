@@ -4,7 +4,7 @@ import tw from '@/src/lib/tailwind';
 import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import PagerView from 'react-native-pager-view';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -26,6 +26,84 @@ export default function PlansModalComponent() {
 	const [selectedPlanPremium, setSelectedPlanPremium] = React.useState(
 		packages[1].plans[0].id
 	);
+
+	// -- Discount config (temporary local); replace with remote/API fetch
+	const discount: {
+		percent: number;
+		expiresAt: string;
+		appliesTo: string | string[];
+		title: string;
+		promoCode: string | null;
+		amount?: number;
+	} = {
+		percent: 20, // percent off
+		expiresAt: new Date(Date.now() + 8 * 60 * 60 * 1000).toISOString(), // 8 hours
+		appliesTo: 'all', // or array of pkg/plan ids
+		title: 'Limited time 20% OFF',
+		promoCode: null,
+	};
+
+	const [timeRemaining, setTimeRemaining] = React.useState('8h 00m 00s');
+	const [discountActive, setDiscountActive] = React.useState(true);
+
+	const formatRemaining = (ms: number) => {
+		if (ms <= 0) return '0h 00m 00s';
+		const total = Math.max(0, Math.floor(ms / 1000));
+		const h = Math.floor(total / 3600);
+		const m = Math.floor((total % 3600) / 60);
+		const s = total % 60;
+		return `${h}h ${String(m).padStart(2, '0')}m ${String(s).padStart(
+			2,
+			'0'
+		)}s`;
+	};
+
+	useEffect(() => {
+		let id: NodeJS.Timeout | number;
+		const tick = () => {
+			const diff = new Date(discount.expiresAt).getTime() - Date.now();
+			if (diff <= 0) {
+				setTimeRemaining('Expired');
+				setDiscountActive(false);
+				if (id) clearInterval(id as any);
+				return;
+			}
+			setTimeRemaining(formatRemaining(diff));
+		};
+		tick();
+		id = setInterval(tick, 1000);
+		return () => clearInterval(id as any);
+	}, []);
+
+	const isDiscountValidFor = (pkgId: string, planId?: string) => {
+		if (!discountActive) return false;
+		if (!discount) return false;
+		if (discount.appliesTo === 'all') return true;
+		if (Array.isArray(discount.appliesTo)) {
+			return discount.appliesTo.includes(planId ?? pkgId);
+		}
+		return false;
+	};
+
+	const applyDiscountToPriceString = (
+		priceStr: string | undefined,
+		d: typeof discount,
+		pkgId: string,
+		planId?: string
+	) => {
+		if (!priceStr) return priceStr ?? '';
+		if (!d || !discountActive || !isDiscountValidFor(pkgId, planId))
+			return priceStr;
+		const match = priceStr.match(/([\d.,]+)/);
+		const num = match ? parseFloat(match[1].replace(',', '.')) : NaN;
+		const suffix = priceStr.replace(/[0-9.,\s]/g, '');
+		if (Number.isNaN(num)) return priceStr;
+		let newNum = num;
+		if (d.percent) newNum = Math.round(newNum * (1 - d.percent / 100));
+		if (d.amount) newNum = Math.max(0, Math.round(newNum - d.amount));
+		return `${newNum}${suffix}`;
+	};
+
 	return (
 		<SafeAreaView
 			edges={['top']}
@@ -94,7 +172,20 @@ export default function PlansModalComponent() {
 								key={pkg.id}
 								style={tw`flex flex-col gap-2 flex-1 items-center`}
 							>
-								<Image source={pkg.photo} style={tw`w-full h-55 mb-4`} />
+								<View style={tw`flex w-full`}>
+									<Image source={pkg.photo} style={tw`w-full h-55 mb-4`} />
+									{discountActive && (
+										<View
+											style={tw`flex items-center justify-center absolute inset-0`}
+										>
+											<Text
+												style={tw`text-white text-xl flex bg-black px-3 py-1 rounded-full font-poppinsSemiBold`}
+											>
+												{timeRemaining} Remaining!
+											</Text>
+										</View>
+									)}
+								</View>
 								<ScrollView
 									horizontal
 									showsHorizontalScrollIndicator={false}
@@ -125,9 +216,37 @@ export default function PlansModalComponent() {
 												<Text style={tw`font-poppinsSemiBold`}>
 													{plan.name}
 												</Text>
-												<Text style={tw`font-poppins text-sm mt-2`}>
-													{plan.price}
-												</Text>
+												{(() => {
+													const discounted = applyDiscountToPriceString(
+														plan.price,
+														discount,
+														pkg.id,
+														plan.id
+													);
+													if (discounted !== plan.price) {
+														return (
+															<>
+																<Text style={tw`font-poppinsSemiBold text-lg`}>
+																	{discounted}
+																</Text>
+																<Text style={tw`font-poppins text-sm mt-1`}>
+																	<Text
+																		style={{
+																			textDecorationLine: 'line-through',
+																		}}
+																	>
+																		{plan.price}
+																	</Text>
+																</Text>
+															</>
+														);
+													}
+													return (
+														<Text style={tw`font-poppins text-sm mt-2`}>
+															{plan.price}
+														</Text>
+													);
+												})()}
 												<Text style={tw`font-poppins text-xs mt-2`}>
 													{plan.popularity ? plan.popularity : ''}
 												</Text>
@@ -179,14 +298,20 @@ export default function PlansModalComponent() {
 								>
 									<Text style={tw`text-white text-center font-poppinsBold`}>
 										{pkg.name === 'Soulflag Plus'
-											? `Subscribe to Plus for ${
+											? `Subscribe to Plus for ${applyDiscountToPriceString(
 													pkg.plans.find(p => p.id === selectedPlanPlus)
-														?.price ?? pkg.plans[0].price
-											  }`
-											: `Subscribe to Premium for ${
+														?.price ?? pkg.plans[0].price,
+													discount,
+													pkg.id,
+													selectedPlanPlus
+											  )}`
+											: `Subscribe to Premium for ${applyDiscountToPriceString(
 													pkg.plans.find(p => p.id === selectedPlanPremium)
-														?.price ?? pkg.plans[0].price
-											  }`}
+														?.price ?? pkg.plans[0].price,
+													discount,
+													pkg.id,
+													selectedPlanPremium
+											  )}`}
 									</Text>
 								</TouchableOpacity>
 							</View>
