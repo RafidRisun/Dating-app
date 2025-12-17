@@ -7,6 +7,7 @@ import tw from '@/src/lib/tailwind';
 import { useTheme } from '@/src/lib/ThemeContext';
 import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { BlurView } from 'expo-blur';
+import { Image } from 'expo-image';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import { StatusBar, Text, TouchableOpacity, View } from 'react-native';
@@ -71,6 +72,49 @@ export default function SwipeScreen() {
 
 					{/* Stack of cards */}
 					<View style={tw`flex-1 items-center justify-center px-4`}>
+						<View
+							style={tw`w-full h-full relative flex flex-col items-center justify-between py-18`}
+						>
+							<View style={tw`flex flex-col gap-4 items-center justify-center`}>
+								<Image
+									source={require('@/assets/images/LogoGray.png')}
+									style={tw`w-30 aspect-square opacity-35`}
+									contentFit="contain"
+								/>
+								<Text style={tw`text-xl text-gray-500 font-poppinsSemiBold`}>
+									Come Again Later
+								</Text>
+								<Text
+									style={tw`text-base text-center text-gray-500 font-poppinsSemiBold`}
+								>
+									You&apos;ve scrolled past most of the active users nearby.
+									Come back later for more.
+								</Text>
+							</View>
+							<View style={tw`flex flex-col gap-4 items-center justify-center`}>
+								<Image
+									style={tw`w-12 h-12 rounded-full`}
+									source={require('@/assets/images/hotGuy.png')}
+								/>
+								<Text style={tw`text-xl text-gray-500 font-poppinsSemiBold`}>
+									Check out other cities
+								</Text>
+								<Text
+									style={tw`text-base text-center text-gray-500 font-poppinsSemiBold`}
+								>
+									With Premium Access profiles in different cities and increase
+									your chances of connecting with people.
+								</Text>
+								<TouchableOpacity
+									style={tw`flex w-full gap-2 px-6 py-2 mb-6 items-center justify-center bg-blue rounded-full`}
+									onPress={() => router.push('/(common)/plansModal')}
+								>
+									<Text style={tw`text-white font-poppins text-lg`}>
+										Try Premium
+									</Text>
+								</TouchableOpacity>
+							</View>
+						</View>
 						{cards.map((profile, index) => (
 							<ProfileCard
 								key={profile.id}
