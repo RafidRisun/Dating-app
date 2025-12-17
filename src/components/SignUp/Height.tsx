@@ -10,7 +10,7 @@ export default function Height({
 	setHeight,
 }: {
 	height: string;
-	setHeight: React.Dispatch<React.SetStateAction<string>>;
+	setHeight: (text: string) => void;
 }) {
 	const { theme } = useTheme();
 

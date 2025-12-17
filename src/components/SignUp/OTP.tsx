@@ -1,6 +1,6 @@
 import tw from '@/src/lib/tailwind';
 import React from 'react';
-import { View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import { OtpInput } from 'react-native-otp-entry';
 import TitleAndSubtitle from '../Register/TitleAndSubtitle';
 
@@ -11,6 +11,15 @@ export default function OTP({
 	otp: string;
 	setOtp: (otp: string) => void;
 }) {
+	const [countdown, setCountdown] = React.useState(60);
+
+	React.useEffect(() => {
+		if (countdown === 0) return;
+		const timer = setInterval(() => {
+			setCountdown(prev => prev - 1);
+		}, 1000);
+		return () => clearInterval(timer);
+	}, [countdown]);
 	return (
 		<View style={tw`flex-1 w-full flex-col gap-4`}>
 			<TitleAndSubtitle
@@ -35,6 +44,15 @@ export default function OTP({
 				onTextChange={text => setOtp(text)}
 				onFilled={text => console.log(`OTP is ${text}`)}
 			/>
+			<TouchableOpacity
+				disabled={countdown !== 0}
+				onPress={() => setCountdown(60)}
+				style={tw`mt-4`}
+			>
+				<Text style={tw`${countdown !== 0 ? 'text-gray-400' : 'text-blue'}`}>
+					Resend Code ({countdown})
+				</Text>
+			</TouchableOpacity>
 		</View>
 	);
 }

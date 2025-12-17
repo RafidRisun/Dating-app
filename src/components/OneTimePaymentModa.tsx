@@ -9,14 +9,16 @@ export default function OneTimePaymentModal({
 	title,
 	subtitle,
 	action,
+	type,
 }: {
 	title: string;
 	subtitle: string;
 	action: () => void;
+	type: 'dm' | 'standout' | 'favorite';
 }) {
 	const { theme } = useTheme();
 	const insets = useSafeAreaInsets();
-	const plans = [
+	const dmPlans = [
 		{
 			id: 1,
 			name: '30 DMs',
@@ -39,6 +41,61 @@ export default function OneTimePaymentModal({
 			save: '',
 		},
 	];
+
+	const standoutPlans = [
+		{
+			id: 1,
+			name: '30 Standouts',
+			price: '30TL each',
+			popularity: 'Most Popular',
+			save: 'Save 40%',
+		},
+		{
+			id: 2,
+			name: '15 Standouts',
+			price: '40TL each',
+			popularity: '',
+			save: 'Save 20%',
+		},
+		{
+			id: 3,
+			name: '5 Standouts',
+			price: '50TL each',
+			popularity: '',
+			save: '',
+		},
+	];
+
+	const favoritePlans = [
+		{
+			id: 1,
+			name: '30 Favorites',
+			price: '30TL each',
+			popularity: 'Most Popular',
+			save: 'Save 40%',
+		},
+		{
+			id: 2,
+			name: '15 Favorites',
+			price: '40TL each',
+			popularity: '',
+			save: 'Save 20%',
+		},
+		{
+			id: 3,
+			name: '5 Favorites',
+			price: '50TL each',
+			popularity: '',
+			save: '',
+		},
+	];
+
+	const plans =
+		type === 'dm'
+			? dmPlans
+			: type === 'standout'
+			? standoutPlans
+			: favoritePlans;
 
 	const [selectedPlan, setSelectedPlan] = React.useState(plans[0].id);
 

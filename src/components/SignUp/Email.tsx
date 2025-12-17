@@ -13,9 +13,9 @@ export default function Email({
 	setIsSubscribed,
 }: {
 	email: string;
-	setEmail: React.Dispatch<React.SetStateAction<string>>;
+	setEmail: (text: string) => void;
 	isSubscribed: boolean;
-	setIsSubscribed: React.Dispatch<React.SetStateAction<boolean>>;
+	setIsSubscribed: (subscribed: boolean) => void;
 }) {
 	const { theme } = useTheme();
 

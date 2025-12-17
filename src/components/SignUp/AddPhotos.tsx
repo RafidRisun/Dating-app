@@ -12,7 +12,7 @@ export default function AddPhotos({
 	setPhotos,
 }: {
 	photos: (string | null)[];
-	setPhotos: React.Dispatch<React.SetStateAction<(string | null)[]>>;
+	setPhotos: (photos: (string | null)[]) => void;
 }) {
 	const handlePhotoUpload = async (index: number) => {
 		const result = await ImagePicker.launchImageLibraryAsync({

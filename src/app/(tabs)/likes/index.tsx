@@ -139,6 +139,7 @@ export default function Likes() {
 													</Text>
 													<TouchableOpacity
 														style={tw`flex p-2 items-center justify-center`}
+														onPress={() => router.push('/(common)/plansModal')}
 													>
 														<LinearGradient
 															style={tw`absolute inset-0 rounded-xl`}

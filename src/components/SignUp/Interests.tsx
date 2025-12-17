@@ -9,7 +9,7 @@ export default function Interests({
 	setInterests,
 }: {
 	interests: string[];
-	setInterests: React.Dispatch<React.SetStateAction<string[]>>;
+	setInterests: (interests: string[]) => void;
 }) {
 	const { theme } = useTheme();
 

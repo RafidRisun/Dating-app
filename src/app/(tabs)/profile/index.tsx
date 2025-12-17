@@ -1,7 +1,6 @@
 import {
 	iconDM,
 	iconEdit,
-	iconNotification,
 	iconSettings,
 	iconStandout,
 	iconSuperLike,
@@ -35,13 +34,10 @@ export default function Profile() {
 				<View
 					style={tw`flex flex-row items-center w-full justify-end gap-6 mb-4`}
 				>
-					<TouchableOpacity>
-						<SvgXml xml={iconNotification} />
-					</TouchableOpacity>
 					<TouchableOpacity
 						onPress={() => router.push('/(tabs)/profile/settings')}
 					>
-						<SvgXml xml={iconSettings} />
+						<SvgXml xml={iconSettings} width={30} height={30} />
 					</TouchableOpacity>
 				</View>
 				<View style={tw`flex flex-row items-center gap-4 w-full`}>
@@ -150,6 +146,7 @@ export default function Profile() {
 						style={tw`flex-1 py-4 bg-${
 							theme === 'dark' ? 'lightDark' : 'white'
 						} shadow-md rounded-lg items-center justify-between h-30`}
+						onPress={() => router.push('/(tabs)/profile/Modals/getFavorite')}
 					>
 						<SvgXml xml={iconSuperLike} width={32} height={32} />
 						<Text
@@ -167,6 +164,7 @@ export default function Profile() {
 						style={tw`flex-1 py-4 bg-${
 							theme === 'dark' ? 'lightDark' : 'white'
 						} shadow-md rounded-lg items-center justify-between h-30`}
+						onPress={() => router.push('/(tabs)/profile/Modals/standout')}
 					>
 						<SvgXml xml={iconStandout} width={32} height={32} />
 						<Text
@@ -184,6 +182,7 @@ export default function Profile() {
 						style={tw`flex-1 py-4 bg-${
 							theme === 'dark' ? 'lightDark' : 'white'
 						} shadow-md rounded-lg items-center justify-between h-30`}
+						onPress={() => router.push('/(tabs)/profile/Modals/sendDM')}
 					>
 						<SvgXml xml={iconDM} width={32} height={32} />
 						<Text
@@ -195,6 +194,42 @@ export default function Profile() {
 						</Text>
 						<Text style={tw`text-xs font-poppinsSemiBold text-blue`}>
 							GET MORE
+						</Text>
+					</TouchableOpacity>
+				</View>
+				<View
+					style={tw`flex flex-row items-center justify-between w-full px-4 mt-10`}
+				>
+					<View style={tw`flex flex-row items-center gap-2`}>
+						<Image
+							style={tw`w-12 h-12 rounded-full`}
+							source={require('@/assets/images/hotGuy.png')}
+						/>
+						<Text
+							style={tw`text-base font-poppinsSemiBold ${
+								theme === 'dark' ? 'text-white' : 'text-black'
+							}`}
+						>
+							Soulflag Plus
+						</Text>
+						<Image
+							source={require('@/assets/images/crown.png')}
+							style={tw`w-9 h-9`}
+							contentFit="contain"
+						/>
+					</View>
+					<TouchableOpacity
+						style={tw`flex flex-row items-center justify-center gap-2 px-4 py-1.5`}
+						onPress={() => router.push('/(common)/plansModal')}
+					>
+						<LinearGradient
+							style={tw`absolute inset-0 rounded-full`}
+							colors={['#05C3DD', '#B14EFF']}
+							start={{ x: -1, y: -1 }}
+							end={{ x: 1, y: 1 }}
+						/>
+						<Text style={tw`text-sm text-white font-poppinsSemiBold`}>
+							Upgrade
 						</Text>
 					</TouchableOpacity>
 				</View>

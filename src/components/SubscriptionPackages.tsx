@@ -19,7 +19,7 @@ export default function SubscriptionPackages() {
 	};
 
 	return (
-		<View style={tw`flex-1 bg-${theme === 'dark' ? 'dark' : 'white'} mt-12`}>
+		<View style={tw`flex-1 bg-${theme === 'dark' ? 'dark' : 'white'} mt-6`}>
 			<View
 				style={tw`flex flex-row w-full items-center border-b border-gray-200`}
 			>
@@ -88,7 +88,7 @@ export default function SubscriptionPackages() {
 						<TouchableOpacity
 							style={tw`mt-6 mb-4 px-6 py-3 bg-blue rounded-lg`}
 							onPress={() => {
-								router.push('/(tabs)/profile/plansModal');
+								router.push('/(common)/plansModal');
 							}}
 						>
 							<Text style={tw`text-white text-center font-poppinsBold`}>

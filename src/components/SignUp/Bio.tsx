@@ -9,7 +9,7 @@ export default function Bio({
 	setBio,
 }: {
 	bio: string;
-	setBio: React.Dispatch<React.SetStateAction<string>>;
+	setBio: (text: string) => void;
 }) {
 	const { theme } = useTheme();
 	return (

@@ -11,9 +11,9 @@ export default function Lifestyle({
 	setSmokingFrequency,
 }: {
 	drinkingFrequency: string | null;
-	setDrinkingFrequency: React.Dispatch<React.SetStateAction<string | null>>;
+	setDrinkingFrequency: (text: string | null) => void;
 	smokingFrequency: string | null;
-	setSmokingFrequency: React.Dispatch<React.SetStateAction<string | null>>;
+	setSmokingFrequency: (text: string | null) => void;
 }) {
 	const { theme } = useTheme();
 

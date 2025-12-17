@@ -14,8 +14,8 @@ export default function LookingFor({
 	const { theme } = useTheme();
 
 	const toggleSelect = (id: string) => {
-		setSelectedIds(prev => {
-			if (prev.includes(id)) return prev.filter(p => p !== id);
+		setSelectedIds((prev: string[]) => {
+			if (prev.includes(id)) return prev.filter((p: string) => p !== id);
 			if (prev.length >= 2) return prev; // ignore if already 2 selected
 			return [...prev, id];
 		});

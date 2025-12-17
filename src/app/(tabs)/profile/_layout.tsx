@@ -36,6 +36,39 @@ export default function ProfileLayout() {
 			<Stack.Screen name="personalInformation/heightSettings" />
 			<Stack.Screen name="personalInformation/interestsSettings" />
 			<Stack.Screen name="personalInformation/lookingForSettings" />
+			<Stack.Screen name="personalInformation/verifyPhone" />
+			<Stack.Screen
+				name="Modals/getFavorite"
+				options={{
+					presentation: 'formSheet',
+					sheetAllowedDetents: 'fitToContents',
+					contentStyle: { backgroundColor: 'transparent' },
+				}}
+			/>
+			<Stack.Screen
+				name="Modals/sendDM"
+				options={{
+					presentation: 'formSheet',
+					sheetAllowedDetents: 'fitToContents',
+					contentStyle: { backgroundColor: 'transparent' },
+				}}
+			/>
+			<Stack.Screen
+				name="Modals/standout"
+				options={{
+					presentation: 'formSheet',
+					sheetAllowedDetents: 'fitToContents',
+					contentStyle: { backgroundColor: 'transparent' },
+				}}
+			/>
+			<Stack.Screen
+				name="reportModal"
+				options={{
+					presentation: 'formSheet',
+					sheetAllowedDetents: 'fitToContents',
+					contentStyle: { backgroundColor: 'transparent' },
+				}}
+			/>
 		</Stack>
 	);
 }

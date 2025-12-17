@@ -9,7 +9,7 @@ export default function Education({
 	setEducation,
 }: {
 	education: string;
-	setEducation: React.Dispatch<React.SetStateAction<string>>;
+	setEducation: (text: string) => void;
 }) {
 	const { theme } = useTheme();
 
