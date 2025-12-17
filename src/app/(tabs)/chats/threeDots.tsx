@@ -32,7 +32,7 @@ export default function ThreeDots() {
 				<TouchableOpacity
 					style={tw`w-full py-3 items-center justify-center`}
 					onPress={() => {
-						setReportModalVisible(true);
+						router.push('/(tabs)/chats/reportModal');
 					}}
 				>
 					<Text style={tw`text-base font-poppinsSemiBold text-red-500`}>
@@ -54,7 +54,8 @@ export default function ThreeDots() {
 						confirmationText="Unmatch Emma?"
 						confirmationSubText="You will no longer be able to message each other."
 						onConfirm={() => {
-							// Handle unmatch logic here
+							setUnMatchModalVisible(false);
+							router.push('/(tabs)/chats');
 						}}
 						onCancel={() => setUnMatchModalVisible(false)}
 					/>

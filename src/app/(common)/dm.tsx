@@ -34,7 +34,7 @@ export default function Dm() {
 		};
 
 		if (dmCount === 0) {
-			router.push('/(tabs)/swipe/Modals/sendDM');
+			router.push('/(common)/Modals/sendDM');
 			return;
 		} else {
 			setMessages(prevMessages => [...prevMessages, newMessage]);
@@ -62,10 +62,7 @@ export default function Dm() {
 	);
 
 	return (
-		<SafeAreaView
-			edges={['top']}
-			style={tw`flex-1 bg-${theme === 'dark' ? 'dark' : 'white'}`}
-		>
+		<SafeAreaView style={tw`flex-1 bg-${theme === 'dark' ? 'dark' : 'white'}`}>
 			<KeyboardAvoidingView behavior="padding" style={tw`flex-1`}>
 				<View
 					style={tw`flex-1 bg-${theme === 'dark' ? 'lightDark' : 'gray-100'}`}

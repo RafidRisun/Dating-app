@@ -79,6 +79,7 @@ export default function SwipeScreen() {
 								onSwipe={handleSwipe}
 								setBottomSheetVisible={setBottomSheetVisible}
 								style={{ zIndex: cards.length - index }} // Ensure the top card is rendered above others
+								tab="swipe"
 							/>
 						))}
 						{!dateEnabled && (
@@ -138,7 +139,7 @@ export default function SwipeScreen() {
 						confirmationSubText="Go back to the last profile you passed."
 						onConfirm={() => {
 							setGobackModal(false);
-							router.push('/(tabs)/swipe/plansModal');
+							router.push('/(common)/plansModal');
 						}}
 						onCancel={() => setGobackModal(false)}
 					/>

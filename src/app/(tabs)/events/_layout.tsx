@@ -8,8 +8,12 @@ export default function EventsLayout() {
 			<Stack.Screen name="detailPage" />
 			<Stack.Screen name="swipeScreen" />
 			<Stack.Screen
-				name="plansModal"
-				options={{ presentation: 'modal', animation: 'slide_from_bottom' }}
+				name="reportModal"
+				options={{
+					presentation: 'formSheet',
+					sheetAllowedDetents: 'fitToContents',
+					contentStyle: { backgroundColor: 'transparent' },
+				}}
 			/>
 		</Stack>
 	);

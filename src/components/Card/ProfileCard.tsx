@@ -38,6 +38,7 @@ export function ProfileCard({
 	profile,
 	onSwipe,
 	style,
+	tab,
 }: ProfileCardProps & { style?: any }) {
 	const { theme } = useTheme();
 	const router = useRouter();
@@ -469,7 +470,13 @@ export function ProfileCard({
 								</Text>
 							</TouchableOpacity>
 							<TouchableOpacity
-								onPress={() => router.push('/(tabs)/swipe/reportModal')}
+								onPress={() =>
+									router.push(
+										tab === 'swipe'
+											? '/(tabs)/swipe/reportModal'
+											: '/(tabs)/events/reportModal'
+									)
+								}
 							>
 								<Text style={tw`text-lg font-poppinsSemiBold text-red-500`}>
 									Report
@@ -529,7 +536,7 @@ export function ProfileCard({
 						confirmationSubText="You're 5x more likely to get a match! Stand out from the crowd."
 						onConfirm={() => {
 							setSuperLikeModal(false);
-							router.push('/(tabs)/events/plansModal');
+							router.push('/(common)/plansModal');
 						}}
 						onCancel={() => setSuperLikeModal(false)}
 					/>
@@ -541,7 +548,7 @@ export function ProfileCard({
 						confirmationSubText="You can start a private conversation with this user."
 						onConfirm={() => {
 							setDmModal(false);
-							router.push('/(tabs)/events/plansModal');
+							router.push('/(common)/dm');
 						}}
 						onCancel={() => setDmModal(false)}
 					/>
@@ -564,4 +571,5 @@ interface ProfileCardProps {
 	onSwipe: (profileId: string) => void;
 	style?: any;
 	setBottomSheetVisible: (visible: boolean) => void;
+	tab: 'swipe' | 'events';
 }

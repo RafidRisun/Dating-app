@@ -43,7 +43,7 @@ export default function TabLayout() {
 						paddingTop: 15,
 						height: 100,
 						backgroundColor: theme === 'dark' ? '#151515' : '#fff',
-						borderTopColor: theme === 'dark' ? '#151515' : '#e5e7eb',
+						borderTopColor: theme === 'dark' ? '#151515' : '#fff',
 					},
 				}}
 			>

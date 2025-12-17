@@ -36,10 +36,6 @@ export default function ProfileLayout() {
 			<Stack.Screen name="personalInformation/heightSettings" />
 			<Stack.Screen name="personalInformation/interestsSettings" />
 			<Stack.Screen name="personalInformation/lookingForSettings" />
-			<Stack.Screen
-				name="plansModal"
-				options={{ presentation: 'modal', animation: 'slide_from_bottom' }}
-			/>
 		</Stack>
 	);
 }

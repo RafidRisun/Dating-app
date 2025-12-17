@@ -1,11 +1,49 @@
 import ProfileComponent from '@/src/components/ProfileComponent';
-import WrapperWithHeader from '@/src/components/WrapperWithHeader';
+import tw from '@/src/lib/tailwind';
+import { useTheme } from '@/src/lib/ThemeContext';
 import React from 'react';
+import { StatusBar, Text, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
+import { iconBack, iconBackDark } from '@/assets/icon';
+import { useRouter } from 'expo-router';
+import { SvgXml } from 'react-native-svg';
 
 export default function Profile() {
+	const router = useRouter();
+	const { theme } = useTheme();
 	return (
-		<WrapperWithHeader name="Likes">
+		<SafeAreaView
+			edges={['top']}
+			style={tw`flex-1 items-center justify-start ${
+				theme === 'dark' ? 'bg-lightDark' : 'bg-[#FDFDFD]'
+			}`}
+		>
+			<StatusBar
+				barStyle={theme === 'dark' ? 'light-content' : 'dark-content'}
+			/>
+			{/* header */}
+			<View
+				style={tw`flex flex-row p-5 ${
+					theme === 'dark' ? 'bg-lightDark' : 'bg-[#FDFDFD]'
+				} w-full items-center gap-4 pb-2`}
+			>
+				<TouchableOpacity style={tw`px-2`} onPress={() => router.back()}>
+					{theme === 'dark' ? (
+						<SvgXml xml={iconBackDark} />
+					) : (
+						<SvgXml xml={iconBack} />
+					)}
+				</TouchableOpacity>
+				<Text
+					style={tw`self-center text-lg font-poppinsSemiBold ${
+						theme === 'dark' ? 'text-white' : 'text-black'
+					}`}
+				>
+					Likes
+				</Text>
+			</View>
 			<ProfileComponent />
-		</WrapperWithHeader>
+		</SafeAreaView>
 	);
 }
