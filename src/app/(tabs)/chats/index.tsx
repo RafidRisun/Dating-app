@@ -112,7 +112,7 @@ export default function Chat() {
 										theme === 'dark' ? 'text-white' : 'text-black'
 									}`}
 								>
-									Matches
+									New Matches
 								</Text>
 								<ScrollView
 									horizontal

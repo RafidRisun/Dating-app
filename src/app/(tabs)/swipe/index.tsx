@@ -78,7 +78,7 @@ export default function SwipeScreen() {
 							<View style={tw`flex flex-col gap-4 items-center justify-center`}>
 								<Image
 									source={require('@/assets/images/LogoGray.png')}
-									style={tw`w-30 aspect-square opacity-35`}
+									style={tw`w-30 aspect-square`}
 									contentFit="contain"
 								/>
 								<Text style={tw`text-xl text-gray-500 font-poppinsSemiBold`}>
@@ -91,16 +91,18 @@ export default function SwipeScreen() {
 									Come back later for more.
 								</Text>
 							</View>
-							<View style={tw`flex flex-col gap-4 items-center justify-center`}>
+							<View
+								style={tw`flex flex-col gap-4 items-center justify-center w-full px-4`}
+							>
 								<Image
 									style={tw`w-12 h-12 rounded-full`}
 									source={require('@/assets/images/hotGuy.png')}
 								/>
-								<Text style={tw`text-xl text-gray-500 font-poppinsSemiBold`}>
+								<Text style={tw`text-lg text-gray-500 font-poppinsSemiBold`}>
 									Check out other cities
 								</Text>
 								<Text
-									style={tw`text-base text-center text-gray-500 font-poppinsSemiBold`}
+									style={tw`text-sm text-center text-gray-500 font-poppinsSemiBold`}
 								>
 									With Premium Access profiles in different cities and increase
 									your chances of connecting with people.

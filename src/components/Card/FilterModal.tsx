@@ -14,6 +14,7 @@ import {
 import { useTheme } from '@/src/lib/ThemeContext';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
 import { SvgXml } from 'react-native-svg';
+import CityFilterModal from '../CityFilterModal';
 
 export default function FilterModal({
 	visible,
@@ -317,51 +318,10 @@ export default function FilterModal({
 				</TouchableOpacity>
 			</View>
 			{cityModalOpen && (
-				<View
-					style={tw`absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center px-5`}
-				>
-					<View
-						style={tw`w-full h-1/2 bg-${
-							theme === 'dark' ? 'lightDark' : 'white'
-						} rounded-lg p-4`}
-					>
-						<Text
-							style={tw`text-base font-poppinsSemiBold mb-3 ${
-								theme === 'dark' ? 'text-white' : 'text-black'
-							}`}
-						>
-							Select City (Turkey)
-						</Text>
-						<ScrollView style={tw`w-full`} showsVerticalScrollIndicator={false}>
-							{turkishCities.map(c => (
-								<TouchableOpacity
-									key={c.value}
-									style={tw`w-full p-3 border border-gray-200 bg-${
-										theme === 'dark' ? 'dark' : 'white'
-									} rounded-lg mb-2`}
-									onPress={() => {
-										setCity(c.value);
-										setCityModalOpen(false);
-									}}
-								>
-									<Text
-										style={tw`font-poppins ${
-											theme === 'dark' ? 'text-white' : 'text-gray-800'
-										}`}
-									>
-										{c.label}
-									</Text>
-								</TouchableOpacity>
-							))}
-						</ScrollView>
-						<TouchableOpacity
-							style={tw`w-full px-4 py-2 bg-gray-200 rounded-xl items-center mt-3`}
-							onPress={() => setCityModalOpen(false)}
-						>
-							<Text style={tw`font-poppinsSemiBold text-gray-700`}>Close</Text>
-						</TouchableOpacity>
-					</View>
-				</View>
+				<CityFilterModal
+					setCityModalOpen={setCityModalOpen}
+					turkishCities={turkishCities}
+				/>
 			)}
 		</View>
 	);
