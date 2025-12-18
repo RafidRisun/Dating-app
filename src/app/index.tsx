@@ -23,8 +23,8 @@ export default function Index() {
 
 	const checkLoginStatus = async () => {
 		setTimeout(() => {
-			//router.replace('/login');
-			router.replace('/(tabs)/swipe');
+			router.replace('/login');
+			//router.replace('/(tabs)/swipe');
 		}, 1800);
 	};
 

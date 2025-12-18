@@ -247,46 +247,46 @@ type Match = {
 };
 
 const matches: Match[] = [
-	// {
-	// 	id: '1',
-	// 	name: 'Alice',
-	// 	image: require('@/assets/images/hotgirl1.png'),
-	// },
-	// {
-	// 	id: '2',
-	// 	name: 'Bob',
-	// 	image: require('@/assets/images/hotgirl2.png'),
-	// },
-	// {
-	// 	id: '3',
-	// 	name: 'Charlie',
-	// 	image: require('@/assets/images/hotgirl1.png'),
-	// },
-	// {
-	// 	id: '4',
-	// 	name: 'Diana',
-	// 	image: require('@/assets/images/hotgirl2.png'),
-	// },
-	// {
-	// 	id: '5',
-	// 	name: 'Alice',
-	// 	image: require('@/assets/images/hotgirl1.png'),
-	// },
-	// {
-	// 	id: '6',
-	// 	name: 'Bob',
-	// 	image: require('@/assets/images/hotgirl2.png'),
-	// },
-	// {
-	// 	id: '7',
-	// 	name: 'Charlie',
-	// 	image: require('@/assets/images/hotgirl1.png'),
-	// },
-	// {
-	// 	id: '8',
-	// 	name: 'Diana',
-	// 	image: require('@/assets/images/hotgirl2.png'),
-	// },
+	{
+		id: '1',
+		name: 'Alice',
+		image: require('@/assets/images/hotgirl1.png'),
+	},
+	{
+		id: '2',
+		name: 'Bob',
+		image: require('@/assets/images/hotgirl2.png'),
+	},
+	{
+		id: '3',
+		name: 'Charlie',
+		image: require('@/assets/images/hotgirl1.png'),
+	},
+	{
+		id: '4',
+		name: 'Diana',
+		image: require('@/assets/images/hotgirl2.png'),
+	},
+	{
+		id: '5',
+		name: 'Alice',
+		image: require('@/assets/images/hotgirl1.png'),
+	},
+	{
+		id: '6',
+		name: 'Bob',
+		image: require('@/assets/images/hotgirl2.png'),
+	},
+	{
+		id: '7',
+		name: 'Charlie',
+		image: require('@/assets/images/hotgirl1.png'),
+	},
+	{
+		id: '8',
+		name: 'Diana',
+		image: require('@/assets/images/hotgirl2.png'),
+	},
 ];
 
 type Message = {
