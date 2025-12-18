@@ -102,6 +102,32 @@ export default function Likes() {
 							<View
 								style={tw`flex flex-row flex-wrap p-4 gap-4 justify-between`}
 							>
+								{likes.length === 0 && (
+									<View
+										style={tw`w-full flex flex-col items-center justify-center gap-45 pt-34`}
+									>
+										<View
+											style={tw`flex flex-col gap-4 items-center justify-center`}
+										>
+											<Image
+												source={require('@/assets/images/LikesGray.png')}
+												style={tw`w-20 aspect-square`}
+												contentFit="contain"
+											/>
+											<Text
+												style={tw`text-xl text-gray-500 font-poppinsSemiBold`}
+											>
+												No Likes Yet
+											</Text>
+											<Text
+												style={tw`text-base text-center text-gray-500 font-poppinsSemiBold`}
+											>
+												When someone likes you, you&apos;ll see them here. Start
+												browsing profiles to get likes!
+											</Text>
+										</View>
+									</View>
+								)}
 								{likes.map(like => (
 									<TouchableOpacity
 										key={like.id}
@@ -157,15 +183,18 @@ export default function Likes() {
 									</TouchableOpacity>
 								))}
 							</View>
-							<View style={tw`flex items-center px-12 py-4 mb-10`}>
-								<TouchableOpacity
-									style={tw`flex w-full items-center bg-blue p-3 rounded-full`}
-								>
-									<Text style={tw`text-white font-poppinsSemiBold`}>
-										See who liked you{' '}
-									</Text>
-								</TouchableOpacity>
-							</View>
+							{likes.length > 0 && (
+								<View style={tw`flex items-center px-12 py-4 mb-10`}>
+									<TouchableOpacity
+										style={tw`flex w-full items-center bg-blue p-3 rounded-full`}
+										onPress={() => router.push('/(common)/plansModal')}
+									>
+										<Text style={tw`text-white font-poppinsSemiBold`}>
+											See who liked you{' '}
+										</Text>
+									</TouchableOpacity>
+								</View>
+							)}
 						</ScrollView>
 					</View>
 					<View key="2" style={tw`flex-1 justify-center items-center`}>
@@ -176,7 +205,40 @@ export default function Likes() {
 							<View
 								style={tw`flex flex-row flex-wrap p-4 gap-4 justify-between`}
 							>
-								{likes.map(like => (
+								{sent.length === 0 && (
+									<View
+										style={tw`w-full flex flex-col items-center justify-center gap-45 pt-34`}
+									>
+										<View
+											style={tw`flex flex-col gap-4 items-center justify-center`}
+										>
+											<Image
+												source={require('@/assets/images/LikesGray.png')}
+												style={tw`w-20 aspect-square`}
+												contentFit="contain"
+											/>
+											<Text
+												style={tw`text-xl text-gray-500 font-poppinsSemiBold`}
+											>
+												No Likes Sent Yet
+											</Text>
+											<Text
+												style={tw`text-base text-center text-gray-500 font-poppinsSemiBold`}
+											>
+												Send likes to profiles you fancy. Start browsing now!
+											</Text>
+										</View>
+										<TouchableOpacity
+											style={tw`flex w-full gap-2 px-6 py-2 mb-6 items-center justify-center bg-blue rounded-full`}
+											onPress={() => router.replace('/(tabs)/swipe')}
+										>
+											<Text style={tw`text-white font-poppins text-lg`}>
+												Browse Profiles
+											</Text>
+										</TouchableOpacity>
+									</View>
+								)}
+								{sent.map(like => (
 									<TouchableOpacity
 										key={like.id}
 										style={tw`flex flex-col w-[${cardWidth}px] h-[${cardWidth}px] justify-between rounded-xl bg-white shadow-sm`}
@@ -202,7 +264,7 @@ export default function Likes() {
 	);
 }
 
-const likes = [
+const likes: Like[] = [
 	{
 		id: '1',
 		name: 'Alice',
@@ -259,7 +321,21 @@ const likes = [
 	},
 ];
 
-const sent = [
+type Like = {
+	id: string;
+	name: string;
+	age: number;
+	image: any;
+};
+
+type SentLike = {
+	id: string;
+	name: string;
+	age: number;
+	image: any;
+};
+
+const sent: SentLike[] = [
 	{
 		id: '1',
 		name: 'Alice',

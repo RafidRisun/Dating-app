@@ -119,10 +119,43 @@ export default function Chat() {
 									showsHorizontalScrollIndicator={false}
 									contentContainerStyle={tw`gap-6`}
 								>
+									{matches.length === 0 && (
+										<TouchableOpacity
+											style={tw`flex flex-row items-center gap-4 p-4`}
+											onPress={() => router.push('/(common)/plansModal')}
+										>
+											<Image
+												source={require('@/assets/images/hotGuy.png')}
+												style={tw`w-14 h-14 rounded-full`}
+												contentFit="cover"
+											/>
+											<View style={tw`flex flex-col`}>
+												<Text
+													style={tw`text-sm font-poppinsBold ${
+														theme === 'dark' ? 'text-white' : 'text-black'
+													}`}
+												>
+													Be seen upto 10x
+												</Text>
+												<Text
+													style={tw`text-xs font-poppins ${
+														theme === 'dark' ? 'text-white' : 'text-gray-600'
+													}`}
+												>
+													Be the first to stand out from the crowd
+												</Text>
+											</View>
+										</TouchableOpacity>
+									)}
 									{matches.map(match => (
-										<View
+										<TouchableOpacity
 											key={match.id}
 											style={tw`flex flex-col items-center justify-center`}
+											onPress={() =>
+												router.push({
+													pathname: '/(tabs)/chats/chat',
+												})
+											}
 										>
 											<Image
 												source={match.image}
@@ -135,7 +168,7 @@ export default function Chat() {
 											>
 												{match.name}
 											</Text>
-										</View>
+										</TouchableOpacity>
 									))}
 								</ScrollView>
 							</View>
@@ -147,6 +180,40 @@ export default function Chat() {
 								>
 									Messages
 								</Text>
+								{messagesState.length === 0 && (
+									<View
+										style={tw`w-full flex flex-col items-center justify-center gap-45 pt-12`}
+									>
+										<View
+											style={tw`flex flex-col gap-4 items-center justify-center`}
+										>
+											<Image
+												source={require('@/assets/images/DmGray.png')}
+												style={tw`w-20 aspect-square`}
+												contentFit="contain"
+											/>
+											<Text
+												style={tw`text-xl text-gray-500 font-poppinsSemiBold`}
+											>
+												No messages yet
+											</Text>
+											<Text
+												style={tw`text-base text-center text-gray-500 font-poppinsSemiBold`}
+											>
+												New matches are waiting for you! Browse profiles and
+												start swiping now.
+											</Text>
+										</View>
+										<TouchableOpacity
+											style={tw`flex w-full gap-2 px-6 py-2 mb-6 items-center justify-center bg-blue rounded-full`}
+											onPress={() => router.replace('/(tabs)/swipe')}
+										>
+											<Text style={tw`text-white font-poppins text-lg`}>
+												Browse Profiles
+											</Text>
+										</TouchableOpacity>
+									</View>
+								)}
 								{messagesState.map(message => (
 									<MessageRow
 										key={message.id}
@@ -173,50 +240,65 @@ export default function Chat() {
 	);
 }
 
-const matches = [
-	{
-		id: '1',
-		name: 'Alice',
-		image: require('@/assets/images/hotgirl1.png'),
-	},
-	{
-		id: '2',
-		name: 'Bob',
-		image: require('@/assets/images/hotgirl2.png'),
-	},
-	{
-		id: '3',
-		name: 'Charlie',
-		image: require('@/assets/images/hotgirl1.png'),
-	},
-	{
-		id: '4',
-		name: 'Diana',
-		image: require('@/assets/images/hotgirl2.png'),
-	},
-	{
-		id: '5',
-		name: 'Alice',
-		image: require('@/assets/images/hotgirl1.png'),
-	},
-	{
-		id: '6',
-		name: 'Bob',
-		image: require('@/assets/images/hotgirl2.png'),
-	},
-	{
-		id: '7',
-		name: 'Charlie',
-		image: require('@/assets/images/hotgirl1.png'),
-	},
-	{
-		id: '8',
-		name: 'Diana',
-		image: require('@/assets/images/hotgirl2.png'),
-	},
+type Match = {
+	id: string;
+	name: string;
+	image: any;
+};
+
+const matches: Match[] = [
+	// {
+	// 	id: '1',
+	// 	name: 'Alice',
+	// 	image: require('@/assets/images/hotgirl1.png'),
+	// },
+	// {
+	// 	id: '2',
+	// 	name: 'Bob',
+	// 	image: require('@/assets/images/hotgirl2.png'),
+	// },
+	// {
+	// 	id: '3',
+	// 	name: 'Charlie',
+	// 	image: require('@/assets/images/hotgirl1.png'),
+	// },
+	// {
+	// 	id: '4',
+	// 	name: 'Diana',
+	// 	image: require('@/assets/images/hotgirl2.png'),
+	// },
+	// {
+	// 	id: '5',
+	// 	name: 'Alice',
+	// 	image: require('@/assets/images/hotgirl1.png'),
+	// },
+	// {
+	// 	id: '6',
+	// 	name: 'Bob',
+	// 	image: require('@/assets/images/hotgirl2.png'),
+	// },
+	// {
+	// 	id: '7',
+	// 	name: 'Charlie',
+	// 	image: require('@/assets/images/hotgirl1.png'),
+	// },
+	// {
+	// 	id: '8',
+	// 	name: 'Diana',
+	// 	image: require('@/assets/images/hotgirl2.png'),
+	// },
 ];
 
-const messages = [
+type Message = {
+	id: string;
+	name: string;
+	image: any;
+	lastMessage: string;
+	timeAgo: string;
+	read: boolean;
+};
+
+const messages: Message[] = [
 	{
 		id: '1',
 		name: 'Alice',
@@ -243,38 +325,6 @@ const messages = [
 	},
 	{
 		id: '4',
-		name: 'Diana',
-		image: require('@/assets/images/hotgirl2.png'),
-		lastMessage: 'Had a great time!',
-		timeAgo: '5d',
-		read: false,
-	},
-	{
-		id: '5',
-		name: 'Alice',
-		image: require('@/assets/images/hotgirl1.png'),
-		lastMessage: 'Hey! How are you?',
-		timeAgo: '2h',
-		read: true,
-	},
-	{
-		id: '6',
-		name: 'Bob',
-		image: require('@/assets/images/hotgirl2.png'),
-		lastMessage: 'Wanna grab coffee?',
-		timeAgo: '1d',
-		read: false,
-	},
-	{
-		id: '7',
-		name: 'Charlie',
-		image: require('@/assets/images/hotgirl1.png'),
-		lastMessage: "Let's catch up soon!",
-		timeAgo: '3d',
-		read: true,
-	},
-	{
-		id: '8',
 		name: 'Diana',
 		image: require('@/assets/images/hotgirl2.png'),
 		lastMessage: 'Had a great time!',

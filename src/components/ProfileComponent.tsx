@@ -23,8 +23,8 @@ export default function ProfileComponent() {
 	return (
 		<>
 			<ScrollView
-				style={tw`flex-1 pb-9 px-5 ${
-					theme === 'dark' ? 'bg-dark' : 'bg-white'
+				style={tw`flex-1 pb-9 ${
+					theme === 'dark' ? 'bg-lightDark' : 'bg-white'
 				}`}
 				showsVerticalScrollIndicator={false}
 				scrollEventThrottle={16}
