@@ -10,7 +10,7 @@ export default function Profile() {
 	const { theme } = useTheme();
 	return (
 		<WrapperWithHeader name="Likes">
-			<ProfileComponent />
+			<ProfileComponent tab="likes" />
 		</WrapperWithHeader>
 	);
 }

@@ -13,15 +13,16 @@ import tw from '../lib/tailwind';
 import { useTheme } from '../lib/ThemeContext';
 import ConfirmationModal from './ConfirmationModal';
 
-export default function ProfileComponent() {
+export default function ProfileComponent({ tab }: { tab?: 'chat' | 'likes' }) {
 	const router = useRouter();
 
 	const { theme } = useTheme();
 	const [blockModal, setBlockModal] = React.useState(false);
 	const [dmModal, setDmModal] = React.useState(false);
 	const [superLikeModal, setSuperLikeModal] = React.useState(false);
+	const [unmatchModal, setUnmatchModal] = React.useState(false);
 	return (
-		<>
+		<View style={tw`flex-1 bg-${theme === 'dark' ? 'dark' : 'white'}`}>
 			<ScrollView
 				style={tw`flex-1 pb-9 ${
 					theme === 'dark' ? 'bg-lightDark' : 'bg-white'
@@ -280,51 +281,61 @@ export default function ProfileComponent() {
 						</View>
 					</View>
 				</View>
-				<View
-					style={tw`flex flex-row w-full items-center justify-between px-12 py-8`}
-				>
-					<TouchableOpacity
-						style={tw`w-12 h-12 rounded-full ${
-							theme === 'dark' ? 'bg-lightDark' : 'bg-white'
-						} shadow-lg shadow-[#00B7DC] items-center justify-center`}
-						onPress={() => setSuperLikeModal(true)}
+				{(tab === 'chat' || tab === 'likes') && (
+					<View
+						style={tw`flex flex-row w-full items-center justify-between px-12 py-8`}
 					>
-						<SvgXml xml={iconSuperLike} />
-					</TouchableOpacity>
-					<TouchableOpacity
-						style={tw`w-12 h-12 rounded-full ${
-							theme === 'dark' ? 'bg-lightDark' : 'bg-white'
-						} shadow-lg shadow-[#00B7DC] items-center justify-center`}
-						onPress={() => setDmModal(true)}
-					>
-						<SvgXml xml={iconSwipeMessage} />
-					</TouchableOpacity>
-				</View>
-				<View
-					style={tw`flex flex-col gap-5 items-center justify-center w-full py-6`}
-				>
-					<TouchableOpacity onPress={() => setBlockModal(true)}>
-						<Text style={tw`text-lg font-poppinsSemiBold text-red-800`}>
-							Unlike
-						</Text>
-					</TouchableOpacity>
-					<TouchableOpacity onPress={() => setBlockModal(true)}>
-						<Text
-							style={tw`text-lg font-poppinsSemiBold ${
-								theme === 'dark' ? 'text-white' : 'text-black'
-							}`}
+						<TouchableOpacity
+							style={tw`w-12 h-12 rounded-full ${
+								theme === 'dark' ? 'bg-lightDark' : 'bg-white'
+							} shadow-lg shadow-[#00B7DC] items-center justify-center`}
+							onPress={() => setSuperLikeModal(true)}
 						>
-							Block
-						</Text>
-					</TouchableOpacity>
-					<TouchableOpacity
-						onPress={() => router.push('/(tabs)/swipe/reportModal')}
+							<SvgXml xml={iconSuperLike} />
+						</TouchableOpacity>
+						<TouchableOpacity
+							style={tw`w-12 h-12 rounded-full ${
+								theme === 'dark' ? 'bg-lightDark' : 'bg-white'
+							} shadow-lg shadow-[#00B7DC] items-center justify-center`}
+							onPress={() => setDmModal(true)}
+						>
+							<SvgXml xml={iconSwipeMessage} />
+						</TouchableOpacity>
+					</View>
+				)}
+				{(tab === 'chat' || tab === 'likes') && (
+					<View
+						style={tw`flex flex-col gap-5 items-center justify-center w-full py-6`}
 					>
-						<Text style={tw`text-lg font-poppinsSemiBold text-red-500`}>
-							Report
-						</Text>
-					</TouchableOpacity>
-				</View>
+						<TouchableOpacity onPress={() => setUnmatchModal(true)}>
+							<Text style={tw`text-lg font-poppinsSemiBold text-red-800`}>
+								Unmatch
+							</Text>
+						</TouchableOpacity>
+						<TouchableOpacity onPress={() => setBlockModal(true)}>
+							<Text
+								style={tw`text-lg font-poppinsSemiBold ${
+									theme === 'dark' ? 'text-white' : 'text-black'
+								}`}
+							>
+								Block
+							</Text>
+						</TouchableOpacity>
+						<TouchableOpacity
+							onPress={() =>
+								router.push(
+									tab === 'chat'
+										? '/(tabs)/chats/reportModal'
+										: '/(tabs)/likes/reportModal'
+								)
+							}
+						>
+							<Text style={tw`text-lg font-poppinsSemiBold text-red-500`}>
+								Report
+							</Text>
+						</TouchableOpacity>
+					</View>
+				)}
 			</ScrollView>
 			{blockModal && (
 				<ConfirmationModal
@@ -336,6 +347,19 @@ export default function ProfileComponent() {
 						setBlockModal(false);
 					}}
 					onCancel={() => setBlockModal(false)}
+				/>
+			)}
+
+			{unmatchModal && (
+				<ConfirmationModal
+					icon="unmatch"
+					confirmationText="Unmatch User?"
+					confirmationSubText="You can match with them again later if you change your mind."
+					onConfirm={() => {
+						// Add your block user logic here
+						setUnmatchModal(false);
+					}}
+					onCancel={() => setUnmatchModal(false)}
 				/>
 			)}
 			{dmModal && (
@@ -362,6 +386,6 @@ export default function ProfileComponent() {
 					onCancel={() => setSuperLikeModal(false)}
 				/>
 			)}
-		</>
+		</View>
 	);
 }

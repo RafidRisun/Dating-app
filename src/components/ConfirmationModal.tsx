@@ -60,6 +60,8 @@ export default function ConfirmationModal({
 							? outOfLikes
 							: icon === 'block'
 							? block
+							: icon === 'unmatch'
+							? unMatch
 							: ''
 					}
 					width={80}

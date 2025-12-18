@@ -5,7 +5,7 @@ import React from 'react';
 export default function Profile() {
 	return (
 		<WrapperWithHeader name="Chat">
-			<ProfileComponent />
+			<ProfileComponent tab="chat" />
 		</WrapperWithHeader>
 	);
 }
