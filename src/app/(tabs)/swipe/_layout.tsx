@@ -18,6 +18,14 @@ export default function SwipeLayout() {
 					contentStyle: { backgroundColor: 'transparent' },
 				}}
 			/>
+			<Stack.Screen
+				name="Modals/getFavorite"
+				options={{
+					presentation: 'formSheet',
+					sheetAllowedDetents: 'fitToContents',
+					contentStyle: { backgroundColor: 'transparent' },
+				}}
+			/>
 		</Stack>
 	);
 }

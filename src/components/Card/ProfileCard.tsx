@@ -536,7 +536,7 @@ export function ProfileCard({
 						confirmationSubText="You're 5x more likely to get a match! Stand out from the crowd."
 						onConfirm={() => {
 							setSuperLikeModal(false);
-							router.push('/(common)/plansModal');
+							router.push('/(tabs)/swipe/Modals/getFavorite');
 						}}
 						onCancel={() => setSuperLikeModal(false)}
 					/>

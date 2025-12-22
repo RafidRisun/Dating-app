@@ -27,6 +27,8 @@ export default function PlansModalComponent() {
 		packages[1].plans[0].id
 	);
 
+	const [expanded, setExpanded] = useState(false);
+
 	// -- Discount config (temporary local); replace with remote/API fetch
 	const discount: {
 		percent: number;
@@ -176,15 +178,26 @@ export default function PlansModalComponent() {
 									<Image source={pkg.photo} style={tw`w-full h-55 mb-4`} />
 									{discountActive && (
 										<View
-											style={tw`flex items-center justify-center absolute inset-0`}
+											style={tw`absolute left-0 right-0 top-4 items-center`}
 										>
-											<Text
-												style={tw`text-white text-xl flex bg-black px-3 py-1 rounded-full font-poppinsSemiBold`}
-											>
-												{timeRemaining} Remaining!
-											</Text>
+											<View style={tw`bg-white px-3 py-1 rounded-full`}>
+												<Text
+													style={tw`text-black text-xs font-poppinsSemiBold`}
+												>
+													{discount.title} - Ends in {timeRemaining}
+												</Text>
+											</View>
 										</View>
 									)}
+									<View
+										style={tw`flex items-center justify-center absolute inset-0`}
+									>
+										<Text
+											style={tw`text-white text-xl flex bg-black px-3 py-1 rounded-full font-poppinsSemiBold`}
+										>
+											See who liked you!
+										</Text>
+									</View>
 								</View>
 								<ScrollView
 									horizontal
@@ -263,57 +276,74 @@ export default function PlansModalComponent() {
 										))}
 									</View>
 								</ScrollView>
-								{pkg.features.map((feature, featureIndex) => (
-									<View
-										key={featureIndex}
-										style={tw`flex flex-row items-center w-full px-6`}
-									>
-										<SvgXml xml={iconFeature} />
-										<Text
-											style={tw`ml-4 text-base font-poppins ${
-												theme === 'dark' ? 'text-white' : 'text-black'
-											}`}
-										>
-											{feature}
-										</Text>
-									</View>
-								))}
-								{pkg.lacks?.map((lack, lackIndex) => (
-									<View
-										key={lackIndex}
-										style={tw`flex flex-row items-center w-full px-6`}
-									>
-										<SvgXml xml={iconLack} />
-										<Text
-											style={tw`ml-4 text-base font-poppins ${
-												theme === 'dark' ? 'text-white' : 'text-black'
-											}`}
-										>
-											{lack}
-										</Text>
-									</View>
-								))}
-								<TouchableOpacity
-									style={tw`mt-6 mb-4 px-6 py-3 bg-blue rounded-lg`}
+								<View
+									style={tw`flex flex-col w-full gap-3 ${
+										expanded ? '' : 'h-48 overflow-hidden'
+									}`}
 								>
-									<Text style={tw`text-white text-center font-poppinsBold`}>
-										{pkg.name === 'Soulflag Plus'
-											? `Subscribe to Plus for ${applyDiscountToPriceString(
-													pkg.plans.find(p => p.id === selectedPlanPlus)
-														?.price ?? pkg.plans[0].price,
-													discount,
-													pkg.id,
-													selectedPlanPlus
-											  )}`
-											: `Subscribe to Premium for ${applyDiscountToPriceString(
-													pkg.plans.find(p => p.id === selectedPlanPremium)
-														?.price ?? pkg.plans[0].price,
-													discount,
-													pkg.id,
-													selectedPlanPremium
-											  )}`}
-									</Text>
-								</TouchableOpacity>
+									{pkg.features.map((feature, featureIndex) => (
+										<View
+											key={featureIndex}
+											style={tw`flex flex-row items-center w-full px-6`}
+										>
+											<SvgXml xml={iconFeature} />
+											<Text
+												style={tw`ml-4 text-base font-poppins ${
+													theme === 'dark' ? 'text-white' : 'text-black'
+												}`}
+											>
+												{feature}
+											</Text>
+										</View>
+									))}
+									{pkg.lacks?.map((lack, lackIndex) => (
+										<View
+											key={lackIndex}
+											style={tw`flex flex-row items-center w-full px-6`}
+										>
+											<SvgXml xml={iconLack} />
+											<Text
+												style={tw`ml-4 text-base font-poppins ${
+													theme === 'dark' ? 'text-white' : 'text-black'
+												}`}
+											>
+												{lack}
+											</Text>
+										</View>
+									))}
+								</View>
+								{expanded ? (
+									<TouchableOpacity
+										style={tw`mt-6 mb-4 px-6 py-3 bg-blue rounded-lg`}
+									>
+										<Text style={tw`text-white text-center font-poppinsBold`}>
+											{pkg.name === 'Soulflag Plus'
+												? `Subscribe to Plus for ${applyDiscountToPriceString(
+														pkg.plans.find(p => p.id === selectedPlanPlus)
+															?.price ?? pkg.plans[0].price,
+														discount,
+														pkg.id,
+														selectedPlanPlus
+												  )}`
+												: `Subscribe to Premium for ${applyDiscountToPriceString(
+														pkg.plans.find(p => p.id === selectedPlanPremium)
+															?.price ?? pkg.plans[0].price,
+														discount,
+														pkg.id,
+														selectedPlanPremium
+												  )}`}
+										</Text>
+									</TouchableOpacity>
+								) : (
+									<TouchableOpacity
+										style={tw`mt-6 mb-4 px-6 py-3 bg-blue rounded-lg`}
+										onPress={() => setExpanded(true)}
+									>
+										<Text style={tw`text-white text-center font-poppinsBold`}>
+											See all Perks
+										</Text>
+									</TouchableOpacity>
+								)}
 							</View>
 						))}
 					</PagerView>
