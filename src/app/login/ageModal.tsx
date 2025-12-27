@@ -1,4 +1,5 @@
 import tw from '@/src/lib/tailwind';
+import { useTheme } from '@/src/lib/ThemeContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import React from 'react';
@@ -14,16 +15,29 @@ export default function AgeModal() {
 	const [rating, setRating] = React.useState(0);
 	const [opinion, setOpinion] = React.useState('');
 	const router = useRouter();
+	const { theme } = useTheme();
 
 	const { age } = useLocalSearchParams();
 
 	return (
 		<TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-			<View style={tw`w-full bg-white rounded-t-3xl p-6`}>
-				<Text style={tw`text-center text-lg font-poppinsSemiBold`}>
+			<View
+				style={tw`w-full bg-${
+					theme === 'dark' ? 'dark' : 'white'
+				} rounded-t-3xl p-6`}
+			>
+				<Text
+					style={tw`text-center text-lg font-poppinsSemiBold text-${
+						theme === 'dark' ? 'white' : 'black'
+					}`}
+				>
 					You are {age} years old
 				</Text>
-				<Text style={tw`text-center text-sm font-poppins mt-4`}>
+				<Text
+					style={tw`text-center text-sm font-poppins mt-4 text-${
+						theme === 'dark' ? 'white' : 'black'
+					}`}
+				>
 					Age cannot be changed later.
 				</Text>
 

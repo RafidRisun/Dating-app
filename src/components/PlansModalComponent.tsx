@@ -29,6 +29,8 @@ export default function PlansModalComponent() {
 
 	const [expanded, setExpanded] = useState(false);
 
+	const [pagerEnabled, setPagerEnabled] = useState(true);
+
 	// -- Discount config (temporary local); replace with remote/API fetch
 	const discount: {
 		percent: number;
@@ -117,55 +119,53 @@ export default function PlansModalComponent() {
 			>
 				<SvgXml xml={iconCloseSmall} />
 			</TouchableOpacity>
+			<View
+				style={tw`flex flex-row w-full items-center border-b border-gray-200 mt-12`}
+			>
+				<TouchableOpacity
+					onPress={() => handlePageChange(0)}
+					style={tw`flex-1`}
+				>
+					<View style={tw`w-full`}>
+						<Text
+							style={tw`w-full text-center py-3 font-poppinsSemiBold border-b-2 ${
+								index === 0
+									? 'text-blue border-blue'
+									: 'text-gray-500 border-white'
+							}`}
+						>
+							Soulflag Plus
+						</Text>
+					</View>
+				</TouchableOpacity>
+				<TouchableOpacity
+					onPress={() => handlePageChange(1)}
+					style={tw`flex-1`}
+				>
+					<View style={tw`w-full`}>
+						<Text
+							style={tw`w-full text-center py-3 font-poppinsSemiBold border-b-2 ${
+								index === 1
+									? 'text-purple border-purple'
+									: 'text-gray-500 border-white'
+							}`}
+						>
+							Soulflag Premium
+						</Text>
+					</View>
+				</TouchableOpacity>
+			</View>
 			<ScrollView
 				nestedScrollEnabled
 				contentContainerStyle={{ flexGrow: 1 }}
 				style={{ flex: 1 }}
 			>
-				<View
-					style={tw`flex-1 bg-${theme === 'dark' ? 'dark' : 'white'} mt-12`}
-				>
-					<View
-						style={tw`flex flex-row w-full items-center border-b border-gray-200`}
-					>
-						<TouchableOpacity
-							onPress={() => handlePageChange(0)}
-							style={tw`flex-1`}
-						>
-							<View style={tw`w-full`}>
-								<Text
-									style={tw`w-full text-center py-3 font-poppinsSemiBold border-b-2 ${
-										index === 0
-											? 'text-blue border-blue'
-											: 'text-gray-500 border-white'
-									}`}
-								>
-									Soulflag Plus
-								</Text>
-							</View>
-						</TouchableOpacity>
-						<TouchableOpacity
-							onPress={() => handlePageChange(1)}
-							style={tw`flex-1`}
-						>
-							<View style={tw`w-full`}>
-								<Text
-									style={tw`w-full text-center py-3 font-poppinsSemiBold border-b-2 ${
-										index === 1
-											? 'text-purple border-purple'
-											: 'text-gray-500 border-white'
-									}`}
-								>
-									Soulflag Premium
-								</Text>
-							</View>
-						</TouchableOpacity>
-					</View>
+				<View style={tw`flex-1 bg-${theme === 'dark' ? 'dark' : 'white'}`}>
 					<PagerView
 						ref={pagerRef} // Attach the reference
-						style={tw`h-250`}
+						style={tw`h-220`}
 						initialPage={0}
-						scrollEnabled={true}
+						scrollEnabled={pagerEnabled}
 						pageMargin={0}
 						onPageSelected={e => setIndex(e.nativeEvent.position)}
 					>
@@ -176,6 +176,13 @@ export default function PlansModalComponent() {
 							>
 								<View style={tw`flex w-full`}>
 									<Image source={pkg.photo} style={tw`w-full h-55 mb-4`} />
+									<View
+										style={tw`flex items-center justify-center bg-black bg-opacity-30 absolute inset-0`}
+									>
+										<Text style={tw`text-white text-xl font-poppinsSemiBold`}>
+											{pkg.quote}
+										</Text>
+									</View>
 									{discountActive && (
 										<View
 											style={tw`absolute left-0 right-0 top-4 items-center`}
@@ -189,21 +196,15 @@ export default function PlansModalComponent() {
 											</View>
 										</View>
 									)}
-									<View
-										style={tw`flex items-center justify-center absolute inset-0`}
-									>
-										<Text
-											style={tw`text-white text-xl flex bg-black px-3 py-1 rounded-full font-poppinsSemiBold`}
-										>
-											See who liked you!
-										</Text>
-									</View>
 								</View>
 								<ScrollView
 									horizontal
 									showsHorizontalScrollIndicator={false}
 									contentContainerStyle={{ paddingHorizontal: 16 }}
 									style={{ flexGrow: 0 }}
+									onTouchStart={() => setPagerEnabled(false)}
+									onTouchEnd={() => setPagerEnabled(true)}
+									onMomentumScrollEnd={() => setPagerEnabled(true)}
 								>
 									<View style={tw`flex-row items-center gap-4 my-4`}>
 										{pkg.plans.map(plan => (
@@ -312,31 +313,9 @@ export default function PlansModalComponent() {
 										</View>
 									))}
 								</View>
-								{expanded ? (
+								{!expanded && (
 									<TouchableOpacity
-										style={tw`mt-6 mb-4 px-6 py-3 bg-blue rounded-lg`}
-									>
-										<Text style={tw`text-white text-center font-poppinsBold`}>
-											{pkg.name === 'Soulflag Plus'
-												? `Subscribe to Plus for ${applyDiscountToPriceString(
-														pkg.plans.find(p => p.id === selectedPlanPlus)
-															?.price ?? pkg.plans[0].price,
-														discount,
-														pkg.id,
-														selectedPlanPlus
-												  )}`
-												: `Subscribe to Premium for ${applyDiscountToPriceString(
-														pkg.plans.find(p => p.id === selectedPlanPremium)
-															?.price ?? pkg.plans[0].price,
-														discount,
-														pkg.id,
-														selectedPlanPremium
-												  )}`}
-										</Text>
-									</TouchableOpacity>
-								) : (
-									<TouchableOpacity
-										style={tw`mt-6 mb-4 px-6 py-3 bg-blue rounded-lg`}
+										style={tw`px-6 py-3 bg-blue rounded-lg`}
 										onPress={() => setExpanded(true)}
 									>
 										<Text style={tw`text-white text-center font-poppinsBold`}>
@@ -349,6 +328,50 @@ export default function PlansModalComponent() {
 					</PagerView>
 				</View>
 			</ScrollView>
+			<View
+				style={tw`flex flex-col w-full mb-3 bg-${
+					theme === 'dark' ? 'dark' : 'white'
+				} p-6`}
+			>
+				<Text
+					style={tw`text-xs font-poppins ${
+						theme === 'dark' ? 'text-white' : 'text-black'
+					}`}
+				>
+					By purchasing, you will be charged, your subscription will auto-renew
+					for the same price and package length until you cancel anytime in App
+					Store Settings, and you agree to our Terms
+				</Text>
+				<TouchableOpacity
+					style={tw`w-full bg-blue rounded-full py-3 mt-4 items-center`}
+					onPress={() => {
+						// Handle purchase logic here
+					}}
+				>
+					<Text style={tw`text-white text-base font-poppinsSemiBold`}>
+						{index === 0
+							? `${
+									packages[0].plans.find(p => p.id === selectedPlanPlus)
+										?.name ?? ''
+							  } - ${applyDiscountToPriceString(
+									packages[0].plans.find(p => p.id === selectedPlanPlus)?.price,
+									discount,
+									packages[0].id,
+									selectedPlanPlus
+							  )}`
+							: `${
+									packages[1].plans.find(p => p.id === selectedPlanPremium)
+										?.name ?? ''
+							  } - ${applyDiscountToPriceString(
+									packages[1].plans.find(p => p.id === selectedPlanPremium)
+										?.price,
+									discount,
+									packages[1].id,
+									selectedPlanPremium
+							  )}`}
+					</Text>
+				</TouchableOpacity>
+			</View>
 		</SafeAreaView>
 	);
 }
@@ -371,6 +394,7 @@ const packages = [
 			'Multicity mode (Not included)',
 		],
 		photo: require('@/assets/images/onboard2.png'),
+		quote: 'See who liked you!',
 		plans: [
 			{
 				id: '1',
@@ -400,6 +424,7 @@ const packages = [
 		],
 		lacks: [],
 		photo: require('@/assets/images/premium.png'),
+		quote: 'Get unlimited access to all features!',
 		plans: [
 			{
 				id: '1',
