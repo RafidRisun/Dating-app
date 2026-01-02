@@ -113,14 +113,16 @@ export default function PlansModalComponent() {
 			edges={['top']}
 			style={tw`flex-1 bg-${theme === 'dark' ? 'dark' : 'white'}`}
 		>
-			<TouchableOpacity
-				style={tw`w-6 h-6 flex items-center justify-center bg-gray-300 rounded-full absolute top-10 right-4 z-50`}
-				onPress={() => router.back()}
-			>
-				<SvgXml xml={iconCloseSmall} />
-			</TouchableOpacity>
+			<View style={tw`flex flex-row items-center justify-end px-4 pt-3`}>
+				<TouchableOpacity
+					style={tw`w-6 h-6 flex items-center justify-center bg-gray-300 rounded-full`}
+					onPress={() => router.back()}
+				>
+					<SvgXml xml={iconCloseSmall} />
+				</TouchableOpacity>
+			</View>
 			<View
-				style={tw`flex flex-row w-full items-center border-b border-gray-200 mt-12`}
+				style={tw`flex flex-row w-full items-center border-b border-gray-200`}
 			>
 				<TouchableOpacity
 					onPress={() => handlePageChange(0)}
