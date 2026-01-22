@@ -1,9 +1,9 @@
 import tw from '@/src/lib/tailwind';
-// import DateTimePicker from '@react-native-community/datetimepicker';
 import { useTheme } from '@/src/lib/ThemeContext';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
-import { DatePicker } from 'react-native-wheel-pick';
+// import { DatePicker } from 'react-native-wheel-pick';
 import TitleAndSubtitle from '../Register/TitleAndSubtitle';
 
 export default function Birthday({
@@ -35,7 +35,7 @@ export default function Birthday({
 				subtitle="Your age will be public."
 			/>
 			<View style={tw`mt-25 items-center justify-center`}>
-				<DatePicker
+				{/* <DatePicker
 					style={{
 						backgroundColor: theme === 'dark' ? '#121212' : 'white',
 						width: 340,
@@ -50,6 +50,18 @@ export default function Birthday({
 					selectTextColor={theme === 'dark' ? 'white' : 'black'}
 					textSize={18}
 					date={date}
+				/> */}
+				<DateTimePicker
+					value={date}
+					mode="date"
+					display="spinner"
+					themeVariant="light"
+					textColor="black"
+					onChange={(event, selectedDate) => {
+						if (selectedDate) {
+							setDate(selectedDate);
+						}
+					}}
 				/>
 			</View>
 		</View>
