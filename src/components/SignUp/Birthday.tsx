@@ -20,7 +20,7 @@ export default function Birthday({
 	});
 
 	// on iOS we render the picker inline; on Android we show it via a button
-	const [showPicker, setShowPicker] = useState(true);
+	const [showPicker, setShowPicker] = useState(() => Platform.OS === 'ios');
 
 	useEffect(() => {
 		const age = new Date().getFullYear() - date.getFullYear();
@@ -57,7 +57,7 @@ export default function Birthday({
 						value={date}
 						mode="date"
 						maximumDate={maxSelectableDate}
-						display={Platform.OS === 'ios' ? 'spinner' : 'default'}
+						display={'spinner'}
 						themeVariant="light"
 						textColor="black"
 						onChange={(event, selectedDate) => {
