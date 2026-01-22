@@ -1,7 +1,7 @@
 import { iconCalendarBlack } from '@/assets/icon';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
-import DatePicker from 'react-native-date-picker';
 import { SvgXml } from 'react-native-svg';
 import tw from '../lib/tailwind';
 
@@ -27,18 +27,18 @@ export default function Calendar({
 				</Text>
 				<SvgXml xml={iconCalendarBlack} />
 			</TouchableOpacity>
-			<DatePicker
-				modal
-				open={visible}
-				date={date}
-				onConfirm={date => {
-					setVisible(false);
-					setDate(date);
-				}}
-				onCancel={() => {
-					setVisible(false);
-				}}
+			<DateTimePicker
+				value={date}
 				mode="date"
+				// maximumDate={maxSelectableDate}
+				display="spinner"
+				themeVariant="light"
+				textColor="black"
+				onChange={(event, selectedDate) => {
+					if (selectedDate) {
+						setDate(selectedDate);
+					}
+				}}
 			/>
 		</View>
 	);

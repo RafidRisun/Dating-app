@@ -54,6 +54,7 @@ export default function Birthday({
 				<DateTimePicker
 					value={date}
 					mode="date"
+					maximumDate={maxSelectableDate}
 					display="spinner"
 					themeVariant="light"
 					textColor="black"
